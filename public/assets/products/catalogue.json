@@ -1,0 +1,722 @@
+[
+  {
+    "id": "MOD-001",
+    "rang": 1,
+    "img": "MOD-001.png",
+    "cat": "Moderne",
+    "name": "Arcos Carré",
+    "shape": "carre",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux carrés assortis — Art mural moderne"
+  },
+  {
+    "id": "MOD-002",
+    "rang": 2,
+    "img": "MOD-002.png",
+    "cat": "Moderne",
+    "name": "Arcos Carré",
+    "shape": "carre",
+    "setSize": 3,
+    "desc": "Ensemble de 3 tableaux carrés assortis — Art mural moderne"
+  },
+  {
+    "id": "MOD-003",
+    "rang": 3,
+    "img": "MOD-003.png",
+    "cat": "Moderne",
+    "name": "Arcos Ronde",
+    "shape": "rond",
+    "setSize": 1,
+    "desc": "Tableau circulaire — Art mural moderne"
+  },
+  {
+    "id": "MOD-004",
+    "rang": 4,
+    "img": "MOD-004.png",
+    "cat": "Moderne",
+    "name": "Arcos Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural moderne"
+  },
+  {
+    "id": "MOD-005",
+    "rang": 5,
+    "img": "MOD-005.png",
+    "cat": "Moderne",
+    "name": "Arcos Carré",
+    "shape": "carre",
+    "setSize": 1,
+    "desc": "Tableau carré — Art mural moderne"
+  },
+  {
+    "id": "MOD-006",
+    "rang": 6,
+    "img": "MOD-006.png",
+    "cat": "Moderne",
+    "name": "Arcos Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural moderne"
+  },
+  {
+    "id": "MOD-007",
+    "rang": 7,
+    "img": "MOD-007.png",
+    "cat": "Moderne",
+    "name": "Arcos Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural moderne"
+  },
+  {
+    "id": "MOD-008",
+    "rang": 8,
+    "img": "MOD-008.png",
+    "cat": "Moderne",
+    "name": "Arcos Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 3,
+    "desc": "Ensemble de 3 tableaux rectangulaires — Art mural moderne"
+  },
+  {
+    "id": "MOD-009",
+    "rang": 9,
+    "img": "MOD-009.png",
+    "cat": "Moderne",
+    "name": "Arcos Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 3,
+    "desc": "Ensemble de 3 tableaux rectangulaires — Art mural moderne"
+  },
+  {
+    "id": "MOD-010",
+    "rang": 10,
+    "img": "MOD-010.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural moderne"
+  },
+  {
+    "id": "MOD-011",
+    "rang": 11,
+    "img": "MOD-011.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural moderne"
+  },
+  {
+    "id": "MOD-012",
+    "rang": 12,
+    "img": "MOD-012.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural moderne"
+  },
+  {
+    "id": "MOD-013",
+    "rang": 13,
+    "img": "MOD-013.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural moderne"
+  },
+  {
+    "id": "MOD-014",
+    "rang": 14,
+    "img": "MOD-014.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural moderne"
+  },
+  {
+    "id": "MOD-015",
+    "rang": 15,
+    "img": "MOD-015.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 3,
+    "desc": "Ensemble de 3 tableaux rectangulaires — Art mural moderne"
+  },
+  {
+    "id": "MOD-016",
+    "rang": 16,
+    "img": "MOD-016.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural moderne"
+  },
+  {
+    "id": "MOD-017",
+    "rang": 17,
+    "img": "MOD-017.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural moderne"
+  },
+  {
+    "id": "MOD-018",
+    "rang": 18,
+    "img": "MOD-018.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural moderne"
+  },
+  {
+    "id": "MOD-019",
+    "rang": 19,
+    "img": "MOD-019.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural moderne"
+  },
+  {
+    "id": "MOD-020",
+    "rang": 20,
+    "img": "MOD-020.png",
+    "cat": "Moderne",
+    "name": "Carré",
+    "shape": "carre",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux carrés — Art mural moderne"
+  },
+  {
+    "id": "MOD-021",
+    "rang": 21,
+    "img": "MOD-021.png",
+    "cat": "Moderne",
+    "name": "Carré",
+    "shape": "carre",
+    "setSize": 1,
+    "desc": "Tableau carré — Art mural moderne"
+  },
+  {
+    "id": "MOD-022",
+    "rang": 22,
+    "img": "MOD-022.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural moderne"
+  },
+  {
+    "id": "MOD-023",
+    "rang": 23,
+    "img": "MOD-023.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural moderne"
+  },
+  {
+    "id": "MOD-024",
+    "rang": 24,
+    "img": "MOD-024.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 3,
+    "desc": "Ensemble de 3 tableaux rectangulaires — Art mural moderne"
+  },
+  {
+    "id": "MOD-025",
+    "rang": 25,
+    "img": "MOD-025.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural moderne"
+  },
+  {
+    "id": "MOD-026",
+    "rang": 26,
+    "img": "MOD-026.png",
+    "cat": "Moderne",
+    "name": "Carré",
+    "shape": "carre",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux carrés — Art mural moderne"
+  },
+  {
+    "id": "MOD-027",
+    "rang": 27,
+    "img": "MOD-027.png",
+    "cat": "Moderne",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural moderne"
+  },
+  {
+    "id": "ABS-010",
+    "rang": 28,
+    "img": "ABS-010.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural abstrait"
+  },
+  {
+    "id": "ABS-011",
+    "rang": 29,
+    "img": "ABS-011.png",
+    "cat": "Abstrait",
+    "name": "Carré",
+    "shape": "carre",
+    "setSize": 1,
+    "desc": "Tableau carré — Art mural abstrait"
+  },
+  {
+    "id": "ABS-012",
+    "rang": 30,
+    "img": "ABS-012.png",
+    "cat": "Abstrait",
+    "name": "Carré",
+    "shape": "carre",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux carrés — Art mural abstrait"
+  },
+  {
+    "id": "ABS-013",
+    "rang": 31,
+    "img": "ABS-013.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural abstrait"
+  },
+  {
+    "id": "ABS-014",
+    "rang": 32,
+    "img": "ABS-014.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural abstrait"
+  },
+  {
+    "id": "ABS-015",
+    "rang": 33,
+    "img": "ABS-015.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural abstrait"
+  },
+  {
+    "id": "ABS-016",
+    "rang": 34,
+    "img": "ABS-016.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural abstrait"
+  },
+  {
+    "id": "ABS-017",
+    "rang": 35,
+    "img": "ABS-017.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural abstrait"
+  },
+  {
+    "id": "ABS-018",
+    "rang": 36,
+    "img": "ABS-018.png",
+    "cat": "Abstrait",
+    "name": "Ronde",
+    "shape": "rond",
+    "setSize": 1,
+    "desc": "Tableau circulaire — Art mural abstrait"
+  },
+  {
+    "id": "ABS-019",
+    "rang": 37,
+    "img": "ABS-019.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural abstrait"
+  },
+  {
+    "id": "ABS-020",
+    "rang": 38,
+    "img": "ABS-020.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 3,
+    "desc": "Ensemble de 3 tableaux rectangulaires — Art mural abstrait"
+  },
+  {
+    "id": "ABS-021",
+    "rang": 39,
+    "img": "ABS-021.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural abstrait"
+  },
+  {
+    "id": "ABS-022",
+    "rang": 40,
+    "img": "ABS-022.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural abstrait"
+  },
+  {
+    "id": "ABS-023",
+    "rang": 41,
+    "img": "ABS-023.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 3,
+    "desc": "Ensemble de 3 tableaux rectangulaires — Art mural abstrait"
+  },
+  {
+    "id": "ABS-024",
+    "rang": 42,
+    "img": "ABS-024.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural abstrait"
+  },
+  {
+    "id": "ABS-025",
+    "rang": 43,
+    "img": "ABS-025.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural abstrait"
+  },
+  {
+    "id": "ABS-026",
+    "rang": 44,
+    "img": "ABS-026.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural abstrait"
+  },
+  {
+    "id": "ABS-027",
+    "rang": 45,
+    "img": "ABS-027.png",
+    "cat": "Abstrait",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural abstrait"
+  },
+  {
+    "id": "ISL-001",
+    "rang": 46,
+    "img": "ISL-001.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-002",
+    "rang": 47,
+    "img": "ISL-002.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-003",
+    "rang": 48,
+    "img": "ISL-003.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-004",
+    "rang": 49,
+    "img": "ISL-004.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-005",
+    "rang": 50,
+    "img": "ISL-005.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-006",
+    "rang": 51,
+    "img": "ISL-006.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-007",
+    "rang": 52,
+    "img": "ISL-007.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural islamique"
+  },
+  {
+    "id": "ISL-008",
+    "rang": 53,
+    "img": "ISL-008.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-009",
+    "rang": 54,
+    "img": "ISL-009.png",
+    "cat": "Islamique",
+    "name": "Carré",
+    "shape": "carre",
+    "setSize": 3,
+    "desc": "Ensemble de 3 tableaux carrés — Art mural islamique"
+  },
+  {
+    "id": "ISL-010",
+    "rang": 55,
+    "img": "ISL-010.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-011",
+    "rang": 56,
+    "img": "ISL-011.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-012",
+    "rang": 57,
+    "img": "ISL-012.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-013",
+    "rang": 58,
+    "img": "ISL-013.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-014",
+    "rang": 59,
+    "img": "ISL-014.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-015",
+    "rang": 60,
+    "img": "ISL-015.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-016",
+    "rang": 61,
+    "img": "ISL-016.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-017",
+    "rang": 62,
+    "img": "ISL-017.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-018",
+    "rang": 63,
+    "img": "ISL-018.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-019",
+    "rang": 64,
+    "img": "ISL-019.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural islamique"
+  },
+  {
+    "id": "ISL-020",
+    "rang": 65,
+    "img": "ISL-020.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 2,
+    "desc": "Ensemble de 2 tableaux rectangulaires — Art mural islamique"
+  },
+  {
+    "id": "ISL-021",
+    "rang": 66,
+    "img": "ISL-021.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-022",
+    "rang": 67,
+    "img": "ISL-022.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-023",
+    "rang": 68,
+    "img": "ISL-023.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 1,
+    "desc": "Tableau rectangulaire — Art mural islamique"
+  },
+  {
+    "id": "ISL-024",
+    "rang": 69,
+    "img": "ISL-024.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 3,
+    "desc": "Ensemble de 3 tableaux rectangulaires — Art mural islamique"
+  },
+  {
+    "id": "ISL-025",
+    "rang": 70,
+    "img": "ISL-025.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 3,
+    "desc": "Ensemble de 3 tableaux rectangulaires — Art mural islamique"
+  },
+  {
+    "id": "ISL-026",
+    "rang": 71,
+    "img": "ISL-026.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 3,
+    "desc": "Ensemble de 3 tableaux rectangulaires — Art mural islamique"
+  },
+  {
+    "id": "ISL-027",
+    "rang": 72,
+    "img": "ISL-027.png",
+    "cat": "Islamique",
+    "name": "Rectangulaire",
+    "shape": "rectangulaire",
+    "setSize": 3,
+    "desc": "Ensemble de 3 tableaux rectangulaires — Art mural islamique"
+  }
+]
