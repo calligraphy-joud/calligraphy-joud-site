@@ -43,8 +43,8 @@ Every artwork card and every "Commande" / "Commander" button opens a premium ord
 sheet that pre-fills a WhatsApp message with the artwork, options and total, then sends
 the visitor straight to your WhatsApp chat.
 
-**Set your real number once** in `app/components/order.js`:
-```js
-export const WA_NUMBER = '212600000000'; // <- replace with your WhatsApp number (country code, no +)
-```
-The contact page reuses the same constant automatically.
+**The number is centralized in one place** — `lib/whatsapp.ts` (`WHATSAPP_NUMBER`).
+Override it at deploy time with the env var `NEXT_PUBLIC_WHATSAPP_NUMBER` (country code,
+digits only, no `+`), e.g. `NEXT_PUBLIC_WHATSAPP_NUMBER=212630690524`. Every usage point
+(order modal, client link builder, server fallback, contact CTA) imports it from there —
+do not hardcode the number anywhere else.

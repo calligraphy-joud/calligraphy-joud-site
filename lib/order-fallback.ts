@@ -7,6 +7,8 @@
 // IMPORTANT: this module reads server-only env vars (no NEXT_PUBLIC_ prefix)
 // and must NOT be imported into any client bundle.
 
+import { WHATSAPP_NUMBER } from './whatsapp';
+
 /** The normalised order payload the route hands to the fallbacks. */
 export interface OrderPayload {
   sku?: string;
@@ -22,11 +24,9 @@ export interface OrderPayload {
   lang?: 'fr' | 'en' | 'ar';
 }
 
-const DEFAULT_WA_NUMBER = '212600000000'; // mirrors WA_NUMBER in app/components/order.js
-
-/** Resolve the WhatsApp number from env, falling back to the site default. */
+/** The WhatsApp Business number (single source of truth: lib/whatsapp.ts). */
 export function getWaNumber(): string {
-  return (process.env.WA_NUMBER || DEFAULT_WA_NUMBER).replace(/[^\d]/g, '') || DEFAULT_WA_NUMBER;
+  return WHATSAPP_NUMBER;
 }
 
 // ---------------------------------------------------------------------------
@@ -111,7 +111,7 @@ export function buildWaText(payload: OrderPayload, lang?: Lang): string {
     if (o.forme) lines.push('• ' + s.forme + sep + o.forme);
     if (o.dimensions) lines.push('• ' + s.dim + sep + o.dimensions);
     if (payload.total !== undefined && payload.total !== null && String(payload.total).trim()) {
-      lines.push('• ' + s.total + sep + String(payload.total));
+      lines.push('• ' + s.total + sep + String(payload.total) + ' MAD');
     }
   }
 

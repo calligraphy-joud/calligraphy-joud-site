@@ -4,9 +4,10 @@ import { useLang } from './lang-context';
 import { Icons } from './icons';
 import { submitOrder, buildClientWaUrl } from '@/lib/order-client';
 import { fbTrack, makeEventId } from './pixel';
+import { WHATSAPP_NUMBER } from '@/lib/whatsapp';
 
 /* ---- WhatsApp config: change this one number to go live ---- */
-export const WA_NUMBER = '212600000000'; // Calligraphy JOUD WhatsApp (placeholder)
+export const WA_NUMBER = WHATSAPP_NUMBER; // single source of truth: lib/whatsapp.ts
 
 const fmt = (n) => Number(n).toLocaleString('fr-FR');
 function priceFor(base, compI, dimI) {

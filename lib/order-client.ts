@@ -4,6 +4,8 @@
 // process.env, and must NOT read any server secret. It only POSTs to the
 // /api/orders route and builds a local WhatsApp link for the failure path.
 
+import { WHATSAPP_NUMBER } from './whatsapp';
+
 export interface ClientOrderPayload {
   sku?: string;
   variationId?: number;
@@ -29,7 +31,7 @@ export interface SubmitOrderResult {
   error?: string;
 }
 
-const DEFAULT_WA_NUMBER = '212600000000'; // mirrors WA_NUMBER in app/components/order.js
+// WhatsApp number — single source of truth: ./whatsapp (WHATSAPP_NUMBER)
 
 type Lang = 'fr' | 'en' | 'ar';
 
@@ -100,7 +102,7 @@ export function buildClientWaUrl(
   const l = L(lang ?? payload.lang);
   const s = STR[l];
   const sep = s.sep;
-  const num = (waNumber || DEFAULT_WA_NUMBER).replace(/[^\d]/g, '') || DEFAULT_WA_NUMBER;
+  const num = (waNumber || WHATSAPP_NUMBER).replace(/[^\d]/g, '') || WHATSAPP_NUMBER;
   const isCommission = !payload.sku && !payload.productName;
 
   const lines: string[] = [s.intro + (isCommission ? s.wantCommission : s.wantOrder)];
@@ -114,7 +116,7 @@ export function buildClientWaUrl(
     if (o.forme) lines.push('• ' + s.forme + sep + o.forme);
     if (o.dimensions) lines.push('• ' + s.dim + sep + o.dimensions);
     if (payload.total !== undefined && payload.total !== null && String(payload.total).trim()) {
-      lines.push('• ' + s.total + sep + String(payload.total));
+      lines.push('• ' + s.total + sep + String(payload.total) + ' MAD');
     }
   }
 

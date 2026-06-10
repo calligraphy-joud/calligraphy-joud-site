@@ -1,7 +1,7 @@
 import { CollectionView } from '../components/shop-view';
 import { getProducts } from '@/lib/woo';
 
-export const revalidate = 60;
+export const revalidate = 30;
 
 export const metadata = {
   title: 'Collection',

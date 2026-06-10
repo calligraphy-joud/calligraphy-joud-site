@@ -411,7 +411,7 @@ export function toCatalogueItem(p: WooProduct): CatalogueItem {
 // Read API
 // ---------------------------------------------------------------------------
 
-const READ_TTL_MS = 60 * 1000;
+const READ_TTL_MS = 15 * 1000;
 
 function warnFallback(reason: string): void {
   // eslint-disable-next-line no-console
