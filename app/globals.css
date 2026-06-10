@@ -765,11 +765,12 @@ body.no-anim [data-reveal] { opacity: 1 !important; transform: none !important; 
 }
 @media (max-width: 1080px) {
   .hdr__nav { display: none; }
-  .hdr__search, .hdr__cta { display: none; }
+  .hdr__search, .hdr__cta { display: none !important; }
   .hdr__burger { display: inline-flex; }
 }
 @media (max-width: 860px) {
   .coll__grid { row-gap: var(--space-9); }
+  .coll__grid--three { grid-template-columns: 1fr; }
   .work, .work--lg, .work--push { grid-column: 1 / -1 !important; grid-column-start: auto !important; }
   .work--offset, .work--offset-sm { margin-block-start: 0; }
   .cats { grid-template-columns: 1fr; }
