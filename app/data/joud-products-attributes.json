@@ -1,0 +1,358 @@
+{
+  "_meta": {
+    "source": "Classification visuelle des 72 images produits (Claude, 11/06/2026)",
+    "rule": "forme et composition sont FIXES par oeuvre. Seules les dimensions (matrice) et le cadre (sauf rond) sont configurables.",
+    "orientation_rule": "Pour rectangulaire en orientation portrait, afficher les dimensions de la matrice inversées (ex: 100x50 -> 50x100). Le prix ne change pas.",
+    "a_verifier": [
+      "ABS-010",
+      "ISL-008",
+      "ISL-026",
+      "ISL-027"
+    ]
+  },
+  "products": {
+    "ABS-010": {
+      "forme": "carre",
+      "composition": 1,
+      "verifier": true
+    },
+    "ABS-011": {
+      "forme": "carre",
+      "composition": 1
+    },
+    "ABS-012": {
+      "forme": "carre",
+      "composition": 2
+    },
+    "ABS-013": {
+      "forme": "carre",
+      "composition": 2
+    },
+    "ABS-014": {
+      "forme": "carre",
+      "composition": 2
+    },
+    "ABS-015": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "portrait"
+    },
+    "ABS-016": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ABS-017": {
+      "forme": "rectangulaire",
+      "composition": 2,
+      "orientation": "portrait"
+    },
+    "ABS-018": {
+      "forme": "rond",
+      "composition": 1
+    },
+    "ABS-019": {
+      "forme": "carre",
+      "composition": 2
+    },
+    "ABS-020": {
+      "forme": "carre",
+      "composition": 3
+    },
+    "ABS-021": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "portrait"
+    },
+    "ABS-022": {
+      "forme": "carre",
+      "composition": 2
+    },
+    "ABS-023": {
+      "forme": "carre",
+      "composition": 3
+    },
+    "ABS-024": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "portrait"
+    },
+    "ABS-025": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "portrait"
+    },
+    "ABS-026": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "portrait"
+    },
+    "ABS-027": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "portrait"
+    },
+    "ISL-001": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-002": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-003": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-004": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-005": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-006": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-007": {
+      "forme": "rectangulaire",
+      "composition": 2,
+      "orientation": "portrait"
+    },
+    "ISL-008": {
+      "forme": "carre",
+      "composition": 1,
+      "verifier": true
+    },
+    "ISL-009": {
+      "forme": "carre",
+      "composition": 3
+    },
+    "ISL-010": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-011": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "portrait"
+    },
+    "ISL-012": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-013": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-014": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-015": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-016": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-017": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-018": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-019": {
+      "forme": "rectangulaire",
+      "composition": 2,
+      "orientation": "portrait"
+    },
+    "ISL-020": {
+      "forme": "carre",
+      "composition": 3
+    },
+    "ISL-021": {
+      "forme": "rectangulaire",
+      "composition": 2,
+      "orientation": "portrait"
+    },
+    "ISL-022": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-023": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "ISL-024": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "portrait"
+    },
+    "ISL-025": {
+      "forme": "rectangulaire",
+      "composition": 3,
+      "orientation": "portrait"
+    },
+    "ISL-026": {
+      "forme": "carre",
+      "composition": 3,
+      "verifier": true
+    },
+    "ISL-027": {
+      "forme": "carre",
+      "composition": 3,
+      "verifier": true
+    },
+    "MOD-001": {
+      "forme": "carre",
+      "composition": 2
+    },
+    "MOD-002": {
+      "forme": "rectangulaire",
+      "composition": 3,
+      "orientation": "portrait"
+    },
+    "MOD-003": {
+      "forme": "rond",
+      "composition": 1
+    },
+    "MOD-004": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "MOD-005": {
+      "forme": "carre",
+      "composition": 1
+    },
+    "MOD-006": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "portrait"
+    },
+    "MOD-007": {
+      "forme": "rectangulaire",
+      "composition": 2,
+      "orientation": "portrait"
+    },
+    "MOD-008": {
+      "forme": "rectangulaire",
+      "composition": 3,
+      "orientation": "portrait"
+    },
+    "MOD-009": {
+      "forme": "rectangulaire",
+      "composition": 3,
+      "orientation": "portrait"
+    },
+    "MOD-010": {
+      "forme": "carre",
+      "composition": 2
+    },
+    "MOD-011": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "portrait"
+    },
+    "MOD-012": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "MOD-013": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "MOD-014": {
+      "forme": "rectangulaire",
+      "composition": 2,
+      "orientation": "portrait"
+    },
+    "MOD-015": {
+      "forme": "rectangulaire",
+      "composition": 3,
+      "orientation": "portrait"
+    },
+    "MOD-016": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "MOD-017": {
+      "forme": "rectangulaire",
+      "composition": 2,
+      "orientation": "paysage"
+    },
+    "MOD-018": {
+      "forme": "rectangulaire",
+      "composition": 2,
+      "orientation": "portrait"
+    },
+    "MOD-019": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "MOD-020": {
+      "forme": "carre",
+      "composition": 2
+    },
+    "MOD-021": {
+      "forme": "carre",
+      "composition": 1
+    },
+    "MOD-022": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "paysage"
+    },
+    "MOD-023": {
+      "forme": "rectangulaire",
+      "composition": 2,
+      "orientation": "portrait"
+    },
+    "MOD-024": {
+      "forme": "rectangulaire",
+      "composition": 3,
+      "orientation": "portrait"
+    },
+    "MOD-025": {
+      "forme": "rectangulaire",
+      "composition": 2,
+      "orientation": "portrait"
+    },
+    "MOD-026": {
+      "forme": "rectangulaire",
+      "composition": 2,
+      "orientation": "paysage"
+    },
+    "MOD-027": {
+      "forme": "rectangulaire",
+      "composition": 1,
+      "orientation": "portrait"
+    }
+  }
+}

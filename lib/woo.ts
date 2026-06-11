@@ -11,6 +11,7 @@ import { cached, getCategoryId } from './woo-cache';
 // Fallback catalogue (72 hand-curated items). content.js is plain JS, imported
 // here as the source of truth when Woo is unconfigured or unreachable.
 import { PRODUCTS as FALLBACK_PRODUCTS } from '@/app/data/content';
+import { attrFor } from './product-attrs';
 
 // ---------------------------------------------------------------------------
 // Public types
@@ -29,6 +30,8 @@ export interface CatalogueItem {
   forme: 0 | 1 | 2;
   /** price in MAD, or null → caller renders "Sur demande" */
   price: number | null;
+  /** rectangulaire orientation — affects dimension display only (portrait swaps W×H). */
+  orientation?: 'portrait' | 'paysage';
   img: string;
 }
 
@@ -253,16 +256,20 @@ export async function wooPut<T = any>(path: string, body: any): Promise<T> {
 // Fallback helpers
 // ---------------------------------------------------------------------------
 
-const FALLBACK: CatalogueItem[] = (FALLBACK_PRODUCTS as any[]).map((p) => ({
-  id: String(p.id),
-  name: p.name,
-  name_ar: p.name_ar,
-  col: p.col as 0 | 1 | 2,
-  comp: p.comp as 1 | 2 | 3,
-  forme: p.forme as 0 | 1 | 2,
-  price: typeof p.price === 'number' && p.price > 0 ? p.price : null,
-  img: p.img,
-}));
+const FALLBACK: CatalogueItem[] = (FALLBACK_PRODUCTS as any[]).map((p) => {
+  const a = attrFor(String(p.id));
+  return {
+    id: String(p.id),
+    name: p.name,
+    name_ar: p.name_ar,
+    col: p.col as 0 | 1 | 2,
+    comp: a ? a.composition : (p.comp as 1 | 2 | 3),
+    forme: a ? a.formeIndex : (p.forme as 0 | 1 | 2),
+    orientation: a ? a.orientation : undefined,
+    price: null,
+    img: `/assets/products/${p.id}.webp`,
+  };
+});
 
 const FALLBACK_BY_SKU = new Map<string, CatalogueItem>(
   FALLBACK.map((item) => [item.id.toUpperCase(), item]),
@@ -390,20 +397,18 @@ function deriveNameAr(p: WooProduct, sku: string, fallbackName: string): string 
 export function toCatalogueItem(p: WooProduct): CatalogueItem {
   const sku = p.sku && p.sku.trim() ? p.sku.trim() : String(p.id);
   const name = p.name || sku;
-  const img =
-    Array.isArray(p.images) && p.images[0] && p.images[0].src
-      ? p.images[0].src
-      : `/assets/products/${sku}.webp`;
-
+  // Fixed per-product attributes are authoritative (override Woo-derived guesses).
+  const a = attrFor(sku);
   return {
     id: sku,
     name,
     name_ar: deriveNameAr(p, sku, name),
     col: deriveCol(p),
-    comp: deriveComp(p),
-    forme: deriveForme(p, sku),
+    comp: a ? a.composition : deriveComp(p),
+    forme: a ? a.formeIndex : deriveForme(p, sku),
+    orientation: a ? a.orientation : undefined,
     price: derivePrice(p),
-    img,
+    img: `/assets/products/${sku}.webp`,
   };
 }
 
