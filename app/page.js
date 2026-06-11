@@ -15,9 +15,20 @@ const jsonLd = {
   aggregateRating: { '@type': 'AggregateRating', ratingValue: '5.0', reviewCount: '3' },
 };
 
+// One featured piece per collection: Islamique (col 0), Moderne (col 1), Abstrait (col 2).
+function pickMix(items) {
+  if (!Array.isArray(items)) return [];
+  const mix = [0, 1, 2].map((c) => items.find((p) => p && p.col === c)).filter(Boolean);
+  for (const p of items) {
+    if (mix.length >= 3) break;
+    if (!mix.includes(p)) mix.push(p);
+  }
+  return mix.slice(0, 3);
+}
+
 export default async function Page() {
   const { items } = await getProducts();
-  const featured = Array.isArray(items) ? items.slice(0, 3) : [];
+  const featured = pickMix(items);
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />

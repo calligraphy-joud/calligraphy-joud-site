@@ -4,7 +4,7 @@ const SITE = 'https://www.calligraphyjoud.com';
 
 export default function sitemap() {
   const now = new Date();
-  const statics = ['', '/collection', '/catalogue', '/histoire', '/contact', '/livraison-retours', '/mentions-legales', '/confidentialite', '/cookies']
+  const statics = ['', '/collection', '/catalogue', '/histoire', '/contact', '/livraison', '/mentions', '/confidentialite', '/cookies']
     .map((r) => ({
       url: SITE + r,
       lastModified: now,

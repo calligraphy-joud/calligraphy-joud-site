@@ -133,6 +133,7 @@ export async function POST(req: NextRequest) {
     name: typeof body?.name === 'string' ? body.name : '',
     phone: typeof body?.phone === 'string' ? body.phone : undefined,
     ville: typeof body?.ville === 'string' ? body.ville : '',
+    adresse: typeof body?.adresse === 'string' ? body.adresse : undefined,
     message: typeof body?.message === 'string' ? body.message : undefined,
     photoUrl: typeof body?.photoUrl === 'string' ? body.photoUrl : undefined,
     lang:
@@ -224,13 +225,17 @@ export async function POST(req: NextRequest) {
         first_name,
         last_name,
         phone: payload.phone || '',
+        address_1: payload.adresse || '',
         city: payload.ville,
       },
       line_items: [lineItem],
       meta_data: orderMeta,
     };
-    if (payload.message && payload.message.trim()) {
-      wooOrder.customer_note = payload.message.trim();
+    const noteParts: string[] = [];
+    if (payload.adresse && payload.adresse.trim()) noteParts.push('Adresse: ' + payload.adresse.trim());
+    if (payload.message && payload.message.trim()) noteParts.push(payload.message.trim());
+    if (noteParts.length) {
+      wooOrder.customer_note = noteParts.join(' — ');
     }
 
     const created = await wooPost<{ id: number; status?: string }>('orders', wooOrder);

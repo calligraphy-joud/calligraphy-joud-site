@@ -44,7 +44,7 @@ function OrderModal({ product, onClose }) {
 
   // Selection is made on the product page and passed in via product.options (read-only here).
   const opts = product && product.options ? product.options : null;
-  const [data, setData] = useState({ name: '', phone: '', city: '', message: '' });
+  const [data, setData] = useState({ name: '', phone: '', city: '', address: '', message: '' });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
   const [result, setResult] = useState(null);
@@ -96,6 +96,7 @@ function OrderModal({ product, onClose }) {
     lines.push('');
     if (data.name.trim()) lines.push(m.name + sep + data.name.trim());
     if (data.city.trim()) lines.push(m.city + sep + data.city.trim());
+    if (data.address.trim()) lines.push((m.address || 'Adresse') + sep + data.address.trim());
     if (data.message.trim()) lines.push(m.sumMessage + sep + data.message.trim());
     return lines.join('\n');
   };
@@ -115,6 +116,7 @@ function OrderModal({ product, onClose }) {
     name: data.name.trim(),
     phone: data.phone.trim() || undefined,
     ville: data.city.trim(),
+    adresse: data.address.trim() || undefined,
     message: data.message.trim() || undefined,
     lang,
   });
@@ -124,6 +126,7 @@ function OrderModal({ product, onClose }) {
     const er = {};
     if (!data.name.trim()) er.name = m.errName;
     if (!data.city.trim()) er.city = m.errCity;
+    if (!data.address.trim()) er.address = m.errAddress;
     setErrors(er);
     if (Object.keys(er).length) return;
 
@@ -224,6 +227,11 @@ function OrderModal({ product, onClose }) {
               <label>{m.city} <span className="req">*</span></label>
               <input type="text" value={data.city} onChange={(e) => setField('city', e.target.value)} />
               {errors.city && <span className="om-err">{errors.city}</span>}
+            </div>
+            <div className={'om-field om-field--full' + (errors.address ? ' om-field--err' : '')}>
+              <label>{m.address} <span className="req">*</span></label>
+              <input type="text" placeholder={m.addressPlaceholder} value={data.address} onChange={(e) => setField('address', e.target.value)} />
+              {errors.address && <span className="om-err">{errors.address}</span>}
             </div>
             <div className="om-field om-field--full">
               <label>{m.phone}</label>

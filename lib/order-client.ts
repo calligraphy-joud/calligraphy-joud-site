@@ -15,6 +15,7 @@ export interface ClientOrderPayload {
   name: string;
   phone?: string;
   ville: string;
+  adresse?: string;
   message?: string;
   photoUrl?: string;
   lang?: 'fr' | 'en' | 'ar';
@@ -51,6 +52,7 @@ const STR: Record<Lang, Record<string, string>> = {
     total: 'Total',
     name: 'Nom',
     city: 'Ville',
+    address: 'Adresse',
     phone: 'Téléphone',
     message: 'Message',
     photo: 'Photo',
@@ -67,6 +69,7 @@ const STR: Record<Lang, Record<string, string>> = {
     total: 'Total',
     name: 'Name',
     city: 'City',
+    address: 'Address',
     phone: 'Phone',
     message: 'Message',
     photo: 'Photo',
@@ -83,6 +86,7 @@ const STR: Record<Lang, Record<string, string>> = {
     total: 'المجموع',
     name: 'الاسم',
     city: 'المدينة',
+    address: 'العنوان',
     phone: 'الهاتف',
     message: 'رسالة',
     photo: 'صورة',
@@ -123,6 +127,7 @@ export function buildClientWaUrl(
   lines.push('');
   if (payload.name && payload.name.trim()) lines.push(s.name + sep + payload.name.trim());
   if (payload.ville && payload.ville.trim()) lines.push(s.city + sep + payload.ville.trim());
+  if (payload.adresse && payload.adresse.trim()) lines.push(s.address + sep + payload.adresse.trim());
   if (payload.phone && payload.phone.trim()) lines.push(s.phone + sep + payload.phone.trim());
   if (payload.message && payload.message.trim()) lines.push(s.message + sep + payload.message.trim());
   if (payload.photoUrl && payload.photoUrl.trim()) lines.push(s.photo + sep + payload.photoUrl.trim());
