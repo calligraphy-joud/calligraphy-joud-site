@@ -99,6 +99,13 @@ export function Header({ page = 'home' }) {
   );
 }
 
+const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '212630690524';
+const SOCIALS = [
+  { key: 'instagram', Icon: Icons.insta, href: process.env.NEXT_PUBLIC_INSTAGRAM_URL || 'https://www.instagram.com/calligraphyjoud', label: 'Instagram' },
+  { key: 'facebook', Icon: Icons.facebook, href: process.env.NEXT_PUBLIC_FACEBOOK_URL || 'https://www.facebook.com/calligraphyjoud', label: 'Facebook' },
+  { key: 'whatsapp', Icon: Icons.whatsapp, href: 'https://wa.me/' + WA, label: 'WhatsApp' },
+].filter((s) => s.href);
+
 export function Footer() {
   const { t, go } = useLang();
   const col1Routes = ['maison', 'commande', 'contact'];
@@ -112,6 +119,13 @@ export function Footer() {
             <span>Calligraphy&nbsp;Joud</span>
           </button>
           <p className="ftr__about">{t.ftrAbout}</p>
+          <div className="ftr__social" role="group" aria-label="Réseaux sociaux">
+            {SOCIALS.map(({ key, Icon, href, label }) => (
+              <a key={key} className="ftr__social-link" href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}>
+                <Icon />
+              </a>
+            ))}
+          </div>
         </div>
 
         <nav className="ftr__col">

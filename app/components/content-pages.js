@@ -51,6 +51,21 @@ export function HistoireView() {
           </div>
         </section>
 
+        <section className="maison-quote">
+          <div className="wrap maison-quote__inner">
+            <div data-reveal>
+              <blockquote>
+                {lang === 'ar' ? 'ألوانٌ، وذهبٌ، وقلب.' : lang === 'en' ? 'Colour, gold, and heart.' : 'Des couleurs, de l’or et du cœur.'}
+              </blockquote>
+              <cite>{lang === 'ar' ? 'JOUD — منذ 1977' : 'JOUD — depuis 1977'}</cite>
+            </div>
+            <div className="maison-quote__pair" data-reveal data-delay="1">
+              <figure><img loading="lazy" src={IMG + 'lifestyle-1.webp'} alt="" /></figure>
+              <figure><img loading="lazy" src={IMG + 'lifestyle-3.webp'} alt="" /></figure>
+            </div>
+          </div>
+        </section>
+
         <section className="section section--tight">
           <div className="wrap">
             <div className="section-head section-head--center">

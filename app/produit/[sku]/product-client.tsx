@@ -337,6 +337,49 @@ export default function ProductClient({
       </div>
 
       {/* Craftsmanship story */}
+      <section className="section oeuvre">
+        <div className="wrap oeuvre__grid">
+          <div className="oeuvre__intro" data-reveal>
+            <span className="eyebrow" style={{ color: 'var(--accent)' }}>
+              {lang === 'ar' ? 'العمل' : lang === 'en' ? 'The artwork' : 'L’œuvre'}
+            </span>
+            <h2 className="serif" style={{ margin: 'var(--space-3) 0 var(--space-5)' }}>
+              {lang === 'ar' ? 'تفاصيل القطعة' : lang === 'en' ? 'About this piece' : 'Détails de la pièce'}
+            </h2>
+            <dl className="oeuvre__specs">
+              <div>
+                <dt>{lang === 'ar' ? 'المواد' : lang === 'en' ? 'Materials' : 'Matériaux'}</dt>
+                <dd>{lang === 'ar' ? 'جبس منحوت · ورق ذهب · أحبار معدنية' : lang === 'en' ? 'Sculpted plaster · gold leaf · mineral inks' : 'Plâtre sculpté · feuille d’or · encres minérales'}</dd>
+              </div>
+              <div>
+                <dt>{lang === 'ar' ? 'الإصدار' : lang === 'en' ? 'Edition' : 'Édition'}</dt>
+                <dd>{lang === 'ar' ? 'قطعة فريدة — ١/١' : lang === 'en' ? 'Unique piece — 1/1' : 'Pièce unique — 1/1'}</dd>
+              </div>
+              <div>
+                <dt>{lang === 'ar' ? 'الأصالة' : lang === 'en' ? 'Authenticity' : 'Authenticité'}</dt>
+                <dd>{lang === 'ar' ? 'شهادة أصالة موقّعة مرفقة' : lang === 'en' ? 'Signed certificate of authenticity included' : 'Certificat d’authenticité signé, inclus'}</dd>
+              </div>
+              <div>
+                <dt>{lang === 'ar' ? 'الصناعة' : lang === 'en' ? 'Craft' : 'Fabrication'}</dt>
+                <dd>{lang === 'ar' ? 'صناعة يدوية بالكامل — مرسم JOUD، المغرب' : lang === 'en' ? '100% handmade — JOUD atelier, Morocco' : '100% fait main — atelier JOUD, Maroc'}</dd>
+              </div>
+            </dl>
+          </div>
+          <div className="oeuvre__strip" data-reveal data-delay="1">
+            {[
+              [1, lang === 'ar' ? 'ورق الذهب يدويًا' : lang === 'en' ? 'Gold leaf, applied by hand' : 'Feuille d’or, posée à la main'],
+              [2, lang === 'ar' ? 'نقش الجبس وملمسه' : lang === 'en' ? 'Sculpted plaster & texture' : 'Plâtre sculpté & texture'],
+              [3, lang === 'ar' ? 'الأصباغ والباتين' : lang === 'en' ? 'Pigments & patina' : 'Pigments & patine'],
+            ].map(([n, cap]) => (
+              <figure className="oeuvre__macro" key={String(n)}>
+                <img src={`/assets/imagery/matiere-${n}.webp`} alt={String(cap) + ' — Calligraphy JOUD'} loading="lazy" />
+                <figcaption>{cap}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="pd-story section">
         <div className="wrap pd-story__grid">
           <div>
