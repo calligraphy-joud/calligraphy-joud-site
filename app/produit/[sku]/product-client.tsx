@@ -7,6 +7,14 @@ import { Icons } from '@/app/components/icons';
 import { useOrder } from '@/app/components/order';
 import { fbTrack } from '@/app/components/pixel';
 import { PRICE } from '@/app/data/content';
+import {
+  formeFromIndex,
+  getSizes,
+  getStartingPrice,
+  cadreSurcharge,
+  CADRE_SURCHARGE,
+  type Cadre,
+} from '@/lib/pricing';
 
 /* ---- Types (kept loose; this is a plain client component) ---- */
 type CatalogueItem = {
@@ -22,9 +30,11 @@ type CatalogueItem = {
 
 const fmt = (n: number) => Number(n).toLocaleString('fr-FR');
 
-/* Normalise a string for fuzzy attribute matching. */
-function norm(s: any): string {
-  return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+/* Turn a matrix size key ("60x60", "Ø50", "100x50") into a display label. */
+function sizeLabel(size: string): string {
+  if (!size) return '';
+  if (size.startsWith('Ø')) return 'Ø ' + size.slice(1) + ' cm';
+  return size.replace(/x/i, ' × ') + ' cm';
 }
 
 /* ---------------- Gallery ---------------- */
@@ -85,7 +95,8 @@ function RelatedCard({ p, lang, t }: { p: CatalogueItem; lang: string; t: any })
   const col = bq.collections[p.col];
   const round = p.forme === 2;
   const mediaCls = 'pmedia ' + (round ? 'pmedia--round' : p.forme === 0 ? 'pmedia--square' : '');
-  const hasPrice = p.price !== null && p.price !== undefined && (p.price as any) !== 0;
+  // Starting price comes from the official matrix (never a hardcoded value).
+  const startFrom = getStartingPrice(formeFromIndex(p.forme), p.comp);
   return (
     <Link className="pcard" href={'/produit/' + encodeURIComponent(p.id)} aria-label={name}>
       <div className={mediaCls}>
@@ -94,7 +105,7 @@ function RelatedCard({ p, lang, t }: { p: CatalogueItem; lang: string; t: any })
       <div className="pbody">
         <span className="pcat">{col}</span>
         <h3 className="pname">{name}</h3>
-        <span className="pprice">{hasPrice ? <>{bq.from} <b>{PRICE(p.price, lang)}</b></> : <b>{PRICE(null, lang)}</b>}</span>
+        <span className="pprice">{startFrom != null ? <>{bq.from} <b>{PRICE(startFrom, lang)}</b></> : <b>{PRICE(null, lang)}</b>}</span>
       </div>
     </Link>
   );
@@ -103,7 +114,6 @@ function RelatedCard({ p, lang, t }: { p: CatalogueItem; lang: string; t: any })
 export default function ProductClient({
   item,
   woo,
-  variations,
   related,
   colSlug,
 }: {
@@ -120,27 +130,37 @@ export default function ProductClient({
   const pd = t.pd;
   const bq = t.bq;
 
-  // Meta Pixel: product view.
-  useEffect(() => {
-    fbTrack('ViewContent', {
-      content_ids: [item.id],
-      content_type: 'product',
-      currency: 'MAD',
-      value: item.price ?? undefined,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item.id]);
+  const cadreLabel = (c: Cadre) =>
+    c === 'double'
+      ? (lang === 'ar' ? 'إطار مزدوج' : lang === 'en' ? 'Double frame' : 'Cadre double')
+      : (lang === 'ar' ? 'إطار بسيط' : lang === 'en' ? 'Single frame' : 'Cadre simple');
+  const cadreHeading = lang === 'ar' ? 'الإطار' : lang === 'en' ? 'Frame' : 'Cadre';
+  const perPiece = lang === 'ar' ? 'لكل لوحة' : lang === 'en' ? '/ piece' : '/ tableau';
 
   const name = lang === 'ar' ? (item.name_ar || item.name) : item.name;
 
-  // ---- Selectors (composition / forme / dimensions) ----
+  // ---- Selectors: comp/forme indices + size index + cadre ----
   const [sel, setSel] = useState({
-    comp: (item.comp ? item.comp - 1 : 0) as number,
-    forme: (item.forme ?? 0) as number,
-    dim: 2,
+    comp: (item.comp ? item.comp - 1 : 0) as number, // 0|1|2
+    forme: (item.forme ?? 0) as number,              // 0=carré 1=rect 2=rond
+    sizeIdx: 0,
+    cadre: 'simple' as Cadre,
   });
 
-  // ---- Gallery images: real Woo images if present, else item.img ----
+  const formeKey = formeFromIndex(sel.forme);
+  const isRond = formeKey === 'rond';
+  const compNum = isRond ? 1 : sel.comp + 1;          // round is locked to 1 piece
+  const compStr = String(compNum);
+
+  const sizes = useMemo(() => getSizes(formeKey, compStr), [formeKey, compStr]);
+  const sizeIdx = Math.min(sel.sizeIdx, Math.max(0, sizes.length - 1));
+  const curSize = sizes[sizeIdx] || null;
+  const cadre: Cadre = isRond ? 'simple' : sel.cadre;
+  const basePrice = curSize ? curSize.price : null;
+  const surcharge = curSize ? cadreSurcharge(formeKey, compStr, cadre) : 0;
+  const finalPrice: number | null = basePrice != null ? basePrice + surcharge : null;
+
+  // ---- Gallery images ----
   const images = useMemo(() => {
     const wooImgs: string[] = Array.isArray(woo?.images)
       ? woo.images.map((im: any) => im && im.src).filter(Boolean)
@@ -149,53 +169,43 @@ export default function ProductClient({
     return item.img ? [item.img] : [];
   }, [woo, item.img]);
 
-  // ---- Variation matching: find a Woo variation whose attribute options
-  // best match the current selection labels, then read its real price. ----
-  const matched = useMemo(() => {
-    if (!Array.isArray(variations) || variations.length === 0) return null;
-    const wantComp = norm(bq.compositions[sel.comp]);
-    const wantForme = norm(bq.formes[sel.forme]);
-    const wantDim = norm(pd.dims[sel.dim]);
-    let best: any = null;
-    let bestScore = -1;
-    for (const v of variations) {
-      const attrs = Array.isArray(v.attributes) ? v.attributes : [];
-      const opts = attrs.map((a: any) => norm(a.option)).join(' | ');
-      let score = 0;
-      if (wantComp && opts.includes(wantComp)) score++;
-      if (wantForme && opts.includes(wantForme)) score++;
-      if (wantDim && opts.includes(wantDim)) score++;
-      if (score > bestScore) { bestScore = score; best = v; }
-    }
-    // Only treat as a real match if at least one attribute aligned.
-    return bestScore > 0 ? best : null;
-  }, [variations, sel.comp, sel.forme, sel.dim, bq, pd]);
+  // Meta Pixel: product view.
+  useEffect(() => {
+    fbTrack('ViewContent', {
+      content_ids: [item.id],
+      content_type: 'product',
+      currency: 'MAD',
+      value: finalPrice ?? undefined,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item.id]);
 
-  // ---- Resolved price (number | null) ----
-  const variationPrice = useMemo(() => {
-    if (matched) {
-      const raw = matched.price || matched.regular_price || '';
-      const n = Number(raw);
-      if (isFinite(n) && n > 0) return n;
-    }
-    return null;
-  }, [matched]);
+  // ---- Selector handlers (reset size on forme/comp change; round locks comp + cadre) ----
+  const pickForme = (i: number) => setSel((s) => {
+    const rond = formeFromIndex(i) === 'rond';
+    return { ...s, forme: i, comp: rond ? 0 : s.comp, sizeIdx: 0, cadre: rond ? 'simple' : s.cadre };
+  });
+  const pickComp = (i: number) => setSel((s) => ({ ...s, comp: i, sizeIdx: 0 }));
+  const pickSize = (i: number) => setSel((s) => ({ ...s, sizeIdx: i }));
+  const pickCadre = (c: Cadre) => setSel((s) => ({ ...s, cadre: c }));
 
-  const price: number | null = variationPrice ?? item.price ?? null;
-  const variationId: number | undefined = matched && matched.id ? matched.id : undefined;
-
-  // ---- Order payload compatible with the order modal ----
+  // ---- Hand the resolved selection to the order modal (read-only there) ----
   const order = () => {
     openOrder({
       id: item.id,
       name: item.name,
       name_ar: item.name_ar,
       col: item.col,
-      comp: sel.comp + 1,
-      forme: sel.forme,
-      price,
       img: images[0] || item.img,
-      ...(variationId ? { variationId } : {}),
+      price: finalPrice,
+      options: {
+        composition: bq.compositions[compNum - 1],
+        forme: bq.formes[sel.forme],
+        dimensions: curSize ? sizeLabel(curSize.size) : '',
+        cadre: cadreLabel(cadre),
+      },
+      sizeRaw: curSize ? curSize.size : undefined,
+      cadre,
     } as any);
   };
 
@@ -221,26 +231,34 @@ export default function ProductClient({
             <span className="pd-orig"><Icons.shield /> {pd.origin}</span>
             <p className="pd-desc">{pd.descByCol[item.col]}</p>
             <div className="pd-price">
-              {price !== null ? (
+              {finalPrice !== null ? (
                 <>
-                  <span className="pd-price__num serif">{fmt(price)}</span>
-                  <span className="pd-price__cur">{pd.cur}</span>
+                  <span className="pd-price__num serif">{fmt(finalPrice)}</span>
+                  <span className="pd-price__cur">MAD</span>
                 </>
               ) : (
                 <span className="pd-price__num serif">{PRICE(null, lang)}</span>
               )}
             </div>
+            {cadre === 'double' && surcharge > 0 && basePrice != null && (
+              <span className="pd-price__break" style={{ display: 'block', color: 'var(--text-muted)', fontSize: 'var(--text-xs)', marginTop: 4 }}>
+                {fmt(basePrice)} MAD + {fmt(surcharge)} MAD {cadreLabel('double').toLowerCase()} = {fmt(finalPrice)} MAD
+              </span>
+            )}
             <span className="pd-price__note">{pd.priceNote}</span>
 
             <hr className="pd-rule" />
 
             <div className="pd-opts">
               <div className="pd-opt">
-                <div className="pd-opt__head"><span className="pd-opt__label">{pd.optComposition}</span><span className="pd-opt__val">{bq.compositions[sel.comp]}</span></div>
+                <div className="pd-opt__head"><span className="pd-opt__label">{pd.optComposition}</span><span className="pd-opt__val">{bq.compositions[compNum - 1]}</span></div>
                 <div className="pd-seg">
-                  {bq.compositions.map((c: string, i: number) => (
-                    <button key={i} type="button" className="pd-chip" aria-pressed={sel.comp === i} onClick={() => setSel((s) => ({ ...s, comp: i }))}>{c}</button>
-                  ))}
+                  {bq.compositions.map((c: string, i: number) => {
+                    const disabled = isRond && i > 0;
+                    return (
+                      <button key={i} type="button" className="pd-chip" aria-pressed={(isRond ? 0 : sel.comp) === i} disabled={disabled} onClick={() => !disabled && pickComp(i)} style={disabled ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}>{c}</button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -248,7 +266,7 @@ export default function ProductClient({
                 <div className="pd-opt__head"><span className="pd-opt__label">{pd.optForme}</span><span className="pd-opt__val">{bq.formes[sel.forme]}</span></div>
                 <div className="pd-forme">
                   {bq.formes.map((f: string, i: number) => (
-                    <button key={i} type="button" aria-pressed={sel.forme === i} onClick={() => setSel((s) => ({ ...s, forme: i }))}>
+                    <button key={i} type="button" aria-pressed={sel.forme === i} onClick={() => pickForme(i)}>
                       <span className={'sw sw--' + ['carre', 'rect', 'rond'][i]}><i /></span>{f}
                     </button>
                   ))}
@@ -256,13 +274,23 @@ export default function ProductClient({
               </div>
 
               <div className="pd-opt">
-                <div className="pd-opt__head"><span className="pd-opt__label">{pd.optDimensions}</span><span className="pd-opt__val">{pd.dims[sel.dim]}</span></div>
+                <div className="pd-opt__head"><span className="pd-opt__label">{pd.optDimensions}</span><span className="pd-opt__val">{curSize ? sizeLabel(curSize.size) : '—'}</span></div>
                 <div className="pd-seg">
-                  {pd.dims.map((d: string, i: number) => (
-                    <button key={i} type="button" className="pd-chip" aria-pressed={sel.dim === i} onClick={() => setSel((s) => ({ ...s, dim: i }))}>{d}</button>
+                  {sizes.map((s, i) => (
+                    <button key={s.size} type="button" className="pd-chip" aria-pressed={sizeIdx === i} onClick={() => pickSize(i)}>{sizeLabel(s.size)}</button>
                   ))}
                 </div>
               </div>
+
+              {!isRond && (
+                <div className="pd-opt">
+                  <div className="pd-opt__head"><span className="pd-opt__label">{cadreHeading}</span><span className="pd-opt__val">{cadreLabel(cadre)}</span></div>
+                  <div className="pd-seg">
+                    <button type="button" className="pd-chip" aria-pressed={cadre === 'simple'} onClick={() => pickCadre('simple')}>{cadreLabel('simple')}</button>
+                    <button type="button" className="pd-chip" aria-pressed={cadre === 'double'} onClick={() => pickCadre('double')}>{cadreLabel('double')} (+{CADRE_SURCHARGE} MAD {perPiece})</button>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="pd-cta">

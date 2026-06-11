@@ -6,6 +6,9 @@ import { Button, Badge, ImgSlot } from './ui';
 import { Icons } from './icons';
 import { ARTWORKS, CATEGORIES, REVIEWS, PARTNERS, PRODUCTS } from '../data/content';
 import { useOrder } from './order';
+import { getSizes, getStartingPrice, formeFromIndex } from '@/lib/pricing';
+
+const _sLabel = (s) => (!s ? '' : s.startsWith('Ø') ? 'Ø ' + s.slice(1) + ' cm' : s.replace('x', ' × ') + ' cm');
 
 /* ---------------- Hero + Trust ---------------- */
 export function Hero() {
@@ -113,10 +116,21 @@ function FeaturedWork({ item }) {
   const cat = bq.collections[item.col];
   const medium = bq.compositions[item.comp - 1];
   const ratio = item.forme === 1 ? '4 / 5' : '1 / 1';
+  // Starting price + default selection from the official matrix (never item.price).
+  const fk = formeFromIndex(item.forme);
+  const compNum = fk === 'rond' ? 1 : item.comp;
+  const startFrom = getStartingPrice(fk, compNum);
+  const defSize = getSizes(fk, String(compNum))[0] || null;
+  const cadreSimple = lang === 'ar' ? 'إطار بسيط' : lang === 'en' ? 'Single frame' : 'Cadre simple';
   const openIt = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    openOrder({ id: item.id, name: item.name, name_ar: item.name_ar, col: item.col, comp: item.comp, forme: item.forme, price: item.price, img: item.img });
+    openOrder({
+      id: item.id, name: item.name, name_ar: item.name_ar, col: item.col, img: item.img,
+      price: defSize ? defSize.price : null,
+      options: { composition: bq.compositions[compNum - 1], forme: bq.formes[item.forme], dimensions: defSize ? _sLabel(defSize.size) : '', cadre: cadreSimple },
+      cadre: 'simple', sizeRaw: defSize ? defSize.size : undefined,
+    });
   };
   return (
     <Link className="work" data-reveal href={'/produit/' + encodeURIComponent(item.id)} aria-label={title}>
@@ -127,7 +141,7 @@ function FeaturedWork({ item }) {
       <div className="work__body">
         <h3 className="work__title serif">{title}</h3>
         <span className="work__meta">{medium}</span>
-        <span className="work__price">{item.price ? (t.bq.from + ' ' + Number(item.price).toLocaleString('fr-FR') + ' ' + (t.pd ? t.pd.cur : 'MAD')) : (t.pd ? t.pd.priceNote : '')}</span>
+        <span className="work__price">{startFrom != null ? (t.bq.from + ' ' + Number(startFrom).toLocaleString('fr-FR') + ' MAD') : (t.pd ? t.pd.priceNote : '')}</span>
         <button type="button" className="pcard__order" onClick={openIt}>{(t.pd && t.pd.commander) || 'Commander'} <Icons.arrow /></button>
       </div>
     </Link>

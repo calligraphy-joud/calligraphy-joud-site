@@ -1,0 +1,61 @@
+{
+  "_meta": {
+    "source": "Grilles tarifaires officielles Calligraphy JOUD (validées par Youssef, juin 2026)",
+    "currency": "MAD",
+    "display_suffix": "Dhs",
+    "notes": [
+      "TO VERIFY: rectangulaire.3.110x50 = 4330 casse le pattern (tous les prix finissent en 90). Probablement 4390.",
+      "Les dimensions proposées sur une page produit DOIVENT être filtrées par forme + composition depuis cette matrice.",
+      "'À partir de' d'un produit = prix minimum de sa combinaison forme/composition par défaut."
+    ]
+  },
+  "options": {
+    "cadre": {
+      "simple": 0,
+      "double": 190,
+      "per_piece": true,
+      "_note": "Cadre double = +190 MAD PAR TABLEAU. Ex: triptyque en cadre double = prix base + (190 × 3) = +570 MAD."
+    }
+  },
+  "matrix": {
+    "rond": {
+      "1": { "Ø50": 1290, "Ø70": 1590, "Ø90": 1990, "Ø110": 2390 }
+    },
+    "carre": {
+      "1": { "40x40": 1490, "60x60": 1790, "80x80": 1990, "100x100": 2290, "120x120": 2490, "140x140": 2790 },
+      "2": { "40x40": 2390, "60x60": 2890, "80x80": 3290, "100x100": 3790 },
+      "3": { "40x40": 3290, "60x60": 3990, "80x80": 4690, "100x100": 5290 }
+    },
+    "rectangulaire": {
+      "1": { "100x50": 1490, "120x70": 1790, "130x80": 1990, "150x80": 2390, "160x80": 2490, "180x90": 2990, "200x100": 3490 },
+      "2": { "60x30": 1990, "70x40": 2290, "90x60": 2690, "100x50": 2890 },
+      "3": { "60x30": 2990, "70x40": 3490, "90x60": 3990, "110x50": 4390 }
+    }
+  },
+  "options": {
+    "cadre": {
+      "applies_to_formes": ["carre", "rectangulaire"],
+      "excluded_formes": ["rond"],
+      "choices": {
+        "simple": { "label": "Cadre simple", "surcharge_per_piece": 0, "default": true },
+        "double": { "label": "Cadre double", "surcharge_per_piece": 190 }
+      },
+      "rule": "Prix final = prix matrice + (190 MAD × nombre de tableaux) si cadre double. Option masquée pour la forme ronde.",
+      "examples": {
+        "carre_1p_100_double": "2290 + 190 = 2480",
+        "carre_2p_100_double": "3790 + 380 = 4170",
+        "carre_3p_100_double": "5290 + 570 = 5860",
+        "rect_3p_90x60_double": "3990 + 570 = 4560"
+      }
+    }
+  },
+  "starting_prices_examples": {
+    "rond_1p": 1290,
+    "carre_1p": 1490,
+    "carre_2p": 2390,
+    "carre_3p": 3290,
+    "rectangulaire_1p": 1490,
+    "rectangulaire_2p": 1990,
+    "rectangulaire_3p": 2990
+  }
+}

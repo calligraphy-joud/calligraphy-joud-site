@@ -42,11 +42,8 @@ function OrderModal({ product, onClose }) {
   const name = product ? (lang === 'ar' ? (product.name_ar || product.name) : (product.name || product.name_ar)) : '';
   const closeLabel = lang === 'ar' ? 'إغلاق' : lang === 'en' ? 'Close' : 'Fermer';
 
-  const [sel, setSel] = useState({
-    comp: product && product.comp ? product.comp - 1 : 0,
-    forme: product && (product.forme || product.forme === 0) ? product.forme : 0,
-    dim: 2,
-  });
+  // Selection is made on the product page and passed in via product.options (read-only here).
+  const opts = product && product.options ? product.options : null;
   const [data, setData] = useState({ name: '', phone: '', city: '', message: '' });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
@@ -70,7 +67,7 @@ function OrderModal({ product, onClose }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const price = hasPriceCalc ? priceFor(product.price, sel.comp, sel.dim) : null;
+  const price = hasPriceCalc ? product.price : null;
   const sep = lang === 'ar' || lang === 'en' ? ': ' : ' : ';
 
   const waText = () => {
@@ -84,11 +81,14 @@ function OrderModal({ product, onClose }) {
     if (product) {
       lines.push('');
       lines.push('• ' + m.sumPiece + sep + name + (product.id ? ' (' + product.id + ')' : ''));
+      if (opts) {
+        if (opts.composition) lines.push('• ' + m.sumCompo + sep + opts.composition);
+        if (opts.forme) lines.push('• ' + m.sumForme + sep + opts.forme);
+        if (opts.dimensions) lines.push('• ' + m.sumDim + sep + opts.dimensions);
+        if (opts.cadre) lines.push('• ' + (lang === 'ar' ? 'الإطار' : lang === 'en' ? 'Frame' : 'Cadre') + sep + opts.cadre);
+      }
       if (hasPriceCalc) {
-        lines.push('• ' + m.sumCompo + sep + bq.compositions[sel.comp]);
-        lines.push('• ' + m.sumForme + sep + bq.formes[sel.forme]);
-        lines.push('• ' + m.sumDim + sep + pd.dims[sel.dim]);
-        lines.push('• ' + m.sumTotal + sep + fmt(price) + ' ' + pd.cur);
+        lines.push('• ' + m.sumTotal + sep + fmt(price) + ' MAD');
       } else if (product.price) {
         lines.push('• ' + m.sumTotal + sep + product.price);
       }
@@ -105,10 +105,11 @@ function OrderModal({ product, onClose }) {
     sku: product?.id,
     variationId: product?.variationId,
     productName: name || undefined,
-    options: hasPriceCalc ? {
-      composition: bq.compositions[sel.comp],
-      forme: bq.formes[sel.forme],
-      dimensions: pd.dims[sel.dim],
+    options: opts ? {
+      composition: opts.composition,
+      forme: opts.forme,
+      dimensions: opts.dimensions,
+      cadre: opts.cadre,
     } : undefined,
     total: hasPriceCalc ? price : (product?.price ?? undefined),
     name: data.name.trim(),
@@ -195,24 +196,21 @@ function OrderModal({ product, onClose }) {
         )}
 
         <form className="om-form" onSubmit={submit} noValidate>
-          {hasPriceCalc && (
+          {opts && (
             <div className="om-opts">
-              <div className="om-opt">
-                <div className="om-opt__head"><span className="om-opt__label">{pd.optComposition}</span><span className="om-opt__val">{bq.compositions[sel.comp]}</span></div>
-                <div className="om-seg">{bq.compositions.map((c, i) => <button type="button" key={i} className="om-chip" aria-pressed={sel.comp === i} onClick={() => setSel((s) => ({ ...s, comp: i }))}>{c}</button>)}</div>
-              </div>
-              <div className="om-opt">
-                <div className="om-opt__head"><span className="om-opt__label">{pd.optForme}</span><span className="om-opt__val">{bq.formes[sel.forme]}</span></div>
-                <div className="om-seg">{bq.formes.map((f, i) => <button type="button" key={i} className="om-chip" aria-pressed={sel.forme === i} onClick={() => setSel((s) => ({ ...s, forme: i }))}>{f}</button>)}</div>
-              </div>
-              <div className="om-opt">
-                <div className="om-opt__head"><span className="om-opt__label">{pd.optDimensions}</span><span className="om-opt__val">{pd.dims[sel.dim]}</span></div>
-                <div className="om-seg">{pd.dims.map((d, i) => <button type="button" key={i} className="om-chip" aria-pressed={sel.dim === i} onClick={() => setSel((s) => ({ ...s, dim: i }))}>{d}</button>)}</div>
-              </div>
-              <div className="om-pricebar">
-                <span className="om-pricebar__label">{m.sumTotal}</span>
-                <span><span className="om-pricebar__num serif">{fmt(price)}</span><span className="om-pricebar__cur">{pd.cur}</span></span>
-              </div>
+              {[['composition', pd.optComposition], ['forme', pd.optForme], ['dimensions', pd.optDimensions], ['cadre', (lang === 'ar' ? 'الإطار' : lang === 'en' ? 'Frame' : 'Cadre')]].map(([k, label]) => (
+                opts[k] ? (
+                  <div className="om-opt om-opt--ro" key={k} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid var(--border-soft)' }}>
+                    <span className="om-opt__label">{label}</span><span className="om-opt__val">{opts[k]}</span>
+                  </div>
+                ) : null
+              ))}
+              {hasPriceCalc && (
+                <div className="om-pricebar">
+                  <span className="om-pricebar__label">{m.sumTotal}</span>
+                  <span><span className="om-pricebar__num serif">{fmt(price)}</span><span className="om-pricebar__cur">MAD</span></span>
+                </div>
+              )}
             </div>
           )}
 

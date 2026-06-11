@@ -5,6 +5,10 @@ import { useLang } from './lang-context';
 import { Icons } from './icons';
 import { PRODUCTS, PRICE } from '../data/content';
 import { useOrder } from './order';
+import { getSizes, getStartingPrice, formeFromIndex } from '@/lib/pricing';
+
+const sLabel = (s) => (!s ? '' : s.startsWith('Ø') ? 'Ø ' + s.slice(1) + ' cm' : s.replace('x', ' × ') + ' cm');
+const startOf = (p) => { const fk = formeFromIndex(p.forme); const sp = getStartingPrice(fk, fk === 'rond' ? 1 : p.comp); return sp == null ? 0 : sp; };
 
 const FilterIcon = (p) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" {...p}>
@@ -21,7 +25,21 @@ function PCard({ p, lang, t }) {
   const forme = bq.formes[p.forme];
   const round = p.forme === 2;
   const mediaCls = 'pmedia ' + (round ? 'pmedia--round' : p.forme === 0 ? 'pmedia--square' : '');
-  const hasPrice = p.price !== null && p.price !== undefined && p.price !== '' && p.price !== 0;
+  // Prices come from the official matrix (lib/pricing) — never a hardcoded value.
+  const fk = formeFromIndex(p.forme);
+  const compNum = fk === 'rond' ? 1 : p.comp;
+  const startFrom = getStartingPrice(fk, compNum);
+  const defSize = getSizes(fk, String(compNum))[0] || null;
+  const cadreSimple = lang === 'ar' ? 'إطار بسيط' : lang === 'en' ? 'Single frame' : 'Cadre simple';
+  const quickOrder = (e) => {
+    e.preventDefault(); e.stopPropagation();
+    openOrder({
+      id: p.id, name: p.name, name_ar: p.name_ar, col: p.col, img: p.img,
+      price: defSize ? defSize.price : null,
+      options: { composition: bq.compositions[compNum - 1], forme: bq.formes[p.forme], dimensions: defSize ? sLabel(defSize.size) : '', cadre: cadreSimple },
+      cadre: 'simple', sizeRaw: defSize ? defSize.size : undefined,
+    });
+  };
   return (
     <Link className="pcard" href={'/produit/' + encodeURIComponent(p.id)} aria-label={(bq.view || 'Voir') + ' — ' + name}>
       <div className={mediaCls}>
@@ -37,12 +55,8 @@ function PCard({ p, lang, t }) {
       <div className="pbody">
         <span className="pcat">{col}</span>
         <h3 className="pname">{name}</h3>
-        <span className="pprice">{hasPrice ? <>{bq.from} <b>{PRICE(p.price, lang)}</b></> : <b>{PRICE(null, lang)}</b>}</span>
-        <button
-          type="button"
-          className="pcard__order"
-          onClick={(e) => { e.preventDefault(); e.stopPropagation(); openOrder(p); }}
-        >
+        <span className="pprice">{startFrom != null ? <>{bq.from} <b>{PRICE(startFrom, lang)}</b></> : <b>{PRICE(null, lang)}</b>}</span>
+        <button type="button" className="pcard__order" onClick={quickOrder}>
           {(t.pd && t.pd.commander) || 'Commander'} <Icons.arrow />
         </button>
       </div>
@@ -117,8 +131,8 @@ export default function Boutique({ variant = 'boutique', lockCol = null, intro =
   };
 
   let list = base.filter((p) => matches(p, null));
-  if (sort === 'price-asc') list = [...list].sort((a, b) => (a.price || 0) - (b.price || 0));
-  else if (sort === 'price-desc') list = [...list].sort((a, b) => (b.price || 0) - (a.price || 0));
+  if (sort === 'price-asc') list = [...list].sort((a, b) => startOf(a) - startOf(b));
+  else if (sort === 'price-desc') list = [...list].sort((a, b) => startOf(b) - startOf(a));
   else if (sort === 'name') list = [...list].sort((a, b) => a.name.localeCompare(b.name));
 
   const active = [];
