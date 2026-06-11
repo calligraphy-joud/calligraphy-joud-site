@@ -1,6 +1,7 @@
 'use client';
 import { useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLang, useReveal } from '@/app/components/lang-context';
 import { Header, Footer } from '@/app/components/chrome';
 import { Icons } from '@/app/components/icons';
@@ -58,8 +59,19 @@ function Gallery({ images, name, alt, forme, pd }: { images: string[]; name: str
           onMouseLeave={() => setZoom(false)}
           onClick={() => setBox(true)}
         >
-          <div className="pd-main__inner" style={{ aspectRatio: ratio }}>
-            {cur ? <img src={cur} alt={alt} /> : <div className="img-slot"><span>{name}</span></div>}
+          <div className="pd-main__inner" style={{ aspectRatio: ratio, position: 'relative' }}>
+            {cur ? (
+              <Image
+                src={cur}
+                alt={alt}
+                fill
+                sizes="(max-width: 768px) 100vw, 600px"
+                style={{ objectFit: 'cover' }}
+                priority
+              />
+            ) : (
+              <div className="img-slot"><span>{name}</span></div>
+            )}
           </div>
           <span className="pd-main__bevel" />
           <span className="pd-zoomhint"><Icons.search /> {pd.view}</span>
@@ -144,8 +156,10 @@ export default function ProductClient({
       : (lang === 'ar' ? 'لوحة' : lang === 'en' ? 'panel' : 'tableau'));
   const specChips = isRond ? [compName, formeLabel(fk)] : [compName, formeLabel(fk), panels];
 
-  // Descriptive French alt text for the main product image (SEO).
-  const mainAlt = `${name} — tableau ${String(bq.collections[item.col]).toLowerCase()} fait main, ${compName.toLowerCase()} ${formeLabel(fk).toLowerCase()}, Calligraphy JOUD`;
+  // Alt text: Woo media-library alt when the owner filled it, else the standard pattern.
+  const mainAlt = item.alt && item.alt.trim()
+    ? item.alt.trim()
+    : `${name} — tableau ${String(bq.collections[item.col]).toLowerCase()} fait main, ${compName.toLowerCase()} ${formeLabel(fk).toLowerCase()}, Calligraphy JOUD`;
 
   const cadreLabel = (c: Cadre) =>
     c === 'double'
@@ -164,8 +178,11 @@ export default function ProductClient({
   const surcharge = curSize ? cadreSurcharge(fk, compNum, cadre) : 0;
   const finalPrice: number | null = basePrice != null ? basePrice + surcharge : null;
 
-  // ---- Image: by SKU ----
-  const images = useMemo(() => (item.img ? [item.img] : []), [item.img]);
+  // ---- Images: Woo gallery (owner-managed) with static-by-SKU fallback ----
+  const images = useMemo(
+    () => (item.images && item.images.length ? item.images : item.img ? [item.img] : []),
+    [item.images, item.img],
+  );
 
   // Meta Pixel: product view.
   useEffect(() => {

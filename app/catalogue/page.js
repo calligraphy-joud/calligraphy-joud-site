@@ -1,7 +1,7 @@
 import { CatalogueView } from '../components/shop-view';
 import { getProducts } from '@/lib/woo';
 
-export const revalidate = 30;
+export const revalidate = 300;
 
 export const metadata = {
   title: 'Catalogue 2026',

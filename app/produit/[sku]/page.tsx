@@ -4,7 +4,7 @@ import { STR, REVIEWS } from '@/app/data/content';
 import { getStartingPrice, formeFromIndex } from '@/lib/pricing';
 import ProductClient from './product-client';
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 const SITE = 'https://www.calligraphyjoud.com';
 const COL_SLUG = ['islamique', 'moderne', 'abstrait'] as const;
@@ -17,12 +17,16 @@ export async function generateMetadata({ params }: { params: Promise<{ sku: stri
     return { title: 'Œuvre introuvable · Calligraphy JOUD' };
   }
   const colName = (STR as any).fr.bq.collections[item.col] || '';
-  const desc = (STR as any).fr.pd.descByCol[item.col] || '';
+  // Description: Woo (owner-managed) when present, else the per-collection default.
+  const desc = item.description || (STR as any).fr.pd.descByCol[item.col] || '';
   // The layout's title template appends " · Calligraphy JOUD", so keep this short.
   const title = `${item.name} · ${colName}`;
   const canonical = `/produit/${encodeURIComponent(item.id)}`;
-  const absImg = item.img ? (item.img.startsWith('http') ? item.img : `${SITE}${item.img}`) : undefined;
-  const imgs = absImg ? [absImg] : undefined;
+  // OG/Twitter images = the Woo gallery (absolute URLs) when present, else the static asset.
+  const gallery = item.images && item.images.length ? item.images : [item.img];
+  const imgs = gallery
+    .filter(Boolean)
+    .map((u: string) => (u.startsWith('http') ? u : `${SITE}${u}`));
   return {
     title,
     description: desc,
@@ -46,8 +50,8 @@ export async function generateMetadata({ params }: { params: Promise<{ sku: stri
 export default async function Page({ params }: { params: Promise<{ sku: string }> }) {
   const { sku: rawSku } = await params;
   const sku = decodeURIComponent(rawSku || '');
-  const { item, woo, variations, source } = await getProduct(sku);
-  if (!item) notFound();
+  const { item, woo, variations, source, notFound: excluded } = await getProduct(sku);
+  if (!item || excluded) notFound();
 
   // Pull a slim list of other items for the "related" grid (server-fetched).
   const { items: all } = await getProducts();
@@ -56,15 +60,19 @@ export default async function Page({ params }: { params: Promise<{ sku: string }
     .slice(0, 4);
 
   const colName = (STR as any).fr.bq.collections[item.col] || '';
-  const desc = (STR as any).fr.pd.descByCol[item.col] || '';
-  const absImg = item.img ? (item.img.startsWith('http') ? item.img : `${SITE}${item.img}`) : undefined;
+  const desc = item.description || (STR as any).fr.pd.descByCol[item.col] || '';
+  // JSON-LD image array = the Woo gallery (absolute) when present, else the static asset.
+  const gallery = item.images && item.images.length ? item.images : [item.img];
+  const absImgs = gallery
+    .filter(Boolean)
+    .map((u: string) => (u.startsWith('http') ? u : `${SITE}${u}`));
   const startFrom = getStartingPrice(formeFromIndex(item.forme), item.comp);
   const reviewCount = Array.isArray(REVIEWS) ? REVIEWS.length : 0;
   const productLd: any = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: item.name,
-    image: absImg ? [absImg] : undefined,
+    image: absImgs.length ? absImgs : undefined,
     description: desc,
     sku: item.id,
     brand: { '@type': 'Brand', name: 'Calligraphy JOUD' },

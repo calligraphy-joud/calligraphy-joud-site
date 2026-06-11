@@ -1,7 +1,7 @@
 import HomeClient from './home-client';
 import { getProducts } from '@/lib/woo';
 
-export const revalidate = 30;
+export const revalidate = 300;
 
 const jsonLd = {
   '@context': 'https://schema.org',

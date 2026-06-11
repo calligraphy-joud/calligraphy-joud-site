@@ -32,7 +32,14 @@ export interface CatalogueItem {
   price: number | null;
   /** rectangulaire orientation — affects dimension display only (portrait swaps W×H). */
   orientation?: 'portrait' | 'paysage';
+  /** Main image — Woo featured image when present, else /assets/products/{SKU}.webp. */
   img: string;
+  /** Full gallery (main first) — Woo gallery when present, else [img]. */
+  images: string[];
+  /** Alt text from the Woo media library, when the owner filled it in. */
+  alt?: string;
+  /** Plain-text product description from Woo (short_description preferred). */
+  description?: string;
 }
 
 /** Minimal WooCommerce product shape — only the fields we consume. */
@@ -45,13 +52,15 @@ export interface WooProduct {
   on_sale: boolean;
   stock_status: string;
   type: string;
+  description?: string;
+  short_description?: string;
   categories: Array<{ id: number; name: string; slug: string }>;
   attributes: Array<{
     name: string;
     option?: string;
     options?: string[];
   }>;
-  images: Array<{ src: string }>;
+  images: Array<{ src: string; alt?: string }>;
   variations: number[];
   // Woo meta_data is loosely typed; we read name_ar from here if present.
   meta_data?: Array<{ key: string; value: unknown }>;
@@ -268,6 +277,7 @@ const FALLBACK: CatalogueItem[] = (FALLBACK_PRODUCTS as any[]).map((p) => {
     orientation: a ? a.orientation : undefined,
     price: null,
     img: `/assets/products/${p.id}.webp`,
+    images: [`/assets/products/${p.id}.webp`],
   };
 });
 
@@ -393,12 +403,55 @@ function deriveNameAr(p: WooProduct, sku: string, fallbackName: string): string 
   return fallbackName;
 }
 
+/** Strip HTML/entities from a Woo description into a plain, single-line string. */
+function cleanDesc(html?: string): string | undefined {
+  if (!html || typeof html !== 'string') return undefined;
+  const txt = html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return txt || undefined;
+}
+
+/**
+ * Resolve product imagery. IMAGES are owner-managed in WooCommerce: the featured
+ * image is the main, the rest are gallery thumbnails. When a product has no Woo
+ * image yet, fall back to the static /assets/products/{SKU}.webp so nothing
+ * breaks during the transition.
+ */
+function resolveImages(
+  p: WooProduct,
+  sku: string,
+): { img: string; images: string[]; alt?: string } {
+  const imgs = Array.isArray(p.images)
+    ? p.images.filter((i) => i && typeof i.src === 'string' && i.src.trim())
+    : [];
+  if (imgs.length === 0) {
+    const local = `/assets/products/${sku}.webp`;
+    return { img: local, images: [local] };
+  }
+  const alt =
+    typeof imgs[0].alt === 'string' && imgs[0].alt.trim()
+      ? imgs[0].alt.trim()
+      : undefined;
+  return { img: imgs[0].src, images: imgs.map((i) => i.src), alt };
+}
+
+/** True when the SKU is one of the 72 official codes (present in the attrs file). */
+export function isOfficialSku(sku: string | undefined | null): boolean {
+  return Boolean(sku && sku.trim() && attrFor(sku.trim()));
+}
+
 /** Map a WooCommerce product to our normalised CatalogueItem shape. */
 export function toCatalogueItem(p: WooProduct): CatalogueItem {
   const sku = p.sku && p.sku.trim() ? p.sku.trim() : String(p.id);
   const name = p.name || sku;
   // Fixed per-product attributes are authoritative (override Woo-derived guesses).
   const a = attrFor(sku);
+  const media = resolveImages(p, sku);
   return {
     id: sku,
     name,
@@ -407,8 +460,13 @@ export function toCatalogueItem(p: WooProduct): CatalogueItem {
     comp: a ? a.composition : deriveComp(p),
     forme: a ? a.formeIndex : deriveForme(p, sku),
     orientation: a ? a.orientation : undefined,
+    // PRICE is always from the matrix (joud-pricing.json) via the product page —
+    // never read from Woo. derivePrice returns null here by design.
     price: derivePrice(p),
-    img: `/assets/products/${sku}.webp`,
+    img: media.img,
+    images: media.images,
+    alt: media.alt,
+    description: cleanDesc(p.short_description) || cleanDesc(p.description),
   };
 }
 
@@ -475,7 +533,21 @@ export async function getProducts(opts?: GetProductsOptions): Promise<{
     });
 
     const raw = Array.isArray(result.data) ? result.data : [];
-    let items = raw.map(toCatalogueItem);
+    // Products are matched by SKU. Anything without an official SKU (one of the
+    // 72 codes in the attributes file) is excluded and logged — this also keeps
+    // duplicates like "Mizane (Copy)" off the site until they're deleted in Woo.
+    let items: CatalogueItem[] = [];
+    for (const p of raw) {
+      const sku = p.sku && p.sku.trim() ? p.sku.trim() : '';
+      if (!isOfficialSku(sku)) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[woo] excluding product id=${p.id} name="${p.name || ''}" sku="${p.sku || ''}" — SKU missing or not in the official 72`,
+        );
+        continue;
+      }
+      items.push(toCatalogueItem(p));
+    }
 
     // Apply forme/composition (and collection if category id didn't resolve)
     // filters in-memory — Woo attribute filtering is unreliable across stores.
@@ -510,6 +582,8 @@ export async function getProduct(idOrSku: string): Promise<{
   woo: WooProduct | null;
   variations: any[];
   source: 'woo' | 'fallback';
+  /** true when the resolved Woo product is not one of the official 72 → page should 404 */
+  notFound?: boolean;
 }> {
   const key = String(idOrSku || '').trim();
 
@@ -526,6 +600,7 @@ export async function getProduct(idOrSku: string): Promise<{
       forme: 1,
       price: null,
       img: `/assets/products/${key}.webp`,
+      images: [`/assets/products/${key}.webp`],
     };
   };
 
@@ -558,6 +633,16 @@ export async function getProduct(idOrSku: string): Promise<{
     if (!found) {
       warnFallback(`getProduct("${key}") — not found in Woo`);
       return { item: fallbackItem(), woo: null, variations: [], source: 'fallback' };
+    }
+
+    // Exclude non-official products (e.g. "Mizane (Copy)") — signal a 404.
+    const foundSku = found.sku && found.sku.trim() ? found.sku.trim() : '';
+    if (!isOfficialSku(foundSku)) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[woo] getProduct("${key}") resolved to non-official product id=${found.id} sku="${found.sku || ''}" — excluding (404)`,
+      );
+      return { item: fallbackItem(), woo: null, variations: [], source: 'fallback', notFound: true };
     }
 
     let variations: any[] = [];
