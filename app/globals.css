@@ -788,11 +788,17 @@ body.no-anim [data-reveal] { opacity: 1 !important; transform: none !important; 
   .trust__item:first-child { border-block-start: 0; }
 }
 @media (max-width: 560px) {
-  /* Compact header so logo + language toggle + burger all fit small phones (down to 320px) */
-  .hdr__bar { gap: 8px; padding-left: 14px !important; padding-right: 14px !important; }
-  .brand__name { font-size: 0.82rem; letter-spacing: 0.03em; }
-  .hdr__actions { margin-inline-start: 0; gap: 5px; }
-  .lang button { padding: 5px 7px; }
+  /* Refined premium mobile header — slimmer bar, lighter elegant wordmark,
+     balanced spacing, logo + language switcher + burger all aligned.
+     Verified to fit 320 / 375 / 390 / 430px with the burger fully on-screen. */
+  .hdr__bar { height: 62px; gap: 10px; padding-left: 18px !important; padding-right: 16px !important; }
+  .brand { gap: 8px; }
+  .brand img { width: 30px; }
+  .brand__name { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; }
+  .hdr__actions { margin-inline-start: 0; gap: 10px; }
+  .lang button { padding: 5px 8px; font-size: 10px; letter-spacing: 0.06em; }
+  .hdr__burger { padding: 6px 4px; }
+  .hdr__burger svg { width: 23px; height: 23px; }
 }
 
 
