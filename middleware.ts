@@ -101,10 +101,21 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL(dest, req.url), 301);
   }
 
-  // 2) Admin Basic-auth gate (only the admin board + admin API).
+  // 2) Admin Basic-auth gate (only the admin board + admin API). Runs before the
+  //    locale handler so ?lang can never bypass the gate.
   if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
     const blocked = adminGate(req);
     if (blocked) return blocked;
+  }
+
+  // 3) Locale via ?lang=fr|ar|en — set the cookie so the server renders the
+  //    correct locale (RTL + Arabic strings) on THIS request, and persist it.
+  const langParam = req.nextUrl.searchParams.get('lang');
+  if (langParam === 'fr' || langParam === 'ar' || langParam === 'en') {
+    req.cookies.set('lang', langParam);
+    const res = NextResponse.next({ request: { headers: req.headers } });
+    res.cookies.set('lang', langParam, { path: '/', maxAge: 31536000, sameSite: 'lax' });
+    return res;
   }
 
   return NextResponse.next();

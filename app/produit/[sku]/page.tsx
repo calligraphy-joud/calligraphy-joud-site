@@ -30,7 +30,14 @@ export async function generateMetadata({ params }: { params: Promise<{ sku: stri
   return {
     title,
     description: desc,
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      languages: {
+        'fr-MA': `${canonical}?lang=fr`,
+        'ar-MA': `${canonical}?lang=ar`,
+        'en': `${canonical}?lang=en`,
+      },
+    },
     openGraph: {
       title,
       description: desc,

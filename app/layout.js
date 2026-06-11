@@ -1,4 +1,5 @@
 import './globals.css';
+import { cookies } from 'next/headers';
 import Providers from './components/providers';
 
 const SITE = 'https://www.calligraphyjoud.com';
@@ -13,7 +14,14 @@ export const metadata = {
     "Maison d'art marocaine depuis 1977. Tableaux de calligraphie arabe 100% faits main — pièces uniques. Livraison gratuite au Maroc, paiement à la livraison.",
   keywords: ['calligraphie arabe', 'tableau', 'art marocain', 'calligraphy', 'Maroc', 'fait main', 'art islamique', 'art moderne', 'art abstrait'],
   authors: [{ name: 'Calligraphy JOUD' }],
-  alternates: { canonical: '/' },
+  alternates: {
+    canonical: '/',
+    languages: {
+      'fr-MA': '/?lang=fr',
+      'ar-MA': '/?lang=ar',
+      'en': '/?lang=en',
+    },
+  },
   icons: { icon: '/assets/logo-mark-navy.png' },
   openGraph: {
     type: 'website',
@@ -21,6 +29,7 @@ export const metadata = {
     title: "Calligraphy JOUD — L'art au service de l'excellence",
     description: "Tableaux de calligraphie arabe 100% faits main — pièces uniques. Maison d'art marocaine depuis 1977.",
     locale: 'fr_MA',
+    alternateLocale: ['ar_MA', 'en_US'],
     images: ['/assets/imagery/hero.webp'],
   },
   twitter: {
@@ -38,11 +47,15 @@ export const viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const cookieStore = await cookies();
+  const raw = cookieStore.get('lang')?.value;
+  const lang = raw === 'ar' || raw === 'en' ? raw : 'fr';
+  const dir = lang === 'ar' ? 'rtl' : 'ltr';
   return (
-    <html lang="fr" dir="ltr">
+    <html lang={lang} dir={dir}>
       <body>
-        <Providers>{children}</Providers>
+        <Providers initialLang={lang}>{children}</Providers>
       </body>
     </html>
   );

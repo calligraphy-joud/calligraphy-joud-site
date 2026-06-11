@@ -11,23 +11,20 @@ const ROUTES = {
   confidentialite: '/confidentialite', cookies: '/cookies',
 };
 
-export function LangProvider({ children }) {
-  const [lang, setLangState] = useState('fr');
+export function LangProvider({ children, initialLang }) {
+  // initialLang comes from the server (the `lang` cookie) so SSR matches the
+  // chosen locale — important for RTL + the Arabic crawl/curl.
+  const [lang, setLangState] = useState(initialLang && STR[initialLang] ? initialLang : 'fr');
   const router = useRouter();
   const pathname = usePathname();
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('joud-lang');
-      if (saved && STR[saved]) setLangState(saved);
-    } catch (e) {}
-  }, []);
 
   useEffect(() => {
     const root = document.documentElement;
     root.lang = lang;
     root.dir = lang === 'ar' ? 'rtl' : 'ltr';
     try { localStorage.setItem('joud-lang', lang); } catch (e) {}
+    // Persist to a cookie so the server renders the same locale on the next load.
+    try { document.cookie = 'lang=' + lang + '; path=/; max-age=31536000; samesite=lax'; } catch (e) {}
   }, [lang]);
 
   const setLang = useCallback((l) => { if (STR[l]) setLangState(l); }, []);

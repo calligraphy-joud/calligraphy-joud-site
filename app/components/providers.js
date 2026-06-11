@@ -4,9 +4,9 @@ import { OrderProvider } from './order';
 import { ConsentProvider } from './cookie-consent';
 import { MetaPixel } from './pixel';
 
-export default function Providers({ children }) {
+export default function Providers({ children, initialLang }) {
   return (
-    <LangProvider>
+    <LangProvider initialLang={initialLang}>
       <ConsentProvider>
         <OrderProvider>{children}</OrderProvider>
         <MetaPixel />
