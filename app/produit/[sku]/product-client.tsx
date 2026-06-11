@@ -34,7 +34,7 @@ type CatalogueItem = {
 const fmt = (n: number) => Number(n).toLocaleString('fr-FR');
 
 /* ---------------- Gallery ---------------- */
-function Gallery({ images, name, forme, pd }: { images: string[]; name: string; forme: 0 | 1 | 2; pd: any }) {
+function Gallery({ images, name, alt, forme, pd }: { images: string[]; name: string; alt: string; forme: 0 | 1 | 2; pd: any }) {
   const [active, setActive] = useState(0);
   const [zoom, setZoom] = useState(false);
   const [box, setBox] = useState(false);
@@ -59,7 +59,7 @@ function Gallery({ images, name, forme, pd }: { images: string[]; name: string; 
           onClick={() => setBox(true)}
         >
           <div className="pd-main__inner" style={{ aspectRatio: ratio }}>
-            {cur ? <img src={cur} alt={name} /> : <div className="img-slot"><span>{name}</span></div>}
+            {cur ? <img src={cur} alt={alt} /> : <div className="img-slot"><span>{name}</span></div>}
           </div>
           <span className="pd-main__bevel" />
           <span className="pd-zoomhint"><Icons.search /> {pd.view}</span>
@@ -144,6 +144,9 @@ export default function ProductClient({
       : (lang === 'ar' ? 'لوحة' : lang === 'en' ? 'panel' : 'tableau'));
   const specChips = isRond ? [compName, formeLabel(fk)] : [compName, formeLabel(fk), panels];
 
+  // Descriptive French alt text for the main product image (SEO).
+  const mainAlt = `${name} — tableau ${String(bq.collections[item.col]).toLowerCase()} fait main, ${compName.toLowerCase()} ${formeLabel(fk).toLowerCase()}, Calligraphy JOUD`;
+
   const cadreLabel = (c: Cadre) =>
     c === 'double'
       ? (lang === 'ar' ? 'إطار مزدوج' : lang === 'en' ? 'Double frame' : 'Cadre double')
@@ -208,7 +211,7 @@ export default function ProductClient({
         </nav>
 
         <div className="pd">
-          <Gallery images={images} name={name} forme={item.forme} pd={pd} />
+          <Gallery images={images} name={name} alt={mainAlt} forme={item.forme} pd={pd} />
 
           <div className="pd-info">
             <Link className="pd-collink" href={'/collection?cat=' + colSlug}>{bq.collections[item.col]}</Link>
