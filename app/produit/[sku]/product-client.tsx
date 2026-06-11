@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLang, useReveal } from '@/app/components/lang-context';
@@ -42,6 +42,31 @@ function Gallery({ images, name, alt, forme, pd }: { images: string[]; name: str
   const round = forme === 2;
   const ratio = round ? '1 / 1' : forme === 1 ? '4 / 5' : '1 / 1';
   const cur = images[active] || images[0];
+  const multi = images.length > 1;
+  const step = (d: number) => setActive((i) => (i + d + images.length) % images.length);
+
+  // Lightbox: arrow keys + escape.
+  useEffect(() => {
+    if (!box) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setBox(false);
+      else if (e.key === 'ArrowRight') step(1);
+      else if (e.key === 'ArrowLeft') step(-1);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [box, images.length]);
+
+  // Swipe (mobile) inside the lightbox.
+  const touchX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => { touchX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
+    touchX.current = null;
+  };
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
@@ -62,6 +87,8 @@ function Gallery({ images, name, alt, forme, pd }: { images: string[]; name: str
           <div className="pd-main__inner" style={{ aspectRatio: ratio, position: 'relative' }}>
             {cur ? (
               <Image
+                key={cur}
+                className="pd-xfade"
                 src={cur}
                 alt={alt}
                 fill
@@ -87,9 +114,20 @@ function Gallery({ images, name, alt, forme, pd }: { images: string[]; name: str
         </div>
       )}
       {box && cur && (
-        <div className="pd-lightbox" onClick={() => setBox(false)}>
-          <button className="pd-lightbox__close" aria-label="Fermer" type="button"><Icons.x /></button>
-          <img src={cur} alt="" />
+        <div
+          className="pd-lightbox is-open"
+          onClick={() => setBox(false)}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <button className="pd-lightbox__close" aria-label="Fermer" type="button" onClick={(e) => { e.stopPropagation(); setBox(false); }}><Icons.x /></button>
+          {multi && (
+            <>
+              <button className="pd-lightbox__nav pd-lightbox__nav--prev" aria-label="Précédent" type="button" onClick={(e) => { e.stopPropagation(); step(-1); }}>‹</button>
+              <button className="pd-lightbox__nav pd-lightbox__nav--next" aria-label="Suivant" type="button" onClick={(e) => { e.stopPropagation(); step(1); }}>›</button>
+            </>
+          )}
+          <img key={cur} className="pd-lb-img" src={cur} alt={alt} onClick={(e) => e.stopPropagation()} />
         </div>
       )}
     </div>

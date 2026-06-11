@@ -7,6 +7,7 @@ import { Icons } from './icons';
 import { ARTWORKS, CATEGORIES, REVIEWS, PARTNERS, PRODUCTS } from '../data/content';
 import { useOrder } from './order';
 import { getSizes, getStartingPrice, formeFromIndex } from '@/lib/pricing';
+import { CountNumber } from './count';
 
 const _sLabel = (s) => (!s ? '' : s.startsWith('Ø') ? 'Ø ' + s.slice(1) + ' cm' : s.replace('x', ' × ') + ' cm');
 
@@ -268,7 +269,7 @@ export function Mission() {
           <div className="mission__stats" data-reveal data-delay="3">
             {t.stats.map(([n, l], i) => (
               <div className="stat" key={i}>
-                <span className="stat__n serif">{n}</span>
+                <CountNumber className="stat__n serif" value={n} />
                 <span className="stat__l">{l}</span>
               </div>
             ))}

@@ -17,6 +17,14 @@ export function Header({ page = 'home' }) {
   const { t, lang, setLang, go } = useLang();
   const { openOrder } = useOrder();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
   const HIDE_IN_NAV = { categories: true, transformation: true };
   const items = [['home', t.navAccueil], ...t.nav].filter(([id]) => !HIDE_IN_NAV[id]);
   const isActive = (id) =>
@@ -36,7 +44,7 @@ export function Header({ page = 'home' }) {
 
   return (
     <>
-      <header className={'hdr' + (open ? ' hdr--open' : '')}>
+      <header className={'hdr' + (open ? ' hdr--open' : '') + (scrolled ? ' is-scrolled' : '')}>
         <div className="wrap hdr__bar">
           <button className="brand" onClick={() => go('home')} aria-label="Calligraphy JOUD">
             <img src="/assets/logo-mark-navy.webp" alt="" width={36} height={36} />
