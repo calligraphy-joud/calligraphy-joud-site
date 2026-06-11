@@ -31,7 +31,7 @@ export function Hero() {
         <div className="hero__art" data-reveal data-delay="2">
           <figure className="joud-frame" style={{ margin: 0 }}>
             <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}>
-              <img loading="eager" fetchPriority="high" src="/assets/imagery/gold-relief.webp" alt={t.heroCapTitle} />
+              <img loading="eager" fetchPriority="high" src="/assets/imagery/hero.webp" alt={t.heroCapTitle} />
             </div>
             <span className="joud-frame__bevel" />
             <figcaption className="hero__caption">
@@ -239,10 +239,10 @@ export function BeforeAfter() {
         <div className="ba" ref={ref} style={{ '--pos': pos + '%' }} data-reveal
           onPointerDown={(e) => { dragging.current = true; move(e.clientX); }}>
           <div className="ba__layer ba__after">
-            <img loading="lazy" src="/assets/imagery/gold-relief.webp" alt={t.after} />
+            <img loading="lazy" src="/assets/imagery/AFTER-JOUD-2.webp" alt={t.after} />
           </div>
           <div className="ba__layer ba__before">
-            <img loading="lazy" src="/assets/imagery/gallery-stair.webp" alt={t.before} />
+            <img loading="lazy" src="/assets/imagery/BEFORE-JOUD-2.webp" alt={t.before} />
           </div>
           <span className="ba__tag ba__tag--before">{t.before}</span>
           <span className="ba__tag ba__tag--after">{t.after}</span>
@@ -276,16 +276,59 @@ export function Mission() {
         </div>
         <div className="mission__media" data-reveal data-delay="2">
           <figure className="joud-frame" style={{ margin: 0 }}>
-            <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}><img loading="lazy" src="/assets/imagery/gallery-stair.webp" alt="" /></div>
+            <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}><img loading="lazy" src="/assets/imagery/maison-1.webp" alt="" /></div>
             <span className="joud-frame__bevel" />
           </figure>
           <figure className="joud-frame" style={{ margin: 0 }}>
-            <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}><img loading="lazy" src="/assets/imagery/paintings-diptych.webp" alt="" /></div>
+            <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}><img loading="lazy" src="/assets/imagery/maison-2.webp" alt="" /></div>
             <span className="joud-frame__bevel" />
           </figure>
         </div>
       </div>
     </section>
+  );
+}
+
+function VideoTestimonials() {
+  const { lang } = useLang();
+  const vids = [1, 2, 3, 4];
+  const [playing, setPlaying] = useState(null);
+  const refs = useRef({});
+  const play = (n) => {
+    const v = refs.current[n];
+    if (v) { try { v.play(); } catch (e) {} setPlaying(n); }
+  };
+  const heading = lang === 'ar' ? 'شهادات بالفيديو' : lang === 'en' ? 'Video testimonials' : 'Témoignages vidéo';
+  return (
+    <div className="vtest" data-reveal style={{ marginTop: 'var(--space-9)' }}>
+      <h3 className="serif" style={{ textAlign: 'center', fontSize: 'clamp(1.1rem, 2.4vw, 1.5rem)', marginBottom: 'var(--space-6)', color: 'var(--navy-700, #28324E)' }}>{heading}</h3>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 'var(--space-5, 18px)' }}>
+        {vids.map((n) => (
+          <div key={n} style={{ position: 'relative', borderRadius: 14, overflow: 'hidden', aspectRatio: '9 / 16', background: '#0e1322', boxShadow: '0 10px 30px rgba(20,28,48,.18)' }}>
+            <video
+              ref={(el) => { refs.current[n] = el; }}
+              src={`/assets/videos/avis-client-${n}.mp4`}
+              poster={`/assets/videos/avis-client-${n}-poster.webp`}
+              preload="none"
+              playsInline
+              controls={playing === n}
+              onClick={() => play(n)}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', cursor: 'pointer' }}
+            />
+            {playing !== n && (
+              <button
+                type="button"
+                aria-label="Lire la vidéo"
+                onClick={() => play(n)}
+                style={{ position: 'absolute', inset: 0, margin: 'auto', width: 60, height: 60, borderRadius: '50%', border: 'none', background: 'rgba(255,255,255,.92)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 6px 18px rgba(0,0,0,.25)' }}
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#28324E" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -320,6 +363,7 @@ export function Reviews() {
             </article>
           ))}
         </div>
+        <VideoTestimonials />
       </div>
     </section>
   );
@@ -346,10 +390,10 @@ export function Partners() {
 export function Instagram() {
   const { t } = useLang();
   const cells = [
-    { img: '/assets/imagery/gold-relief.webp' },
-    { img: '/assets/imagery/gallery-stair.webp' },
-    { img: '/assets/products/ISL-009.webp' },
-    { img: '/assets/imagery/paintings-diptych.webp' },
+    { img: '/assets/imagery/instagram-1.webp' },
+    { img: '/assets/imagery/instagram-2.webp' },
+    { img: '/assets/imagery/instagram-3.webp' },
+    { img: '/assets/imagery/instagram-4.webp' },
   ];
   return (
     <section className="section" id="insta">

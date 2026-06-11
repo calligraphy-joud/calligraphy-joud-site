@@ -27,7 +27,7 @@ export function HistoireView() {
           <p className="hs-hero__lead" data-reveal data-delay="2">{h.lead}</p>
           <figure className="hs-herofig" data-reveal data-delay="2" style={{ margin: 'clamp(2.5rem,5vw,8rem) auto 0' }}>
             <div className="joud-frame" style={{ padding: 18 }}>
-              <div className="joud-frame__img" style={{ aspectRatio: '16 / 9' }}><img loading="lazy" src={IMG + 'gallery-stair.webp'} alt="" /></div>
+              <div className="joud-frame__img" style={{ aspectRatio: '16 / 9' }}><img loading="lazy" src={IMG + 'maison-2.webp'} alt="" /></div>
               <span className="joud-frame__bevel" style={{ inset: 18 }} />
             </div>
             <figcaption>{h.heroCap}</figcaption>
@@ -44,7 +44,7 @@ export function HistoireView() {
             </div>
             <figure className="hs-origin__fig" data-reveal data-delay="2" style={{ margin: 0 }}>
               <div className="joud-frame">
-                <div className="joud-frame__img" style={{ aspectRatio: '4 / 5' }}><img loading="lazy" src={IMG + 'gold-relief.webp'} alt="" /></div>
+                <div className="joud-frame__img" style={{ aspectRatio: '4 / 5' }}><img loading="lazy" src={IMG + 'maison-1.webp'} alt="" /></div>
                 <span className="joud-frame__bevel" />
               </div>
             </figure>
@@ -59,10 +59,10 @@ export function HistoireView() {
               <p className="section-head__lead" data-reveal data-delay="2">{h.atelierText}</p>
             </div>
             <div className="hs-atelier__montage">
-              <div className="cell cell--a" data-reveal><img loading="lazy" src={IMG + 'gallery-stair.webp'} alt="" /></div>
-              <div className="cell cell--b" data-reveal data-delay="1"><img loading="lazy" src={IMG + 'gold-relief.webp'} alt="" /></div>
-              <div className="cell cell--c" data-reveal data-delay="1"><img loading="lazy" src={IMG + 'paintings-diptych.webp'} alt="" /></div>
-              <div className="cell cell--d" data-reveal><img loading="lazy" src={IMG + 'paintings-diptych.webp'} alt="" /></div>
+              <div className="cell cell--a" data-reveal><img loading="lazy" src={IMG + 'matiere-1.webp'} alt="Détail matière — feuille d’or appliquée à la main, Calligraphy JOUD" /></div>
+              <div className="cell cell--b" data-reveal data-delay="1"><img loading="lazy" src={IMG + 'matiere-2.webp'} alt="Détail matière — texture et relief, atelier Calligraphy JOUD" /></div>
+              <div className="cell cell--c" data-reveal data-delay="1"><img loading="lazy" src={IMG + 'matiere-3.webp'} alt="Détail matière — pigments et patine, atelier Calligraphy JOUD" /></div>
+              <div className="cell cell--d" data-reveal><img loading="lazy" src={IMG + 'lifestyle-2.webp'} alt="Œuvre Calligraphy JOUD mise en scène dans un intérieur" /></div>
             </div>
           </div>
         </section>

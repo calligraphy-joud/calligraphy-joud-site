@@ -21,13 +21,13 @@ export const metadata = {
     title: "Calligraphy JOUD — L'art au service de l'excellence",
     description: "Tableaux de calligraphie arabe 100% faits main — pièces uniques. Maison d'art marocaine depuis 1977.",
     locale: 'fr_MA',
-    images: ['/assets/imagery/gold-relief.png'],
+    images: ['/assets/imagery/hero.webp'],
   },
   twitter: {
     card: 'summary_large_image',
     title: "Calligraphy JOUD — L'art au service de l'excellence",
     description: 'Tableaux de calligraphie arabe 100% faits main — pièces uniques.',
-    images: ['/assets/imagery/gold-relief.png'],
+    images: ['/assets/imagery/hero.webp'],
   },
   robots: { index: true, follow: true },
 };
