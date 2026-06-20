@@ -19,6 +19,10 @@ export interface ClientOrderPayload {
   message?: string;
   photoUrl?: string;
   lang?: 'fr' | 'en' | 'ar';
+  /** Google Ads click ids — stored on the Woo order for offline conversion import. */
+  gclid?: string;
+  gbraid?: string;
+  wbraid?: string;
 }
 
 export interface SubmitOrderResult {

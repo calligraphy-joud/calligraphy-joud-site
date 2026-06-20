@@ -134,6 +134,9 @@ export async function POST(req: NextRequest) {
     phone: typeof body?.phone === 'string' ? body.phone : undefined,
     ville: typeof body?.ville === 'string' ? body.ville : '',
     adresse: typeof body?.adresse === 'string' ? body.adresse : undefined,
+    gclid: typeof body?.gclid === 'string' ? body.gclid : undefined,
+    gbraid: typeof body?.gbraid === 'string' ? body.gbraid : undefined,
+    wbraid: typeof body?.wbraid === 'string' ? body.wbraid : undefined,
     message: typeof body?.message === 'string' ? body.message : undefined,
     photoUrl: typeof body?.photoUrl === 'string' ? body.photoUrl : undefined,
     lang:
@@ -214,6 +217,10 @@ export async function POST(req: NextRequest) {
       ['_joud_lang', payload.lang],
       ['_joud_product_name', payload.productName],
       ['_joud_total_display', payload.total],
+      // Google Ads click ids → used to import the real COD-delivered conversion later.
+      ['_gclid', payload.gclid],
+      ['_gbraid', payload.gbraid],
+      ['_wbraid', payload.wbraid],
     ]);
 
     const wooOrder: Record<string, unknown> = {

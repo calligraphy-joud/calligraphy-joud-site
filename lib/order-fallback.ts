@@ -23,6 +23,10 @@ export interface OrderPayload {
   message?: string;
   photoUrl?: string;
   lang?: 'fr' | 'en' | 'ar';
+  /** Google Ads click ids — stored on the Woo order for offline conversion import. */
+  gclid?: string;
+  gbraid?: string;
+  wbraid?: string;
 }
 
 /** The WhatsApp Business number (single source of truth: lib/whatsapp.ts). */

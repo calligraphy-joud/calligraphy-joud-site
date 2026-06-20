@@ -4,6 +4,7 @@ import { useLang } from './lang-context';
 import { Icons } from './icons';
 import { submitOrder, buildClientWaUrl } from '@/lib/order-client';
 import { fbTrack, makeEventId } from './pixel';
+import { trackOrderPlaced, getClickId } from './gtag';
 import { WHATSAPP_NUMBER } from '@/lib/whatsapp';
 
 /* ---- WhatsApp config: change this one number to go live ---- */
@@ -119,6 +120,10 @@ function OrderModal({ product, onClose }) {
     adresse: data.address.trim() || undefined,
     message: data.message.trim() || undefined,
     lang,
+    // Google Ads click ids (captured on landing) so the COD order is attributable.
+    gclid: getClickId('gclid') || undefined,
+    gbraid: getClickId('gbraid') || undefined,
+    wbraid: getClickId('wbraid') || undefined,
   });
 
   const submit = async (e) => {
@@ -149,6 +154,14 @@ function OrderModal({ product, onClose }) {
         content_type: 'product',
         num_items: 1,
       }, eventId);
+      // Google Ads "Commande passée" + GA4 purchase (+ Enhanced Conversions: hashed phone).
+      // Fire-and-forget; never blocks or breaks the order flow.
+      trackOrderPlaced({
+        value: typeof payload.total === 'number' ? payload.total : undefined,
+        currency: 'MAD',
+        orderId: res.orderId,
+        phone: data.phone,
+      });
       setResult(res);
       setStatus('success');
     } else {
