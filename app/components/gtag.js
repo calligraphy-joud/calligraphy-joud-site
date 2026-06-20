@@ -113,10 +113,10 @@ export async function trackOrderPlaced({ value, currency = 'MAD', orderId, phone
   });
 }
 
-/** "Clic WhatsApp" — secondary conversion + GA4 lead. Wired globally below. */
+/** "Clic WhatsApp" — VALUELESS conversion (no value/currency) + GA4 lead. Wired globally below. */
 export function trackWhatsAppClick() {
-  if (SENDTO_WA) gtagEvent('conversion', { send_to: SENDTO_WA });
-  gtagEvent('generate_lead', { currency: 'MAD' });
+  if (SENDTO_WA) gtagEvent('conversion', { send_to: SENDTO_WA }); // intentionally no value/currency
+  gtagEvent('generate_lead'); // valueless lead signal
 }
 
 export function GoogleTag() {
