@@ -174,9 +174,7 @@ export default function Boutique({ variant = 'boutique', lockCol = null, intro =
             <button className="bq-clear" onClick={clearAll} disabled={active.length === 0}>{bq.clear}</button>
           </div>
           {showColFacet && <Facet label={bq.facetCollection} options={bq.collections} sel={sel.col} counts={counts.col} onToggle={(i) => toggle('col', i)} />}
-          <Facet label={bq.facetComposition} options={bq.compositions} sel={sel.comp} counts={counts.comp} onToggle={(i) => toggle('comp', i)} />
-          <Facet label={bq.facetForme} options={bq.formes} sel={sel.forme} counts={counts.forme} onToggle={(i) => toggle('forme', i)} />
-        </aside>
+            </aside>
 
         <div className="bq-content">
           <div className="bq-gridhead">
