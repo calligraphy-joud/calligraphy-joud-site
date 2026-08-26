@@ -1,5 +1,5 @@
 // server-only
-// WooCommerce REST API v3 client + product read layer for Calligraphy JOUD.
+// WooCommerce REST API v3 client + product read layer for JOUDART.
 //
 // IMPORTANT: this module reads server-only credentials (WOO_CONSUMER_KEY etc.)
 // and must NEVER be imported into a client component / bundle. It is meant to be
@@ -96,7 +96,7 @@ export class WooError extends Error {
 
 const TIMEOUT_MS = 5000;
 const RETRY_BACKOFF_MS = 400;
-const USER_AGENT = 'CalligraphyJOUD-Web/1.0 (+https://calligraphyjoud.com)';
+const USER_AGENT = 'JOUDART-Web/1.0 (+https://joudart.com)';
 
 /** True only when all three Woo env vars are present. */
 export function isWooConfigured(): boolean {

@@ -1,4 +1,4 @@
-// SINGLE SOURCE OF TRUTH for the Calligraphy JOUD WhatsApp Business number.
+// SINGLE SOURCE OF TRUTH for the JOUDART WhatsApp Business number.
 //
 // Override at deploy time with the env var NEXT_PUBLIC_WHATSAPP_NUMBER
 // (NEXT_PUBLIC_ is required so the value is available in the browser bundle,

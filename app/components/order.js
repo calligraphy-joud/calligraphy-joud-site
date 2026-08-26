@@ -72,9 +72,9 @@ function OrderModal({ product, onClose }) {
   const sep = lang === 'ar' || lang === 'en' ? ': ' : ' : ';
 
   const waText = () => {
-    const intro = lang === 'ar' ? 'مرحباً Calligraphy JOUD، '
-      : lang === 'en' ? 'Hello Calligraphy JOUD, '
-      : 'Bonjour Calligraphy JOUD, ';
+    const intro = lang === 'ar' ? 'مرحباً JOUDART، '
+      : lang === 'en' ? 'Hello JOUDART, '
+      : 'Bonjour JOUDART, ';
     const want = isCommission
       ? (lang === 'ar' ? 'أودّ طلب عمل مخصّص.' : lang === 'en' ? 'I would like to request a custom commission.' : 'je souhaite une commande personnalisée.')
       : (lang === 'ar' ? 'أودّ طلب:' : lang === 'en' ? 'I would like to order:' : 'je souhaite commander :');

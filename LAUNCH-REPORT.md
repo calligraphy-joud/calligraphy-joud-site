@@ -1,4 +1,4 @@
-# Calligraphy JOUD — Launch Readiness Report
+# JOUDART — Launch Readiness Report
 
 _Final QA pass. Date: 2026-06-08._
 
@@ -29,7 +29,7 @@ _Final QA pass. Date: 2026-06-08._
 ### SEO
 - Every page has a unique **title, meta description, canonical**, Open Graph/Twitter tags; homepage has **Organization JSON-LD**.
 - Single, correct **H1** per page; `sitemap.xml` + `robots.txt` present and include all routes.
-- Product titles render cleanly (e.g. "Nour · Art islamique · Calligraphy JOUD").
+- Product titles render cleanly (e.g. "Nour · Art islamique · JOUDART").
 
 ### Accessibility
 - All images carry `alt` (decorative ones correctly use empty alt); all icon-only buttons have `aria-label`; the map iframe has a title; no empty links; `lang`/`dir` set correctly per language.
@@ -43,7 +43,7 @@ _Final QA pass. Date: 2026-06-08._
 ## 2. Issues found and fixed in this pass
 
 1. **Hero headline didn't translate** — it was hardcoded French on all languages. → Added translated hero titles (FR/EN/AR) and wired them in.
-2. **Product SEO title duplicated "Calligraphy JOUD"** → fixed to a single clean suffix.
+2. **Product SEO title duplicated "JOUDART"** → fixed to a single clean suffix.
 3. **Hero could flash blank on first load** (reveal-gated) → above-the-fold content now reveals instantly.
 4. **Homepage + Histoire + Categories images weren't optimized/lazy** → converted to WebP and lazy-loaded below the fold; hero prioritized.
 5. **Build was failing type-check** on Next 15 async route params and mixed JS/TS noise → fixed async params; build now passes.

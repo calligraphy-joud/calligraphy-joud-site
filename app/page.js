@@ -6,11 +6,11 @@ export const revalidate = 300;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Calligraphy JOUD',
+  name: 'JOUDART',
   description: "Maison d'art marocaine spécialisée dans les tableaux de calligraphie arabe 100% faits main.",
   foundingDate: '1977',
-  url: 'https://www.calligraphyjoud.com',
-  logo: 'https://www.calligraphyjoud.com/assets/logo-mark-navy.png',
+  url: 'https://www.joudart.com',
+  logo: 'https://www.joudart.com/assets/logo-mark-navy.png',
   address: { '@type': 'PostalAddress', addressLocality: 'Agadir', addressCountry: 'MA' },
   aggregateRating: { '@type': 'AggregateRating', ratingValue: '5.0', reviewCount: '3' },
 };

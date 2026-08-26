@@ -46,9 +46,9 @@ export function Header({ page = 'home' }) {
     <>
       <header className={'hdr' + (open ? ' hdr--open' : '') + (scrolled ? ' is-scrolled' : '')}>
         <div className="wrap hdr__bar">
-          <button className="brand" onClick={() => go('home')} aria-label="Calligraphy JOUD">
+          <button className="brand" onClick={() => go('home')} aria-label="JOUDART">
             <img src="/assets/logo-mark-navy.webp" alt="" width={36} height={36} />
-            <span className="brand__name">Calligraphy&nbsp;Joud</span>
+            <span className="brand__name">JOUDART</span>
           </button>
 
           <nav className="hdr__nav">
@@ -116,7 +116,7 @@ export function Footer() {
         <div>
           <button className="ftr__brand" onClick={() => go('home')} style={{ background: 'none', border: 0, padding: 0, cursor: 'pointer' }}>
             <img src="/assets/logo-mark-gold.webp" alt="" width={34} height={34} />
-            <span>Calligraphy&nbsp;Joud</span>
+            <span>JOUDART</span>
           </button>
           <p className="ftr__about">{t.ftrAbout}</p>
           <div className="ftr__social" role="group" aria-label="Réseaux sociaux">

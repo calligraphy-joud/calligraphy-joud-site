@@ -46,7 +46,7 @@ function L(lang: Lang | undefined): Lang {
 
 const STR: Record<Lang, Record<string, string>> = {
   fr: {
-    intro: 'Bonjour Calligraphy JOUD, ',
+    intro: 'Bonjour JOUDART, ',
     wantOrder: 'je souhaite commander :',
     wantCommission: 'je souhaite une commande personnalisée.',
     piece: 'Œuvre',
@@ -63,7 +63,7 @@ const STR: Record<Lang, Record<string, string>> = {
     sep: ' : ',
   },
   en: {
-    intro: 'Hello Calligraphy JOUD, ',
+    intro: 'Hello JOUDART, ',
     wantOrder: 'I would like to order:',
     wantCommission: 'I would like to request a custom commission.',
     piece: 'Piece',
@@ -80,7 +80,7 @@ const STR: Record<Lang, Record<string, string>> = {
     sep: ': ',
   },
   ar: {
-    intro: 'مرحباً Calligraphy JOUD، ',
+    intro: 'مرحباً JOUDART، ',
     wantOrder: 'أودّ طلب:',
     wantCommission: 'أودّ طلب عمل مخصّص.',
     piece: 'العمل',
@@ -225,7 +225,7 @@ function buildEmailHtml(payload: OrderPayload): string {
   return `<div style="font-family:Arial,Helvetica,sans-serif;color:#1a1a1a;">
     <h2 style="margin:0 0 12px;">Nouvelle commande — ${esc(payload.name)}</h2>
     <table style="border-collapse:collapse;width:100%;max-width:560px;">${trs}</table>
-    <p style="margin-top:16px;color:#888;font-size:12px;">Calligraphy JOUD — site web</p>
+    <p style="margin-top:16px;color:#888;font-size:12px;">JOUDART — site web</p>
   </div>`;
 }
 
@@ -238,7 +238,7 @@ export async function sendOrderEmail(payload: OrderPayload): Promise<boolean> {
   const to = process.env.ORDER_NOTIFY_EMAIL;
   if (!apiKey || !to) return false;
 
-  const from = process.env.ORDER_FROM_EMAIL || 'orders@calligraphyjoud.com';
+  const from = process.env.ORDER_FROM_EMAIL || 'orders@joudart.com';
 
   try {
     const controller = new AbortController();

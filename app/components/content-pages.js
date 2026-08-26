@@ -57,7 +57,7 @@ export function HistoireView() {
               <blockquote>
                 {lang === 'ar' ? 'ألوانٌ، وذهبٌ، وقلب.' : lang === 'en' ? 'Colour, gold, and heart.' : 'Des couleurs, de l’or et du cœur.'}
               </blockquote>
-              <cite>{lang === 'ar' ? 'JOUD — منذ 1977' : 'JOUD — depuis 1977'}</cite>
+              <cite>{lang === 'ar' ? 'JOUDART — منذ 1977' : 'JOUDART — depuis 1977'}</cite>
             </div>
             <div className="maison-quote__pair" data-reveal data-delay="1">
               <figure><img loading="lazy" src={IMG + 'lifestyle-1.webp'} alt="" /></figure>
@@ -74,10 +74,10 @@ export function HistoireView() {
               <p className="section-head__lead" data-reveal data-delay="2">{h.atelierText}</p>
             </div>
             <div className="hs-atelier__montage">
-              <div className="cell cell--a" data-reveal><img loading="lazy" src={IMG + 'matiere-1.webp'} alt="Détail matière — feuille d’or appliquée à la main, Calligraphy JOUD" /></div>
-              <div className="cell cell--b" data-reveal data-delay="1"><img loading="lazy" src={IMG + 'matiere-2.webp'} alt="Détail matière — texture et relief, atelier Calligraphy JOUD" /></div>
-              <div className="cell cell--c" data-reveal data-delay="1"><img loading="lazy" src={IMG + 'matiere-3.webp'} alt="Détail matière — pigments et patine, atelier Calligraphy JOUD" /></div>
-              <div className="cell cell--d" data-reveal><img loading="lazy" src={IMG + 'lifestyle-2.webp'} alt="Œuvre Calligraphy JOUD mise en scène dans un intérieur" /></div>
+              <div className="cell cell--a" data-reveal><img loading="lazy" src={IMG + 'matiere-1.webp'} alt="Détail matière — feuille d’or appliquée à la main, JOUDART" /></div>
+              <div className="cell cell--b" data-reveal data-delay="1"><img loading="lazy" src={IMG + 'matiere-2.webp'} alt="Détail matière — texture et relief, atelier JOUDART" /></div>
+              <div className="cell cell--c" data-reveal data-delay="1"><img loading="lazy" src={IMG + 'matiere-3.webp'} alt="Détail matière — pigments et patine, atelier JOUDART" /></div>
+              <div className="cell cell--d" data-reveal><img loading="lazy" src={IMG + 'lifestyle-2.webp'} alt="Œuvre JOUDART mise en scène dans un intérieur" /></div>
             </div>
           </div>
         </section>
@@ -104,7 +104,7 @@ export function HistoireView() {
           <div className="wrap wrap--md">
             <hr data-reveal />
             <blockquote data-reveal data-delay="1">{h.quote}</blockquote>
-            <div className="sig" data-reveal data-delay="2">Calligraphy JOUD · {h.eyebrow}</div>
+            <div className="sig" data-reveal data-delay="2">JOUDART · {h.eyebrow}</div>
           </div>
         </section>
 
@@ -146,7 +146,7 @@ export function ContactView() {
   const { t, lang } = useLang();
   useReveal([lang]);
   const c = t.contact;
-  const waText = lang === 'ar' ? 'مرحباً Calligraphy JOUD، أودّ الاستفسار عن أعمالكم.' : 'Bonjour Calligraphy JOUD, je souhaite me renseigner sur vos œuvres.';
+  const waText = lang === 'ar' ? 'مرحباً JOUDART، أودّ الاستفسار عن أعمالكم.' : 'Bonjour JOUDART, je souhaite me renseigner sur vos œuvres.';
   const waHref = 'https://wa.me/' + CT_WA + '?text=' + encodeURIComponent(waText);
   const mapsHref = 'https://www.google.com/maps/search/?api=1&query=Agadir%2C%20Maroc';
   return (
@@ -208,9 +208,9 @@ const LEGAL = {
     en: { eyebrow: 'Information', title: 'Delivery & Returns', intro: 'Placeholder text — to be replaced with your final terms.', sections: [['Free delivery in Morocco', 'Every work is delivered free anywhere in Morocco, carefully packed for transport. Indicative times are 3 to 7 business days depending on the city and the piece’s availability.'], ['Cash on delivery', 'You pay when the work arrives, with full confidence. No online payment is required to place an order.'], ['Guaranteed returns — 14 days', 'If the work isn’t right for you, you have 14 days to contact us and arrange a return. The piece must be returned in its original condition and packaging.'], ['International delivery', 'For any order outside Morocco, reach us on WhatsApp: we’ll prepare an insured shipping quote, case by case.']] },
   },
   mentions: {
-    fr: { eyebrow: 'Informations', title: 'Mentions légales', intro: 'Texte indicatif — à remplacer par vos informations légales définitives.', sections: [['Éditeur', 'Calligraphy JOUD — maison d’art marocaine. Adresse de l’atelier : Agadir, Maroc. Contact : contact@calligraphyjoud.com.'], ['Propriété intellectuelle', 'L’ensemble des œuvres, visuels et textes présentés sur ce site est la propriété de Calligraphy JOUD. Toute reproduction, même partielle, est interdite sans autorisation écrite.'], ['Données personnelles', 'Les informations communiquées lors d’une commande (nom, téléphone, ville) servent uniquement au traitement de votre demande et ne sont jamais cédées à des tiers.'], ['Œuvres faites main', 'Chaque pièce étant réalisée à la main, de légères variations de matière, de teinte et de relief sont inhérentes au caractère unique de l’œuvre.']] },
-    ar: { eyebrow: 'معلومات', title: 'إشعار قانوني', intro: 'نص إرشادي — يُستبدل بمعلوماتك القانونية النهائية.', sections: [['الناشر', 'Calligraphy JOUD — دار فنّ مغربية. عنوان المرسم: أكادير، المغرب. للتواصل: contact@calligraphyjoud.com.'], ['الملكية الفكرية', 'جميع الأعمال والصور والنصوص المعروضة على هذا الموقع ملك لـ Calligraphy JOUD. يُمنع أي استنساخ، ولو جزئي، دون إذن كتابي.'], ['البيانات الشخصية', 'المعلومات المقدَّمة عند الطلب (الاسم، الهاتف، المدينة) تُستخدم فقط لمعالجة طلبك ولا تُمنح أبداً لأطراف ثالثة.'], ['أعمال يدوية', 'بما أن كل قطعة تُصنع يدوياً، فإن اختلافات طفيفة في المادة واللون والنتوء هي من طبيعة العمل الفريد.']] },
-    en: { eyebrow: 'Information', title: 'Legal notice', intro: 'Placeholder text — to be replaced with your final legal information.', sections: [['Publisher', 'Calligraphy JOUD — Moroccan art house. Atelier address: Agadir, Morocco. Contact: contact@calligraphyjoud.com.'], ['Intellectual property', 'All works, images and texts on this site are the property of Calligraphy JOUD. Any reproduction, even partial, is forbidden without written permission.'], ['Personal data', 'The information you provide when ordering (name, phone, city) is used solely to process your request and is never shared with third parties.'], ['Handmade works', 'As each piece is made by hand, slight variations in material, tone and relief are inherent to the unique nature of the work.']] },
+    fr: { eyebrow: 'Informations', title: 'Mentions légales', intro: 'Texte indicatif — à remplacer par vos informations légales définitives.', sections: [['Éditeur', 'JOUDART — maison d’art marocaine. Adresse de l’atelier : Agadir, Maroc. Contact : contact@joudart.com.'], ['Propriété intellectuelle', 'L’ensemble des œuvres, visuels et textes présentés sur ce site est la propriété de JOUDART. Toute reproduction, même partielle, est interdite sans autorisation écrite.'], ['Données personnelles', 'Les informations communiquées lors d’une commande (nom, téléphone, ville) servent uniquement au traitement de votre demande et ne sont jamais cédées à des tiers.'], ['Œuvres faites main', 'Chaque pièce étant réalisée à la main, de légères variations de matière, de teinte et de relief sont inhérentes au caractère unique de l’œuvre.']] },
+    ar: { eyebrow: 'معلومات', title: 'إشعار قانوني', intro: 'نص إرشادي — يُستبدل بمعلوماتك القانونية النهائية.', sections: [['الناشر', 'JOUDART — دار فنّ مغربية. عنوان المرسم: أكادير، المغرب. للتواصل: contact@joudart.com.'], ['الملكية الفكرية', 'جميع الأعمال والصور والنصوص المعروضة على هذا الموقع ملك لـ JOUDART. يُمنع أي استنساخ، ولو جزئي، دون إذن كتابي.'], ['البيانات الشخصية', 'المعلومات المقدَّمة عند الطلب (الاسم، الهاتف، المدينة) تُستخدم فقط لمعالجة طلبك ولا تُمنح أبداً لأطراف ثالثة.'], ['أعمال يدوية', 'بما أن كل قطعة تُصنع يدوياً، فإن اختلافات طفيفة في المادة واللون والنتوء هي من طبيعة العمل الفريد.']] },
+    en: { eyebrow: 'Information', title: 'Legal notice', intro: 'Placeholder text — to be replaced with your final legal information.', sections: [['Publisher', 'JOUDART — Moroccan art house. Atelier address: Agadir, Morocco. Contact: contact@joudart.com.'], ['Intellectual property', 'All works, images and texts on this site are the property of JOUDART. Any reproduction, even partial, is forbidden without written permission.'], ['Personal data', 'The information you provide when ordering (name, phone, city) is used solely to process your request and is never shared with third parties.'], ['Handmade works', 'As each piece is made by hand, slight variations in material, tone and relief are inherent to the unique nature of the work.']] },
   },
   confidentialite: {
     fr: { eyebrow: 'Confidentialité', title: 'Politique de confidentialité', intro: 'Modèle indicatif — à faire valider. Dernière mise à jour : 2026.', sections: [
@@ -218,7 +218,7 @@ const LEGAL = {
       ['Utilisation des données', 'Vos informations servent à traiter et livrer votre commande, vous recontacter pour confirmer les détails, et — avec votre consentement — à mesurer l’audience du site et améliorer nos campagnes. Le paiement se fait à la livraison ; aucune donnée bancaire n’est demandée ni stockée.'],
       ['Partage', 'Nous ne vendons jamais vos données. Elles peuvent être traitées par nos prestataires techniques (hébergement, WooCommerce) et, avec votre consentement, par Meta (Facebook) à des fins de mesure publicitaire. Vos coordonnées peuvent être partagées avec le transporteur pour la livraison.'],
       ['Conservation', 'Vos données de commande sont conservées le temps nécessaire au traitement et aux obligations légales, puis supprimées ou anonymisées.'],
-      ['Vos droits', 'Vous pouvez demander l’accès, la rectification ou la suppression de vos données, ou retirer votre consentement à tout moment, en écrivant à contact@calligraphyjoud.com.'],
+      ['Vos droits', 'Vous pouvez demander l’accès, la rectification ou la suppression de vos données, ou retirer votre consentement à tout moment, en écrivant à contact@joudart.com.'],
       ['Cookies', 'Ce site utilise des cookies. Pour en savoir plus et gérer vos choix, consultez notre page Cookies.'],
     ] },
     ar: { eyebrow: 'الخصوصية', title: 'سياسة الخصوصية', intro: 'نموذج إرشادي — يُراجَع قانونياً. آخر تحديث: 2026.', sections: [
@@ -226,7 +226,7 @@ const LEGAL = {
       ['استخدام البيانات', 'تُستخدم معلوماتك لمعالجة طلبك وتوصيله، والتواصل معك للتأكيد، و—بموافقتك—لقياس جمهور الموقع وتحسين حملاتنا. الدفع عند الاستلام؛ لا نطلب أي بيانات بنكية ولا نخزّنها.'],
       ['المشاركة', 'لا نبيع بياناتك أبداً. قد تُعالَج من قِبل مزوّدينا التقنيين (الاستضافة، WooCommerce)، وبموافقتك من قِبل Meta لأغراض قياس الإعلانات. قد تُشارَك بياناتك مع شركة التوصيل.'],
       ['الاحتفاظ', 'نحتفظ ببيانات طلبك للمدة اللازمة للمعالجة والالتزامات القانونية، ثم تُحذف أو يُزال تعريفها.'],
-      ['حقوقك', 'يمكنك طلب الوصول إلى بياناتك أو تصحيحها أو حذفها، أو سحب موافقتك في أي وقت، عبر contact@calligraphyjoud.com.'],
+      ['حقوقك', 'يمكنك طلب الوصول إلى بياناتك أو تصحيحها أو حذفها، أو سحب موافقتك في أي وقت، عبر contact@joudart.com.'],
       ['ملفات الارتباط', 'يستخدم هذا الموقع ملفات تعريف الارتباط. لمعرفة المزيد وإدارة خياراتك، راجع صفحة ملفات الارتباط.'],
     ] },
     en: { eyebrow: 'Privacy', title: 'Privacy Policy', intro: 'Indicative template — to be legally reviewed. Last updated: 2026.', sections: [
@@ -234,7 +234,7 @@ const LEGAL = {
       ['How we use data', 'Your information is used to process and deliver your order, contact you to confirm details, and — with your consent — to measure site audience and improve our campaigns. Payment is on delivery; no banking data is requested or stored.'],
       ['Sharing', 'We never sell your data. It may be processed by our technical providers (hosting, WooCommerce) and, with your consent, by Meta (Facebook) for ad measurement. Your details may be shared with the carrier for delivery.'],
       ['Retention', 'Order data is kept as long as needed for processing and legal obligations, then deleted or anonymised.'],
-      ['Your rights', 'You may request access, correction or deletion of your data, or withdraw consent at any time, by writing to contact@calligraphyjoud.com.'],
+      ['Your rights', 'You may request access, correction or deletion of your data, or withdraw consent at any time, by writing to contact@joudart.com.'],
       ['Cookies', 'This site uses cookies. To learn more and manage your choices, see our Cookies page.'],
     ] },
   },
@@ -244,21 +244,21 @@ const LEGAL = {
       ['Cookies essentiels', 'Indispensables au fonctionnement du site, ils mémorisent par exemple votre langue et votre choix de consentement. Ils ne nécessitent pas votre accord.'],
       ['Cookies de mesure (Meta Pixel)', 'Avec votre consentement, nous utilisons le pixel Meta (Facebook) pour mesurer la performance de nos publicités et l’audience du site. Ces cookies ne sont déposés que si vous cliquez sur « Accepter ».'],
       ['Gérer vos choix', 'Vous pouvez refuser les cookies de mesure dès la bannière, ou les effacer à tout moment depuis les réglages de votre navigateur. Le refus n’empêche pas de commander.'],
-      ['Contact', 'Pour toute question : contact@calligraphyjoud.com.'],
+      ['Contact', 'Pour toute question : contact@joudart.com.'],
     ] },
     ar: { eyebrow: 'ملفات الارتباط', title: 'سياسة ملفات الارتباط', intro: 'كيف نستخدم ملفات الارتباط وكيف تدير خياراتك.', sections: [
       ['ما هو ملف الارتباط؟', 'ملف صغير يُحفظ على جهازك عند زيارة موقع. يتيح تذكّر تفضيلاتك وقياس الجمهور.'],
       ['ملفات أساسية', 'ضرورية لعمل الموقع، تتذكّر مثلاً لغتك واختيار موافقتك. لا تتطلّب موافقتك.'],
       ['ملفات القياس (Meta Pixel)', 'بموافقتك، نستخدم بكسل Meta لقياس أداء إعلاناتنا وجمهور الموقع. تُحفظ هذه الملفات فقط إذا نقرت «قبول».'],
       ['إدارة خياراتك', 'يمكنك رفض ملفات القياس من الشريط، أو مسحها في أي وقت من إعدادات متصفّحك. الرفض لا يمنعك من الطلب.'],
-      ['التواصل', 'لأي استفسار: contact@calligraphyjoud.com.'],
+      ['التواصل', 'لأي استفسار: contact@joudart.com.'],
     ] },
     en: { eyebrow: 'Cookies', title: 'Cookie Policy', intro: 'How we use cookies and how to manage your choices.', sections: [
       ['What is a cookie?', 'A cookie is a small file placed on your device when you visit a site. It remembers your preferences and helps measure audience.'],
       ['Essential cookies', 'Required for the site to work — they remember things like your language and your consent choice. They don’t need your agreement.'],
       ['Measurement cookies (Meta Pixel)', 'With your consent, we use the Meta (Facebook) pixel to measure our ad performance and site audience. These cookies are only set if you click “Accept”.'],
       ['Managing your choices', 'You can decline measurement cookies from the banner, or clear them anytime from your browser settings. Declining does not prevent you from ordering.'],
-      ['Contact', 'Any questions: contact@calligraphyjoud.com.'],
+      ['Contact', 'Any questions: contact@joudart.com.'],
     ] },
   },
 };

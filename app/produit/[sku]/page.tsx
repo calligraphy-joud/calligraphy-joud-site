@@ -6,7 +6,7 @@ import ProductClient from './product-client';
 
 export const revalidate = 300;
 
-const SITE = 'https://www.calligraphyjoud.com';
+const SITE = 'https://www.joudart.com';
 const COL_SLUG = ['islamique', 'moderne', 'abstrait'] as const;
 
 export async function generateMetadata({ params }: { params: Promise<{ sku: string }> }) {
@@ -14,12 +14,12 @@ export async function generateMetadata({ params }: { params: Promise<{ sku: stri
   const sku = decodeURIComponent(rawSku || '');
   const { item } = await getProduct(sku);
   if (!item) {
-    return { title: 'Œuvre introuvable · Calligraphy JOUD' };
+    return { title: 'Œuvre introuvable · JOUDART' };
   }
   const colName = (STR as any).fr.bq.collections[item.col] || '';
   // Description: Woo (owner-managed) when present, else the per-collection default.
   const desc = item.description || (STR as any).fr.pd.descByCol[item.col] || '';
-  // The layout's title template appends " · Calligraphy JOUD", so keep this short.
+  // The layout's title template appends " · JOUDART", so keep this short.
   const title = `${item.name} · ${colName}`;
   const canonical = `/produit/${encodeURIComponent(item.id)}`;
   // OG/Twitter images = the Woo gallery (absolute URLs) when present, else the static asset.
@@ -82,7 +82,7 @@ export default async function Page({ params }: { params: Promise<{ sku: string }
     image: absImgs.length ? absImgs : undefined,
     description: desc,
     sku: item.id,
-    brand: { '@type': 'Brand', name: 'Calligraphy JOUD' },
+    brand: { '@type': 'Brand', name: 'JOUDART' },
     category: colName,
   };
   if (startFrom != null) {

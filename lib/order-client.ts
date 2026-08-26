@@ -46,7 +46,7 @@ function L(lang: Lang | undefined): Lang {
 
 const STR: Record<Lang, Record<string, string>> = {
   fr: {
-    intro: 'Bonjour Calligraphy JOUD, ',
+    intro: 'Bonjour JOUDART, ',
     wantOrder: 'je souhaite commander :',
     wantCommission: 'je souhaite une commande personnalisée.',
     piece: 'Œuvre',
@@ -63,7 +63,7 @@ const STR: Record<Lang, Record<string, string>> = {
     sep: ' : ',
   },
   en: {
-    intro: 'Hello Calligraphy JOUD, ',
+    intro: 'Hello JOUDART, ',
     wantOrder: 'I would like to order:',
     wantCommission: 'I would like to request a custom commission.',
     piece: 'Piece',
@@ -80,7 +80,7 @@ const STR: Record<Lang, Record<string, string>> = {
     sep: ': ',
   },
   ar: {
-    intro: 'مرحباً Calligraphy JOUD، ',
+    intro: 'مرحباً JOUDART، ',
     wantOrder: 'أودّ طلب:',
     wantCommission: 'أودّ طلب عمل مخصّص.',
     piece: 'العمل',

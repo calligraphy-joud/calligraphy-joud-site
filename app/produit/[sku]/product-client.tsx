@@ -197,7 +197,7 @@ export default function ProductClient({
   // Alt text: Woo media-library alt when the owner filled it, else the standard pattern.
   const mainAlt = item.alt && item.alt.trim()
     ? item.alt.trim()
-    : `${name} — tableau ${String(bq.collections[item.col]).toLowerCase()} fait main, ${compName.toLowerCase()} ${formeLabel(fk).toLowerCase()}, Calligraphy JOUD`;
+    : `${name} — tableau ${String(bq.collections[item.col]).toLowerCase()} fait main, ${compName.toLowerCase()} ${formeLabel(fk).toLowerCase()}, JOUDART`;
 
   const cadreLabel = (c: Cadre) =>
     c === 'double'
@@ -361,7 +361,7 @@ export default function ProductClient({
               </div>
               <div>
                 <dt>{lang === 'ar' ? 'الصناعة' : lang === 'en' ? 'Craft' : 'Fabrication'}</dt>
-                <dd>{lang === 'ar' ? 'صناعة يدوية بالكامل — مرسم JOUD، المغرب' : lang === 'en' ? '100% handmade — JOUD atelier, Morocco' : '100% fait main — atelier JOUD, Maroc'}</dd>
+                <dd>{lang === 'ar' ? 'صناعة يدوية بالكامل — مرسم JOUDART، المغرب' : lang === 'en' ? '100% handmade — JOUDART atelier, Morocco' : '100% fait main — atelier JOUDART, Maroc'}</dd>
               </div>
             </dl>
           </div>
@@ -372,7 +372,7 @@ export default function ProductClient({
               [3, lang === 'ar' ? 'الأصباغ والباتين' : lang === 'en' ? 'Pigments & patina' : 'Pigments & patine'],
             ].map(([n, cap]) => (
               <figure className="oeuvre__macro" key={String(n)}>
-                <img src={`/assets/imagery/matiere-${n}.webp`} alt={String(cap) + ' — Calligraphy JOUD'} loading="lazy" />
+                <img src={`/assets/imagery/matiere-${n}.webp`} alt={String(cap) + ' — JOUDART'} loading="lazy" />
                 <figcaption>{cap}</figcaption>
               </figure>
             ))}

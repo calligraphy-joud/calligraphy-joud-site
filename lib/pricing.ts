@@ -1,4 +1,4 @@
-// SINGLE SOURCE OF TRUTH for Calligraphy JOUD prices.
+// SINGLE SOURCE OF TRUTH for JOUDART prices.
 // Reads the official tariff matrix from app/data/joud-pricing.json.
 // Never hardcode a price anywhere else — always go through this engine.
 

@@ -6,11 +6,11 @@
 //
 // Wire it as a WooCommerce webhook (WooCommerce > Settings > Advanced > Webhooks):
 //   Topic:        Product created  (add more for updated / deleted)
-//   Delivery URL: https://calligraphyjoud.com/api/revalidate?secret=YOUR_SECRET
+//   Delivery URL: https://joudart.com/api/revalidate?secret=YOUR_SECRET
 //   Method:       POST
 //
 // Manual trigger (anytime):
-//   https://calligraphyjoud.com/api/revalidate?secret=YOUR_SECRET
+//   https://joudart.com/api/revalidate?secret=YOUR_SECRET
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';

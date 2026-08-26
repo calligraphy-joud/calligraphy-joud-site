@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&family=Aref+Ruqaa:wght@400;700&display=swap');
 
 /* ============================================================
-   Calligraphy JOUD — Color tokens
+   JOUDART — Color tokens
    Four brand colors from the brandbook, expanded into harmonious
    working scales. Hues stay anchored to the originals; lighter and
    darker steps are derived in oklch for even perceptual spacing.
@@ -106,7 +106,7 @@
 }
 
 /* ============================================================
-   Calligraphy JOUD — Typography tokens
+   JOUDART — Typography tokens
    Display: Playfair Display — set large, tight, with a touch of
             italic for editorial accents. Carries the "artistic
             heritage / elegance" voice.
@@ -179,7 +179,7 @@
 }
 
 /* ============================================================
-   Calligraphy JOUD — Spacing & layout tokens
+   JOUDART — Spacing & layout tokens
    4px base grid. Generous, gallery-like whitespace is part of the
    brand: artworks need air. Containers stay narrow and centered.
    ============================================================ */
@@ -253,7 +253,7 @@
 }
 
 /* ============================================================
-   Calligraphy JOUD — Base layer
+   JOUDART — Base layer
    Light element defaults so cards & kits inherit the brand without
    each one re-declaring fonts/colors. Tokens come from the imports.
    ============================================================ */
@@ -311,7 +311,7 @@ img, svg { display: block; max-width: 100%; }
 }
 
 /* ============================================================
-   Calligraphy JOUD — Accueil (editorial gallery home)
+   JOUDART — Accueil (editorial gallery home)
    Token-driven layout. RTL-ready via CSS logical properties.
    All values from the design system tokens.
    ============================================================ */
@@ -886,7 +886,7 @@ body.no-anim [data-reveal] { opacity: 1 !important; transform: none !important; 
 
 /* ====== Histoire + Contact + static pages ====== */
 /* ============================================================
-   Calligraphy JOUD — Notre histoire + Contact
+   JOUDART — Notre histoire + Contact
    Editorial, slow, emotional. Same tokens & rhythm. RTL-ready.
    ============================================================ */
 
@@ -1069,7 +1069,7 @@ body.no-anim [data-reveal] { opacity: 1 !important; transform: none !important; 
 
 /* ====== Boutique / Collection / Catalogue ====== */
 /* ============================================================
-   Calligraphy JOUD — Boutique
+   JOUDART — Boutique
    Filter rail + editorial product grid. Built on the same tokens
    and spacing rhythm as the Accueil. RTL-ready (logical props).
    ============================================================ */

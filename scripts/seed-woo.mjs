@@ -1,5 +1,5 @@
 /**
- * Calligraphy JOUD — WooCommerce one-time seeder
+ * JOUDART — WooCommerce one-time seeder
  * ----------------------------------------------------------------------------
  * Builds your whole store structure over the REST API:
  *   1. Enables Cash on Delivery
@@ -193,7 +193,7 @@ async function ensureProduct(p, catByCol, attrs) {
 
 // ---- run --------------------------------------------------------------------
 (async () => {
-  console.log(`\nCalligraphy JOUD — WooCommerce seeder${DRY ? ' (DRY RUN)' : ''}`);
+  console.log(`\nJOUDART — WooCommerce seeder${DRY ? ' (DRY RUN)' : ''}`);
   console.log(`Store: ${STORE}\n`);
   try {
     // connectivity check

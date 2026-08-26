@@ -2,18 +2,18 @@ import './globals.css';
 import { cookies } from 'next/headers';
 import Providers from './components/providers';
 
-const SITE = 'https://www.calligraphyjoud.com';
+const SITE = 'https://www.joudart.com';
 
 export const metadata = {
   metadataBase: new URL(SITE),
   title: {
-    default: "Calligraphy JOUD — L'art au service de l'excellence",
-    template: '%s · Calligraphy JOUD',
+    default: "JOUDART — L'art au service de l'excellence",
+    template: '%s · JOUDART',
   },
   description:
     "Maison d'art marocaine depuis 1977. Tableaux de calligraphie arabe 100% faits main — pièces uniques. Livraison gratuite au Maroc, paiement à la livraison.",
   keywords: ['calligraphie arabe', 'tableau', 'art marocain', 'calligraphy', 'Maroc', 'fait main', 'art islamique', 'art moderne', 'art abstrait'],
-  authors: [{ name: 'Calligraphy JOUD' }],
+  authors: [{ name: 'JOUDART' }],
   alternates: {
     canonical: '/',
     languages: {
@@ -25,8 +25,8 @@ export const metadata = {
   icons: { icon: '/assets/logo-mark-navy.png' },
   openGraph: {
     type: 'website',
-    siteName: 'Calligraphy JOUD',
-    title: "Calligraphy JOUD — L'art au service de l'excellence",
+    siteName: 'JOUDART',
+    title: "JOUDART — L'art au service de l'excellence",
     description: "Tableaux de calligraphie arabe 100% faits main — pièces uniques. Maison d'art marocaine depuis 1977.",
     locale: 'fr_MA',
     alternateLocale: ['ar_MA', 'en_US'],
@@ -34,7 +34,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Calligraphy JOUD — L'art au service de l'excellence",
+    title: "JOUDART — L'art au service de l'excellence",
     description: 'Tableaux de calligraphie arabe 100% faits main — pièces uniques.',
     images: ['/assets/imagery/hero.webp'],
   },

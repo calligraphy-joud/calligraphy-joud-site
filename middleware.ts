@@ -88,7 +88,7 @@ function adminGate(req: NextRequest): NextResponse | null {
 
   return new NextResponse('Authentification requise', {
     status: 401,
-    headers: { 'WWW-Authenticate': 'Basic realm="Calligraphy JOUD Admin", charset="UTF-8"' },
+    headers: { 'WWW-Authenticate': 'Basic realm="JOUDART Admin", charset="UTF-8"' },
   });
 }
 

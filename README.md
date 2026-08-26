@@ -1,4 +1,4 @@
-# Calligraphy JOUD — Marketing Website
+# JOUDART — Marketing Website
 
 A standalone **Next.js (App Router)** site, rebuilt from the Claude Design handoff:
 the full brand design system, trilingual content (FR / EN / AR + RTL), SEO, and a
@@ -72,13 +72,13 @@ Pages use ISR (`revalidate = 300`), so edits show within 5 minutes on their own.
 2. **Add the webhook** (wp-admin → WooCommerce → Settings → Advanced → Webhooks → Add):
    - Status: **Active**
    - Topic: **Product updated** (add a second one for *Product created* / *deleted*)
-   - Delivery URL: `https://www.calligraphyjoud.com/api/revalidate?secret=YOUR_SECRET`
+   - Delivery URL: `https://www.joudart.com/api/revalidate?secret=YOUR_SECRET`
    - API version: WP REST API v3
 3. Now any product edit fires the webhook → the route clears the Woo cache and
    revalidates the home, collection, catalogue, and all product pages within seconds.
 
 Manual trigger (anytime): open
-`https://www.calligraphyjoud.com/api/revalidate?secret=YOUR_SECRET` (optionally
+`https://www.joudart.com/api/revalidate?secret=YOUR_SECRET` (optionally
 `&sku=ISL-027` to also target one product). Returns `{ "revalidated": true, … }`.
 
 ## WhatsApp checkout

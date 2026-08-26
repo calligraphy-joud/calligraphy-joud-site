@@ -82,7 +82,7 @@ function fmtTotal(total: string, currency: string): string {
 }
 
 function waHref(o: Order): string {
-  const msg = `Bonjour ${o.customer.name || ''}, ici Calligraphy JOUD au sujet de votre commande n°${o.number}.`;
+  const msg = `Bonjour ${o.customer.name || ''}, ici JOUDART au sujet de votre commande n°${o.number}.`;
   return `https://wa.me/${o.waNumber}?text=${encodeURIComponent(msg)}`;
 }
 
