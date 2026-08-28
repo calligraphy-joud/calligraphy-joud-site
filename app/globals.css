@@ -1469,7 +1469,7 @@ body.no-anim .pcard { animation: none; }
 
 /* ============================================================
    Admin — live orders board (/admin)
-   Private dashboard. Reuses the JOUD tokens only; no token redefs.
+   Private dashboard. Reuses the JOUDART tokens only; no token redefs.
    ============================================================ */
 .adm { max-width: var(--container-xl); margin-inline: auto; padding: var(--space-7) var(--gutter-page) var(--space-10); }
 

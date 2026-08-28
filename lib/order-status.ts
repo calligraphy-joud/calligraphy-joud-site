@@ -1,4 +1,4 @@
-// Pipeline status mapping between WooCommerce order statuses and the JOUD
+// Pipeline status mapping between WooCommerce order statuses and the JOUDART
 // admin pipeline. Pure functions — safe to import from server route handlers.
 //
 // Our pipeline stages (ordered):

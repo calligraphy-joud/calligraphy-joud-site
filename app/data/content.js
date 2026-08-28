@@ -533,14 +533,14 @@ export const PRODUCTS = [
 
 export const SHOP_STR = {
   catalogue: {
-    fr: { eyebrow: 'Le catalogue · 2026', title: 'Catalogue complet', lead: "L'intégralité de la collection 2026 — 72 œuvres originales, faites main et signées. Filtrez par collection, forme et composition." },
-    ar: { eyebrow: 'الكتالوج · 2026', title: 'الكتالوج الكامل', lead: 'مجموعة 2026 بكاملها — 72 عملاً أصلياً، مصنوعة يدوياً وموقّعة. صفِّ حسب المجموعة والشكل والتكوين.' },
-    en: { eyebrow: 'The catalogue · 2026', title: 'Full catalogue', lead: 'The complete 2026 collection — 72 original works, handmade and signed. Filter by collection, shape and composition.' },
+    fr: { eyebrow: 'Le catalogue · 2026', title: 'Catalogue complet', lead: "L'intégralité de la collection 2026 — des œuvres originales, faites main et signées. Filtrez par collection." },
+    ar: { eyebrow: 'الكتالوج · 2026', title: 'الكتالوج الكامل', lead: 'مجموعة 2026 بكاملها — أعمال أصلية، مصنوعة يدوياً وموقّعة. صفِّ حسب المجموعة.' },
+    en: { eyebrow: 'The catalogue · 2026', title: 'Full catalogue', lead: 'The complete 2026 collection — original works, handmade and signed. Filter by collection.' },
   },
   all: {
-    fr: { eyebrow: 'La collection', title: 'Toute la collection', lead: "72 œuvres originales, faites main et signées. Filtrez par collection, forme et composition pour trouver l'œuvre de votre mur." },
-    ar: { eyebrow: 'المجموعة', title: 'كامل المجموعة', lead: '72 عملاً أصلياً، مصنوعة يدوياً وموقّعة. صفِّ حسب المجموعة والشكل والتكوين لتجد عمل جدارك.' },
-    en: { eyebrow: 'The collection', title: 'The full collection', lead: '72 original works, handmade and signed. Filter by collection, shape and composition to find the work for your wall.' },
+    fr: { eyebrow: 'La collection', title: 'Toute la collection', lead: "Des œuvres originales, faites main et signées. Filtrez par collection pour trouver l'œuvre de votre mur." },
+    ar: { eyebrow: 'المجموعة', title: 'كامل المجموعة', lead: 'أعمال أصلية، مصنوعة يدوياً وموقّعة. صفِّ حسب المجموعة لتجد عمل جدارك.' },
+    en: { eyebrow: 'The collection', title: 'The full collection', lead: 'Original works, handmade and signed. Filter by collection to find the work for your wall.' },
   },
   colEyebrow: { fr: 'Collection', ar: 'مجموعة', en: 'Collection' },
 };

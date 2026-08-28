@@ -1,7 +1,7 @@
 'use client';
 
 // Admin live-orders board (client). Talks ONLY to /api/admin/orders — never
-// imports @/lib/woo. Renders a kanban grouped by the JOUD pipeline stages,
+// imports @/lib/woo. Renders a kanban grouped by the JOUDART pipeline stages,
 // with optimistic stage moves, per-order WhatsApp, manual refresh and a full
 // set of loading / error / empty states.
 
