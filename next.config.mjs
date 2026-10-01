@@ -19,6 +19,19 @@ const nextConfig = {
       { protocol: 'https', hostname: '**.hostingersite.com', pathname: '/wp-content/**' },
     ],
   },
+  // /public/assets (images, logos, review videos + posters) are not content-hashed,
+  // so no `immutable`: 7 days fresh + 30 days stale-while-revalidate instead of
+  // Vercel's default max-age=0 (a revisit re-downloads/revalidates everything).
+  // /_next/static (JS, CSS, next/font files) is already immutable by default and
+  // /_next/image follows images.minimumCacheTTL above.
+  async headers() {
+    return [
+      {
+        source: '/assets/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=2592000' }],
+      },
+    ];
+  },
   // This is a mixed JS/TS codebase: the page components are TS while the shared
   // hooks/data modules are JS, which makes the strict build-time type-checker
   // emit inference-only errors (e.g. `t` inferred as `never`) on code that is
