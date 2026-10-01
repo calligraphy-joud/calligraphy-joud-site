@@ -148,6 +148,15 @@ async function parseBody(res: Response): Promise<unknown> {
   }
 }
 
+/**
+ * Catalogue reads (products, variations, categories) go through Next's Data
+ * Cache: shared across instances/regions, refreshed every 5 min (ISR) and purged
+ * instantly by /api/revalidate (revalidateTag('woo')). Orders/admin/health
+ * reads pass no options and stay live (no-store).
+ */
+export type WooCacheOpts = { revalidate: number; tags: string[] };
+export const WOO_CATALOGUE_CACHE: WooCacheOpts = { revalidate: 300, tags: ['woo'] };
+
 interface RequestResult {
   res: Response;
   body: unknown;
@@ -161,6 +170,7 @@ async function request(
   method: 'GET' | 'POST' | 'PUT',
   url: string,
   jsonBody?: unknown,
+  cacheOpts?: WooCacheOpts,
 ): Promise<RequestResult> {
   if (!isWooConfigured()) {
     throw new WooError('WooCommerce is not configured', undefined, 'not_configured');
@@ -182,8 +192,10 @@ async function request(
         headers,
         body: jsonBody !== undefined ? JSON.stringify(jsonBody) : undefined,
         signal: controller.signal,
-        // Always hit the network; we do our own in-memory caching layer.
-        cache: 'no-store',
+        // Catalogue GETs opt into the Data Cache; everything else always hits the network.
+        ...(cacheOpts && method === 'GET'
+          ? { next: { revalidate: cacheOpts.revalidate, tags: cacheOpts.tags } }
+          : { cache: 'no-store' as const }),
       });
       const body = await parseBody(res);
       return { res, body };
@@ -242,8 +254,9 @@ async function request(
 export async function wooGet<T = any>(
   path: string,
   params?: Record<string, string | number | boolean | undefined>,
+  cacheOpts?: WooCacheOpts,
 ): Promise<{ data: T; totalPages: number; total: number }> {
-  const { res, body } = await request('GET', buildUrl(path, params));
+  const { res, body } = await request('GET', buildUrl(path, params), undefined, cacheOpts);
   const totalPages = Number(res.headers.get('x-wp-totalpages')) || 1;
   const total = Number(res.headers.get('x-wp-total')) || 0;
   return { data: body as T, totalPages, total };
@@ -528,7 +541,7 @@ export async function getProducts(opts?: GetProductsOptions): Promise<{
       if (o.search) params.search = o.search;
       if (categoryId) params.category = categoryId;
 
-      const res = await wooGet<WooProduct[]>('products', params);
+      const res = await wooGet<WooProduct[]>('products', params, WOO_CATALOGUE_CACHE);
       return res;
     });
 
@@ -577,7 +590,10 @@ export async function getProducts(opts?: GetProductsOptions): Promise<{
  * Get a single product by SKU (preferred) or numeric id, with its variations
  * when it is a variable product. Falls back to the local item on any failure.
  */
-export async function getProduct(idOrSku: string): Promise<{
+export async function getProduct(
+  idOrSku: string,
+  opts?: { fresh?: boolean },
+): Promise<{
   item: CatalogueItem;
   woo: WooProduct | null;
   variations: any[];
@@ -586,6 +602,8 @@ export async function getProduct(idOrSku: string): Promise<{
   notFound?: boolean;
 }> {
   const key = String(idOrSku || '').trim();
+  // Pages read the cached catalogue; the order API asks for a live read.
+  const cacheOpts = opts && opts.fresh ? undefined : WOO_CATALOGUE_CACHE;
 
   const fallbackItem = (): CatalogueItem => {
     const known = FALLBACK_BY_SKU.get(key.toUpperCase());
@@ -615,15 +633,16 @@ export async function getProduct(idOrSku: string): Promise<{
       READ_TTL_MS,
       async () => {
         // Resolve by SKU first.
-        const bySku = await wooGet<WooProduct[]>('products', {
-          sku: key,
-          per_page: 1,
-        });
+        const bySku = await wooGet<WooProduct[]>(
+          'products',
+          { sku: key, per_page: 1 },
+          cacheOpts,
+        );
         if (Array.isArray(bySku.data) && bySku.data[0]) return bySku.data[0];
 
         // Else by numeric id.
         if (/^\d+$/.test(key)) {
-          const byId = await wooGet<WooProduct>(`products/${key}`);
+          const byId = await wooGet<WooProduct>(`products/${key}`, undefined, cacheOpts);
           if (byId.data && (byId.data as WooProduct).id) return byId.data;
         }
         return null;
@@ -652,9 +671,11 @@ export async function getProduct(idOrSku: string): Promise<{
           `woo:variations:${found.id}`,
           READ_TTL_MS,
           async () => {
-            const res = await wooGet<any[]>(`products/${found.id}/variations`, {
-              per_page: 100,
-            });
+            const res = await wooGet<any[]>(
+              `products/${found.id}/variations`,
+              { per_page: 100 },
+              cacheOpts,
+            );
             return Array.isArray(res.data) ? res.data : [];
           },
         );

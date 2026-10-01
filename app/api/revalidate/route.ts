@@ -14,7 +14,7 @@
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { clearWooCache } from '@/lib/woo-cache';
 
 export const runtime = 'nodejs';
@@ -39,8 +39,11 @@ async function handle(req: NextRequest) {
     );
   }
 
-  // Drop the in-memory Woo cache so the next render fetches fresh data.
+  // Drop the in-memory Woo cache and the shared Data Cache entries (every
+  // catalogue fetch is tagged 'woo'), so the next render fetches fresh data —
+  // products deleted in Woo disappear from the listings right away.
   clearWooCache();
+  revalidateTag('woo');
 
   const extra = req.nextUrl.searchParams.get('path');
   const paths = extra ? [...LISTING_PATHS, extra] : LISTING_PATHS;
@@ -51,9 +54,10 @@ async function handle(req: NextRequest) {
       /* ignore individual path failures */
     }
   }
-  // Refresh every product detail page too.
+  // Pages are pre-rendered per locale (app/[locale]/…, see middleware.ts):
+  // purge the whole tree so every locale + every product page is regenerated.
   try {
-    revalidatePath('/produit/[sku]', 'page');
+    revalidatePath('/', 'layout');
   } catch {
     /* ignore */
   }

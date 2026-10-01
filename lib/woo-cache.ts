@@ -78,7 +78,7 @@ export async function getCategoryId(slugOrName: string): Promise<number | null> 
 
   // Imported lazily to avoid a circular import at module-eval time
   // (woo.ts imports from this file too).
-  const { wooGet, isWooConfigured } = await import('./woo');
+  const { wooGet, isWooConfigured, WOO_CATALOGUE_CACHE } = await import('./woo');
   if (!isWooConfigured()) return null;
 
   let categories: WooCategory[];
@@ -92,10 +92,11 @@ export async function getCategoryId(slugOrName: string): Promise<number | null> 
         // Categories are usually few; cap pages defensively.
         // eslint-disable-next-line no-constant-condition
         while (page <= 10) {
-          const res = await wooGet<WooCategory[]>('products/categories', {
-            per_page: 100,
-            page,
-          });
+          const res = await wooGet<WooCategory[]>(
+            'products/categories',
+            { per_page: 100, page },
+            WOO_CATALOGUE_CACHE,
+          );
           if (Array.isArray(res.data)) acc.push(...res.data);
           if (page >= (res.totalPages || 1)) break;
           page += 1;

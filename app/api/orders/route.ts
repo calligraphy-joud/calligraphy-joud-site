@@ -176,7 +176,7 @@ export async function POST(req: NextRequest) {
     let variationId: number | undefined = payload.variationId;
     if (payload.sku) {
       try {
-        const resolved = await getProduct(payload.sku);
+        const resolved = await getProduct(payload.sku, { fresh: true });
         if (resolved.woo && resolved.woo.id) productId = resolved.woo.id;
         if (!variationId && wantedDim && Array.isArray(resolved.variations)) {
           const norm = (s: unknown) =>
