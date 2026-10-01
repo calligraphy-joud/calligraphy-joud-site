@@ -80,11 +80,16 @@ export function useReveal(deps = []) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    els.forEach((e) => {
-      if (e.classList.contains('is-in')) return;
+    // Read every rect first, then write classes: interleaving getBoundingClientRect()
+    // with classList.add() forced a synchronous layout per element (forced reflow).
+    const pending = els.filter((e) => !e.classList.contains('is-in'));
+    const onScreen = pending.map((e) => {
       const r = e.getBoundingClientRect();
-      // Already on screen → reveal now; otherwise observe for scroll.
-      if (r.top < vh && r.bottom > 0) e.classList.add('is-in');
+      return r.top < vh && r.bottom > 0;
+    });
+    // Already on screen → reveal now; otherwise observe for scroll.
+    pending.forEach((e, i) => {
+      if (onScreen[i]) e.classList.add('is-in');
       else io.observe(e);
     });
     return () => io.disconnect();

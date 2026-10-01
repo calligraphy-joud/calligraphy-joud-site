@@ -215,9 +215,12 @@ export function BeforeAfter() {
   const [pos, setPos] = useState(52);
   const dragging = useRef(false);
 
+  // The slider box is measured once per drag (pointerdown), not on every
+  // pointermove: reading layout right after a React style write forced a reflow.
+  const rect = useRef(null);
+  const measure = () => { const el = ref.current; rect.current = el ? el.getBoundingClientRect() : null; };
   const move = useCallback((clientX) => {
-    const el = ref.current; if (!el) return;
-    const r = el.getBoundingClientRect();
+    const r = rect.current; if (!r || !r.width) return;
     const f = Math.min(1, Math.max(0, (clientX - r.left) / r.width));
     setPos(f * 100);
   }, []);
@@ -239,7 +242,7 @@ export function BeforeAfter() {
           <p className="section-head__lead" data-reveal data-delay="2">{t.transformLead}</p>
         </div>
         <div className="ba" ref={ref} style={{ '--pos': pos + '%' }} data-reveal
-          onPointerDown={(e) => { dragging.current = true; move(e.clientX); }}>
+          onPointerDown={(e) => { dragging.current = true; measure(); move(e.clientX); }}>
           <div className="ba__layer ba__after">
             <Img src="/assets/imagery/AFTER-JOUD-2.webp" alt={t.after} sizes="(max-width: 1200px) 100vw, 1200px" />
           </div>
