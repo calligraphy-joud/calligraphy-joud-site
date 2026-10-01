@@ -21,12 +21,12 @@ export function HistoireView() {
       <Header page="histoire" />
       <main>
         <section className="wrap hs-hero">
-          <span className="eyebrow" data-reveal>{h.eyebrow}</span>
+          <span className="eyebrow" data-hero-in>{h.eyebrow}</span>
           {lang === 'ar'
-            ? <h1 data-reveal data-delay="1">{h.title}</h1>
-            : <h1 data-reveal data-delay="1">Notre <span className="ital">histoire.</span></h1>}
-          <p className="hs-hero__lead" data-reveal data-delay="2">{h.lead}</p>
-          <figure className="hs-herofig" data-reveal data-delay="2" style={{ margin: 'clamp(2.5rem,5vw,8rem) auto 0' }}>
+            ? <h1>{h.title}</h1>
+            : <h1>Notre <span className="ital">histoire.</span></h1>}
+          <p className="hs-hero__lead" data-hero-in="1">{h.lead}</p>
+          <figure className="hs-herofig" data-hero-in="2" style={{ margin: 'clamp(2.5rem,5vw,8rem) auto 0' }}>
             <div className="joud-frame" style={{ padding: 18 }}>
               <div className="joud-frame__img" style={{ aspectRatio: '16 / 9' }}><Img src={IMG + 'maison-2.webp'} alt="" sizes="(max-width: 1100px) 92vw, 1100px" /></div>
               <span className="joud-frame__bevel" style={{ inset: 18 }} />

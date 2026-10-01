@@ -149,7 +149,7 @@ export default function Boutique({ variant = 'boutique', lockCol = null, intro =
   return (
     <main>
       {intro && intro.img ? (
-        <section className="collhero" data-reveal>
+        <section className="collhero">
           <Img priority src={intro.img} alt={title} sizes="100vw" />
           <div className="collhero__scrim" />
           <div className="wrap collhero__body">
@@ -160,9 +160,9 @@ export default function Boutique({ variant = 'boutique', lockCol = null, intro =
         </section>
       ) : (
         <section className="wrap bq-intro">
-          <span className="eyebrow" data-reveal>{eyebrow}</span>
-          <h1 className="section-head__title" data-reveal data-delay="1" style={{ marginTop: 'var(--space-4)' }}>{title}</h1>
-          <p className="bq-intro__lead" data-reveal data-delay="2">{lead}</p>
+          <span className="eyebrow" data-hero-in>{eyebrow}</span>
+          <h1 className="section-head__title" style={{ marginTop: 'var(--space-4)' }}>{title}</h1>
+          <p className="bq-intro__lead" data-hero-in="1">{lead}</p>
         </section>
       )}
 

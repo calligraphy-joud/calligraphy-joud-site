@@ -20,17 +20,17 @@ export function Hero() {
     <section className="hero" id="top">
       <div className="wrap hero__grid">
         <div className="hero__copy">
-          <span className="eyebrow" data-reveal>{t.heroEyebrow}</span>
-          <h1 data-reveal data-delay="1">
+          <span className="eyebrow" data-hero-in>{t.heroEyebrow}</span>
+          <h1>
             {t.heroTitle1}<br /><span className="ital accent">{t.heroTitle2}</span>
           </h1>
-          <p className="hero__lead" data-reveal data-delay="2">{t.heroLead}</p>
-          <div className="hero__cta" data-reveal data-delay="3">
+          <p className="hero__lead" data-hero-in="1">{t.heroLead}</p>
+          <div className="hero__cta" data-hero-in="2">
             <Button variant="primary" size="lg" rightIcon={<Icons.arrow />} onClick={() => go('collection')}>{t.heroCta1}</Button>
             <Button variant="secondary" size="lg" onClick={() => openOrder()}>{t.heroCta2}</Button>
           </div>
         </div>
-        <div className="hero__art" data-reveal data-delay="2">
+        <div className="hero__art">
           <figure className="joud-frame" style={{ margin: 0 }}>
             <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}>
               <Img priority src="/assets/imagery/hero.webp" alt={t.heroCapTitle} sizes="(max-width: 1024px) min(90vw, 380px), 440px" />
