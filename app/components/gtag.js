@@ -153,7 +153,9 @@ export function GoogleTag() {
   const primary = GA4_ID || ADS_ID;
   return (
     <>
-      <Script id="ga-lib" strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${primary}`} />
+      {/* The library itself can wait for idle: ga-init below defines the gtag()/dataLayer
+          stub right away, so every event pushed before the library arrives is queued. */}
+      <Script id="ga-lib" strategy="lazyOnload" src={`https://www.googletagmanager.com/gtag/js?id=${primary}`} />
       <Script
         id="ga-init"
         strategy="afterInteractive"
