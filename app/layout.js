@@ -1,6 +1,7 @@
 import './globals.css';
 import { cookies } from 'next/headers';
 import Providers from './components/providers';
+import { fontVars } from './fonts';
 
 const SITE = 'https://www.joudart.com';
 
@@ -53,7 +54,7 @@ export default async function RootLayout({ children }) {
   const lang = raw === 'ar' || raw === 'en' ? raw : 'fr';
   const dir = lang === 'ar' ? 'rtl' : 'ltr';
   return (
-    <html lang={lang} dir={dir}>
+    <html lang={lang} dir={dir} className={fontVars}>
       <body>
         <Providers initialLang={lang}>{children}</Providers>
       </body>
