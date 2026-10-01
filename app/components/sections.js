@@ -8,6 +8,7 @@ import { ARTWORKS, CATEGORIES, REVIEWS, PARTNERS, PRODUCTS } from '../data/conte
 import { useOrder } from './order';
 import { getSizes, getStartingPrice, formeFromIndex } from '@/lib/pricing';
 import { CountNumber } from './count';
+import { Img } from './img';
 
 const _sLabel = (s) => (!s ? '' : s.startsWith('Ø') ? 'Ø ' + s.slice(1) + ' cm' : s.replace('x', ' × ') + ' cm');
 
@@ -32,7 +33,7 @@ export function Hero() {
         <div className="hero__art" data-reveal data-delay="2">
           <figure className="joud-frame" style={{ margin: 0 }}>
             <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}>
-              <img loading="eager" fetchPriority="high" src="/assets/imagery/hero.webp" alt={t.heroCapTitle} />
+              <Img priority src="/assets/imagery/hero.webp" alt={t.heroCapTitle} sizes="(max-width: 1024px) min(90vw, 380px), 440px" />
             </div>
             <span className="joud-frame__bevel" />
             <figcaption className="hero__caption">
@@ -97,7 +98,7 @@ function Work({ w }) {
     <Link className={cls} data-reveal onClick={openIt} href={href} aria-label={title}>
       <div className="work__media" style={{ aspectRatio: w.ratio }}>
         <span className="work__cat"><Badge variant="navy">{cat}</Badge></span>
-        {w.img ? <img loading="lazy" src={w.img} alt={title} /> : <ImgSlot label={'« ' + w.title + ' »'} />}
+        {w.img ? <Img src={w.img} alt={title} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 45vw, 380px" /> : <ImgSlot label={'« ' + w.title + ' »'} />}
       </div>
       <div className="work__body">
         <h3 className="work__title serif">{title}</h3>
@@ -137,7 +138,7 @@ function FeaturedWork({ item }) {
     <Link className="work" data-reveal href={'/produit/' + encodeURIComponent(item.id)} aria-label={title}>
       <div className="work__media" style={{ aspectRatio: ratio }}>
         <span className="work__cat"><Badge variant="navy">{cat}</Badge></span>
-        {item.img ? <img loading="lazy" src={item.img} alt={title} /> : <ImgSlot label={'« ' + item.name + ' »'} />}
+        {item.img ? <Img src={item.img} alt={title} sizes="(max-width: 700px) 90vw, (max-width: 1100px) 45vw, 380px" /> : <ImgSlot label={'« ' + item.name + ' »'} />}
       </div>
       <div className="work__body">
         <h3 className="work__title serif">{title}</h3>
@@ -192,7 +193,7 @@ export function Categories() {
               <article className="cat" key={c.id} data-reveal data-delay={String(i)} role="button" tabIndex={0}
                 onClick={() => open(c.id)}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(c.id); } }}>
-                <img loading="lazy" src={c.img} alt={name} />
+                <Img src={c.img} alt={name} sizes="(max-width: 900px) 100vw, 34vw" />
                 <div className="cat__body">
                   <h3 className="cat__name serif">{name}</h3>
                   <p className="cat__desc">{desc}</p>
@@ -240,10 +241,10 @@ export function BeforeAfter() {
         <div className="ba" ref={ref} style={{ '--pos': pos + '%' }} data-reveal
           onPointerDown={(e) => { dragging.current = true; move(e.clientX); }}>
           <div className="ba__layer ba__after">
-            <img loading="lazy" src="/assets/imagery/AFTER-JOUD-2.webp" alt={t.after} />
+            <Img src="/assets/imagery/AFTER-JOUD-2.webp" alt={t.after} sizes="(max-width: 1200px) 100vw, 1200px" />
           </div>
           <div className="ba__layer ba__before">
-            <img loading="lazy" src="/assets/imagery/BEFORE-JOUD-2.webp" alt={t.before} />
+            <Img src="/assets/imagery/BEFORE-JOUD-2.webp" alt={t.before} sizes="(max-width: 1200px) 100vw, 1200px" />
           </div>
           <span className="ba__tag ba__tag--before">{t.before}</span>
           <span className="ba__tag ba__tag--after">{t.after}</span>
@@ -260,7 +261,7 @@ export function Mission() {
   const { t } = useLang();
   return (
     <section className="mission section" id="maison">
-      <img loading="lazy" className="mission__mark" src="/assets/logo-mark-white.webp" alt="" />
+      <Img className="mission__mark" src="/assets/logo-mark-white.webp" alt="" sizes="(max-width: 740px) 280px, 38vw" />
       <div className="wrap mission__grid">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)', alignItems: 'flex-start' }}>
           <span className="eyebrow" data-reveal>{t.missionEyebrow}</span>
@@ -277,11 +278,11 @@ export function Mission() {
         </div>
         <div className="mission__media" data-reveal data-delay="2">
           <figure className="joud-frame" style={{ margin: 0 }}>
-            <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}><img loading="lazy" src="/assets/imagery/maison-1.webp" alt="" /></div>
+            <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}><Img src="/assets/imagery/maison-1.webp" alt="" sizes="(max-width: 1024px) 45vw, 300px" /></div>
             <span className="joud-frame__bevel" />
           </figure>
           <figure className="joud-frame" style={{ margin: 0 }}>
-            <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}><img loading="lazy" src="/assets/imagery/maison-2.webp" alt="" /></div>
+            <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}><Img src="/assets/imagery/maison-2.webp" alt="" sizes="(max-width: 1024px) 45vw, 300px" /></div>
             <span className="joud-frame__bevel" />
           </figure>
         </div>
@@ -406,7 +407,7 @@ export function Instagram() {
         <div className="insta__grid">
           {cells.map((c, i) => (
             <div className="insta__cell" key={i} data-reveal data-delay={String(i % 4)}>
-              {c.img ? <img loading="lazy" src={c.img} alt="" /> : <ImgSlot label="Instagram" />}
+              {c.img ? <Img src={c.img} alt="" sizes="(max-width: 700px) 50vw, 25vw" /> : <ImgSlot label="Instagram" />}
             </div>
           ))}
         </div>

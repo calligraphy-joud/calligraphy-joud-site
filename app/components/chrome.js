@@ -4,6 +4,7 @@ import { useLang } from './lang-context';
 import { useOrder } from './order';
 import { Button } from './ui';
 import { Icons } from './icons';
+import { Img } from './img';
 
 const LANGS = [['fr', 'FR'], ['en', 'EN'], ['ar', 'ع']];
 
@@ -47,7 +48,7 @@ export function Header({ page = 'home' }) {
       <header className={'hdr' + (open ? ' hdr--open' : '') + (scrolled ? ' is-scrolled' : '')}>
         <div className="wrap hdr__bar">
           <button className="brand" onClick={() => go('home')} aria-label="JOUDART">
-            <img src="/assets/logo-mark-navy.webp" alt="" width={36} height={36} />
+            <Img priority src="/assets/logo-mark-navy.webp" alt="" sizes="36px" />
             <span className="brand__name">JOUDART</span>
           </button>
 
@@ -115,7 +116,7 @@ export function Footer() {
       <div className="wrap ftr__grid">
         <div>
           <button className="ftr__brand" onClick={() => go('home')} style={{ background: 'none', border: 0, padding: 0, cursor: 'pointer' }}>
-            <img src="/assets/logo-mark-gold.webp" alt="" width={34} height={34} />
+            <Img src="/assets/logo-mark-gold.webp" alt="" sizes="34px" />
             <span>JOUDART</span>
           </button>
           <p className="ftr__about">{t.ftrAbout}</p>

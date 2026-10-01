@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useLang } from './lang-context';
 import { Icons } from './icons';
+import { Img } from './img';
 import { PRODUCTS, PRICE } from '../data/content';
 import { useOrder } from './order';
 import { getSizes, getStartingPrice, formeFromIndex } from '@/lib/pricing';
@@ -43,7 +44,7 @@ function PCard({ p, lang, t }) {
   return (
     <Link className="pcard" href={'/produit/' + encodeURIComponent(p.id)} aria-label={(bq.view || 'Voir') + ' — ' + name}>
       <div className={mediaCls}>
-        {p.img ? <img src={p.img} alt={name} loading="lazy" /> : <div className="img-slot"><span>{p.name}</span></div>}
+        {p.img ? <Img src={p.img} alt={name} sizes="(max-width: 600px) 45vw, (max-width: 1000px) 30vw, 340px" /> : <div className="img-slot"><span>{p.name}</span></div>}
         <div className="pmedia__scrim">
           <div className="pmedia__tags">
             <span className="ptag">{comp}</span>
@@ -149,7 +150,7 @@ export default function Boutique({ variant = 'boutique', lockCol = null, intro =
     <main>
       {intro && intro.img ? (
         <section className="collhero" data-reveal>
-          <img src={intro.img} alt={title} />
+          <Img priority src={intro.img} alt={title} sizes="100vw" />
           <div className="collhero__scrim" />
           <div className="wrap collhero__body">
             <span className="eyebrow collhero__eyebrow">{eyebrow}</span>

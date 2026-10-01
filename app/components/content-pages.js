@@ -3,6 +3,7 @@ import { useLang, useReveal } from './lang-context';
 import { Header, Footer } from './chrome';
 import { Button } from './ui';
 import { Icons } from './icons';
+import { Img } from './img';
 import { useOrder } from './order';
 import { WA_NUMBER } from './order';
 
@@ -27,7 +28,7 @@ export function HistoireView() {
           <p className="hs-hero__lead" data-reveal data-delay="2">{h.lead}</p>
           <figure className="hs-herofig" data-reveal data-delay="2" style={{ margin: 'clamp(2.5rem,5vw,8rem) auto 0' }}>
             <div className="joud-frame" style={{ padding: 18 }}>
-              <div className="joud-frame__img" style={{ aspectRatio: '16 / 9' }}><img loading="lazy" src={IMG + 'maison-2.webp'} alt="" /></div>
+              <div className="joud-frame__img" style={{ aspectRatio: '16 / 9' }}><Img src={IMG + 'maison-2.webp'} alt="" sizes="(max-width: 1100px) 92vw, 1100px" /></div>
               <span className="joud-frame__bevel" style={{ inset: 18 }} />
             </div>
             <figcaption>{h.heroCap}</figcaption>
@@ -44,7 +45,7 @@ export function HistoireView() {
             </div>
             <figure className="hs-origin__fig" data-reveal data-delay="2" style={{ margin: 0 }}>
               <div className="joud-frame">
-                <div className="joud-frame__img" style={{ aspectRatio: '4 / 5' }}><img loading="lazy" src={IMG + 'maison-1.webp'} alt="" /></div>
+                <div className="joud-frame__img" style={{ aspectRatio: '4 / 5' }}><Img src={IMG + 'maison-1.webp'} alt="" sizes="(max-width: 900px) 92vw, 45vw" /></div>
                 <span className="joud-frame__bevel" />
               </div>
             </figure>
@@ -60,8 +61,8 @@ export function HistoireView() {
               <cite>{lang === 'ar' ? 'JOUDART — منذ 1977' : 'JOUDART — depuis 1977'}</cite>
             </div>
             <div className="maison-quote__pair" data-reveal data-delay="1">
-              <figure><img loading="lazy" src={IMG + 'lifestyle-1.webp'} alt="" /></figure>
-              <figure><img loading="lazy" src={IMG + 'lifestyle-3.webp'} alt="" /></figure>
+              <figure><Img src={IMG + 'lifestyle-1.webp'} alt="" sizes="(max-width: 900px) 50vw, 25vw" /></figure>
+              <figure><Img src={IMG + 'lifestyle-3.webp'} alt="" sizes="(max-width: 900px) 50vw, 25vw" /></figure>
             </div>
           </div>
         </section>
@@ -74,10 +75,10 @@ export function HistoireView() {
               <p className="section-head__lead" data-reveal data-delay="2">{h.atelierText}</p>
             </div>
             <div className="hs-atelier__montage">
-              <div className="cell cell--a" data-reveal><img loading="lazy" src={IMG + 'matiere-1.webp'} alt="Détail matière — feuille d’or appliquée à la main, JOUDART" /></div>
-              <div className="cell cell--b" data-reveal data-delay="1"><img loading="lazy" src={IMG + 'matiere-2.webp'} alt="Détail matière — texture et relief, atelier JOUDART" /></div>
-              <div className="cell cell--c" data-reveal data-delay="1"><img loading="lazy" src={IMG + 'matiere-3.webp'} alt="Détail matière — pigments et patine, atelier JOUDART" /></div>
-              <div className="cell cell--d" data-reveal><img loading="lazy" src={IMG + 'lifestyle-2.webp'} alt="Œuvre JOUDART mise en scène dans un intérieur" /></div>
+              <div className="cell cell--a" data-reveal><Img sizes="(max-width: 900px) 92vw, 58vw" src={IMG + 'matiere-1.webp'} alt="Détail matière — feuille d’or appliquée à la main, JOUDART" /></div>
+              <div className="cell cell--b" data-reveal data-delay="1"><Img sizes="(max-width: 900px) 92vw, 42vw" src={IMG + 'matiere-2.webp'} alt="Détail matière — texture et relief, atelier JOUDART" /></div>
+              <div className="cell cell--c" data-reveal data-delay="1"><Img sizes="(max-width: 900px) 92vw, 42vw" src={IMG + 'matiere-3.webp'} alt="Détail matière — pigments et patine, atelier JOUDART" /></div>
+              <div className="cell cell--d" data-reveal><Img sizes="(max-width: 900px) 92vw, 58vw" src={IMG + 'lifestyle-2.webp'} alt="Œuvre JOUDART mise en scène dans un intérieur" /></div>
             </div>
           </div>
         </section>

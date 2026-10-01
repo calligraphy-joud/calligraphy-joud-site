@@ -3,6 +3,10 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Optimised variants are content-addressed by (url, width, quality): keep them
+    // 31 days at the edge instead of the 60 s default (Woo media URLs change when
+    // the owner uploads a new file, so long TTLs are safe).
+    minimumCacheTTL: 2678400,
     // Owner-managed product images are served from the WordPress/WooCommerce host.
     // next/image optimizes remote images only from allow-listed hosts.
     remotePatterns: [

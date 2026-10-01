@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useLang } from './lang-context';
 import { Icons } from './icons';
+import { Img } from './img';
 import { submitOrder, buildClientWaUrl } from '@/lib/order-client';
 import { fbTrack, makeEventId } from './pixel';
 import { trackOrderPlaced, getClickId } from './gtag';
@@ -202,7 +203,7 @@ function OrderModal({ product, onClose }) {
         {product && (
           <div className="om-media">
             {product.img ? (
-              <span className="om-media__img"><img src={product.img} alt={name} /></span>
+              <span className="om-media__img"><Img src={product.img} alt={name} sizes="72px" /></span>
             ) : null}
             <span className="om-media__meta">
               {typeof product.col === 'number' && <span className="om-media__cat">{bq.collections[product.col]}</span>}

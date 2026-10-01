@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useLang, useReveal } from '@/app/components/lang-context';
 import { Header, Footer } from '@/app/components/chrome';
 import { Icons } from '@/app/components/icons';
+import { Img } from '@/app/components/img';
 import { useOrder } from '@/app/components/order';
 import { fbTrack } from '@/app/components/pixel';
 import { PRICE } from '@/app/data/content';
@@ -108,7 +109,7 @@ function Gallery({ images, name, alt, forme, pd }: { images: string[]; name: str
         <div className="pd-thumbs">
           {images.map((src, i) => (
             <button key={i} className="pd-thumb" aria-pressed={i === active} onClick={() => setActive(i)} type="button">
-              <img src={src} alt="" />
+              <Img src={src} alt="" sizes="84px" />
             </button>
           ))}
         </div>
@@ -127,7 +128,7 @@ function Gallery({ images, name, alt, forme, pd }: { images: string[]; name: str
               <button className="pd-lightbox__nav pd-lightbox__nav--next" aria-label="Suivant" type="button" onClick={(e) => { e.stopPropagation(); step(1); }}>›</button>
             </>
           )}
-          <img key={cur} className="pd-lb-img" src={cur} alt={alt} onClick={(e) => e.stopPropagation()} />
+          <Img key={cur} className="pd-lb-img" src={cur} alt={alt} sizes="100vw" style={{ width: 'auto', height: 'auto' }} onClick={(e: React.MouseEvent) => e.stopPropagation()} />
         </div>
       )}
     </div>
@@ -145,7 +146,7 @@ function RelatedCard({ p, lang, t }: { p: CatalogueItem; lang: string; t: any })
   return (
     <Link className="pcard" href={'/produit/' + encodeURIComponent(p.id)} aria-label={name}>
       <div className={mediaCls}>
-        {p.img ? <img src={p.img} alt={name} loading="lazy" /> : <div className="img-slot"><span>{p.name}</span></div>}
+        {p.img ? <Img src={p.img} alt={name} sizes="(max-width: 600px) 45vw, (max-width: 1000px) 30vw, 300px" /> : <div className="img-slot"><span>{p.name}</span></div>}
       </div>
       <div className="pbody">
         <span className="pcat">{col}</span>
@@ -372,7 +373,7 @@ export default function ProductClient({
               [3, lang === 'ar' ? 'الأصباغ والباتين' : lang === 'en' ? 'Pigments & patina' : 'Pigments & patine'],
             ].map(([n, cap]) => (
               <figure className="oeuvre__macro" key={String(n)}>
-                <img src={`/assets/imagery/matiere-${n}.webp`} alt={String(cap) + ' — JOUDART'} loading="lazy" />
+                <Img src={`/assets/imagery/matiere-${n}.webp`} alt={String(cap) + ' — JOUDART'} sizes="260px" />
                 <figcaption>{cap}</figcaption>
               </figure>
             ))}
@@ -398,11 +399,11 @@ export default function ProductClient({
           </div>
           <div className="pd-story__img" data-reveal data-delay="1">
             <figure className="joud-frame">
-              <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}><img src="/assets/imagery/matiere-1.webp" alt="" /></div>
+              <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}><Img src="/assets/imagery/matiere-1.webp" alt="" sizes="(max-width: 860px) 45vw, 300px" /></div>
               <span className="joud-frame__bevel" />
             </figure>
             <figure className="joud-frame">
-              <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}><img src="/assets/imagery/matiere-2.webp" alt="" /></div>
+              <div className="joud-frame__img" style={{ aspectRatio: '3 / 4' }}><Img src="/assets/imagery/matiere-2.webp" alt="" sizes="(max-width: 860px) 45vw, 300px" /></div>
               <span className="joud-frame__bevel" />
             </figure>
           </div>
