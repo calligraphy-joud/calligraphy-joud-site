@@ -1,4 +1,4 @@
-import HomeClient from './home-client';
+import HomeClient from '@/app/home-client';
 import { getProducts } from '@/lib/woo';
 
 export const revalidate = 300;

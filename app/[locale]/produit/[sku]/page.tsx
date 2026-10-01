@@ -3,8 +3,18 @@ import { getProduct, getProducts } from '@/lib/woo';
 import { STR, REVIEWS } from '@/app/data/content';
 import { getStartingPrice, formeFromIndex } from '@/lib/pricing';
 import ProductClient from './product-client';
+import attrs from '@/app/data/joud-products-attributes.json';
 
 export const revalidate = 300;
+
+// Pre-render the 72 official SKUs (the attributes file is the single source of
+// truth, same list as the sitemap) for every locale, then keep them fresh via
+// ISR (5 min) and the Woo webhook. Pre-rendering matters: pages are reached
+// through the middleware locale rewrite, and on-demand ISR of a never-built
+// dynamic path behind a rewrite is not cached by `next start`.
+export async function generateStaticParams() {
+  return Object.keys((attrs as any).products || {}).map((sku) => ({ sku }));
+}
 
 const SITE = 'https://www.joudart.com';
 const COL_SLUG = ['islamique', 'moderne', 'abstrait'] as const;

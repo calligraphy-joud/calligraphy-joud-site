@@ -1,4 +1,4 @@
-import { HistoireView } from '../components/content-pages';
+import { HistoireView } from '@/app/components/content-pages';
 export const metadata = {
   title: 'Notre histoire',
   description: "Depuis 1977, JOUDART perpétue l'art de la calligraphie arabe — une main de famille transmise de génération en génération, entre tradition et création contemporaine.",

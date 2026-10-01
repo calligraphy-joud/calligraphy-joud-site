@@ -1,4 +1,4 @@
-import { ContactView } from '../components/content-pages';
+import { ContactView } from '@/app/components/content-pages';
 export const metadata = {
   title: 'Contact',
   description: "Contactez JOUDART à Agadir — WhatsApp, téléphone, e-mail. Commande personnalisée, questions, projet sur mesure : nous répondons vite.",

@@ -1,4 +1,4 @@
-import { CatalogueView } from '../components/shop-view';
+import { CatalogueView } from '@/app/components/shop-view';
 import { getProducts } from '@/lib/woo';
 
 export const revalidate = 300;

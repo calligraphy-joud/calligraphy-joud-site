@@ -12,8 +12,9 @@ const ROUTES = {
 };
 
 export function LangProvider({ children, initialLang }) {
-  // initialLang comes from the server (the `lang` cookie) so SSR matches the
-  // chosen locale — important for RTL + the Arabic crawl/curl.
+  // initialLang comes from the server (the app/[locale] route segment, picked by
+  // middleware from ?lang= / the `lang` cookie) so SSR matches the chosen
+  // locale — important for RTL + the Arabic crawl/curl.
   const [lang, setLangState] = useState(initialLang && STR[initialLang] ? initialLang : 'fr');
   const router = useRouter();
   const pathname = usePathname();
@@ -27,7 +28,15 @@ export function LangProvider({ children, initialLang }) {
     try { document.cookie = 'lang=' + lang + '; path=/; max-age=31536000; samesite=lax'; } catch (e) {}
   }, [lang]);
 
-  const setLang = useCallback((l) => { if (STR[l]) setLangState(l); }, []);
+  // Pages are pre-rendered per locale (see middleware.ts). Switch the UI right
+  // away, persist the cookie, then refresh so the server tree (and the client
+  // router cache, which may hold other-locale prefetches) follows the new locale.
+  const setLang = useCallback((l) => {
+    if (!STR[l]) return;
+    try { document.cookie = 'lang=' + l + '; path=/; max-age=31536000; samesite=lax'; } catch (e) {}
+    setLangState(l);
+    router.refresh();
+  }, [router]);
 
   const go = useCallback((id) => {
     if (!id) return;

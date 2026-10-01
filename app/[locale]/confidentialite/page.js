@@ -1,4 +1,4 @@
-import { LegalView } from '../components/content-pages';
+import { LegalView } from '@/app/components/content-pages';
 export const metadata = {
   title: 'Politique de confidentialité',
   description: 'Comment JOUDART collecte, utilise et protège vos données personnelles.',

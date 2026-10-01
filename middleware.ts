@@ -108,15 +108,43 @@ export function middleware(req: NextRequest) {
     if (blocked) return blocked;
   }
 
-  // 3) Locale via ?lang=fr|ar|en — set the cookie so the server renders the
-  //    correct locale (RTL + Arabic strings) on THIS request, and persist it.
-  const langParam = req.nextUrl.searchParams.get('lang');
-  if (langParam === 'fr' || langParam === 'ar' || langParam === 'en') {
-    req.cookies.set('lang', langParam);
-    const res = NextResponse.next({ request: { headers: req.headers } });
-    res.cookies.set('lang', langParam, { path: '/', maxAge: 31536000, sameSite: 'lax' });
-    return res;
+  // API routes are not localized.
+  if (pathname.startsWith('/api/') || pathname === '/api' || pathname.startsWith('/_next/')) {
+    return NextResponse.next();
   }
 
-  return NextResponse.next();
+  // 3) Locale: ?lang=fr|ar|en wins (and is persisted in the `lang` cookie), else
+  //    the cookie, else French. Pages live under app/[locale]/ and are
+  //    pre-rendered per locale (ISR); this internal rewrite picks the right
+  //    copy (RTL + Arabic strings for ar) while the public URL stays the same.
+  const langParam = req.nextUrl.searchParams.get('lang');
+  const fromParam = isLocale(langParam) ? langParam : null;
+  const fromCookie = req.cookies.get('lang')?.value;
+  const lang = fromParam || (isLocale(fromCookie) ? fromCookie : 'fr');
+
+  let target = pathname;
+  if (pathname === '/collection') {
+    // /collection?cat=x → pre-rendered app/[locale]/collection/[cat]
+    const cat = req.nextUrl.searchParams.get('cat');
+    if (cat && COLLECTION_CATS.includes(cat)) target = `/collection/${cat}`;
+  } else if (pathname.startsWith('/collection/')) {
+    // The per-category route is internal only (keeps ?cat= the single public URL).
+    target = '/_not-found';
+  }
+
+  const url = req.nextUrl.clone();
+  url.pathname = `/${lang}${target === '/' ? '' : target}`;
+  const res = NextResponse.rewrite(url);
+  if (fromParam) {
+    res.cookies.set('lang', fromParam, { path: '/', maxAge: 31536000, sameSite: 'lax' });
+  }
+  return res;
 }
+
+const LOCALES = ['fr', 'ar', 'en'] as const;
+type Locale = (typeof LOCALES)[number];
+function isLocale(v: string | null | undefined): v is Locale {
+  return !!v && (LOCALES as readonly string[]).includes(v);
+}
+
+const COLLECTION_CATS = ['islamique', 'moderne', 'abstrait'];

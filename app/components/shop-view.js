@@ -1,15 +1,13 @@
 'use client';
-import { Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { useLang, useReveal } from './lang-context';
 import { Header, Footer } from './chrome';
 import Boutique from './boutique';
 import { CATEGORIES, SHOP_STR } from '../data/content';
 
-function CollectionInner({ items }) {
+// `cat` comes from the route (/collection?cat=x is rewritten to
+// app/[locale]/collection/[cat] by middleware.ts), so the grid is in the HTML.
+function CollectionInner({ items, cat: catId }) {
   const { lang } = useLang();
-  const params = useSearchParams();
-  const catId = params.get('cat');
   const order = ['islamique', 'moderne', 'abstrait'];
   const cat = CATEGORIES.find((c) => c.id === catId);
   if (!cat) {
@@ -23,10 +21,10 @@ function CollectionInner({ items }) {
   return <Boutique variant="collection" lockCol={col} intro={intro} items={items} />;
 }
 
-export function CollectionView({ items = null }) {
+export function CollectionView({ items = null, cat = null }) {
   const { lang } = useLang();
   useReveal([lang]);
-  return (<><Header page="catalogue" /><Suspense fallback={null}><CollectionInner items={items} /></Suspense><Footer /></>);
+  return (<><Header page="catalogue" /><CollectionInner items={items} cat={cat} /><Footer /></>);
 }
 
 export function CatalogueView({ items = null }) {

@@ -1,4 +1,4 @@
-import { LegalView } from '../components/content-pages';
+import { LegalView } from '@/app/components/content-pages';
 export const metadata = {
   title: 'Politique relative aux cookies',
   description: 'Comment JOUDART utilise les cookies et comment gérer vos choix de consentement.',

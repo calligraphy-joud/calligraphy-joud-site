@@ -1,7 +1,7 @@
-import './globals.css';
-import { cookies } from 'next/headers';
-import Providers from './components/providers';
-import { fontVars } from './fonts';
+import '@/app/globals.css';
+import { notFound } from 'next/navigation';
+import Providers from '@/app/components/providers';
+import { fontVars } from '@/app/fonts';
 
 const SITE = 'https://www.joudart.com';
 
@@ -48,10 +48,20 @@ export const viewport = {
   initialScale: 1,
 };
 
-export default async function RootLayout({ children }) {
-  const cookieStore = await cookies();
-  const raw = cookieStore.get('lang')?.value;
-  const lang = raw === 'ar' || raw === 'en' ? raw : 'fr';
+// The locale is a route segment, not a cookie read: middleware.ts rewrites every
+// public URL (/collection) to /{fr|ar|en}/collection from ?lang= / the `lang`
+// cookie, so each locale is pre-rendered once and served statically (ISR)
+// instead of server-rendering every request. Public URLs are unchanged.
+const LOCALES = ['fr', 'ar', 'en'];
+
+export function generateStaticParams() {
+  return LOCALES.map((locale) => ({ locale }));
+}
+
+export default async function RootLayout({ children, params }) {
+  const { locale } = await params;
+  if (!LOCALES.includes(locale)) notFound();
+  const lang = locale;
   const dir = lang === 'ar' ? 'rtl' : 'ltr';
   return (
     <html lang={lang} dir={dir} className={fontVars}>
