@@ -12,6 +12,10 @@ export const revalidate = 300;
 // ISR (5 min) and the Woo webhook. Pre-rendering matters: pages are reached
 // through the middleware locale rewrite, and on-demand ISR of a never-built
 // dynamic path behind a rewrite is not cached by `next start`.
+// Any other SKU (e.g. a new Woo product not yet in the attributes file) is still
+// rendered on demand instead of 404ing.
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   return Object.keys((attrs as any).products || {}).map((sku) => ({ sku }));
 }
