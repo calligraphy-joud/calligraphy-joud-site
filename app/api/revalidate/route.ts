@@ -12,6 +12,7 @@
 // Manual trigger (anytime):
 //   https://joudart.com/api/revalidate?secret=YOUR_SECRET
 
+import { timingSafeEqual } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { revalidatePath, revalidateTag } from 'next/cache';
@@ -30,9 +31,17 @@ function presentedSecret(req: NextRequest): string {
   );
 }
 
+/** Constant-time comparison so the secret can't be guessed from response timing. */
+function secretMatches(presented: string, expected: string): boolean {
+  const a = Buffer.from(presented);
+  const b = Buffer.from(expected);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
+
 async function handle(req: NextRequest) {
+  // Fail closed: no REVALIDATE_SECRET configured → nobody can trigger it.
   const expected = process.env.REVALIDATE_SECRET;
-  if (!expected || presentedSecret(req) !== expected) {
+  if (!expected || !secretMatches(presentedSecret(req), expected)) {
     return NextResponse.json(
       { revalidated: false, error: 'unauthorized' },
       { status: 401 },
