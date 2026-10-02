@@ -25,6 +25,8 @@ export function Img({ src, alt = '', sizes = '100vw', priority = false, ...rest 
       height={d.h}
       sizes={sizes}
       priority={priority}
+      // next/image's preload alone left the LCP image at Low fetch priority.
+      fetchPriority={priority ? 'high' : undefined}
       placeholder={d.b ? 'blur' : 'empty'}
       blurDataURL={d.b}
       unoptimized={remote && !OPTIMIZABLE_REMOTE.test(src)}

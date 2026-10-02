@@ -96,6 +96,7 @@ function Gallery({ images, name, alt, forme, pd }: { images: string[]; name: str
                 sizes="(max-width: 768px) 100vw, 600px"
                 style={{ objectFit: 'cover' }}
                 priority
+                fetchPriority="high"
               />
             ) : (
               <div className="img-slot"><span>{name}</span></div>

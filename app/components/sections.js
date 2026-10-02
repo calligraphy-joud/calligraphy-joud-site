@@ -299,13 +299,24 @@ function VideoTestimonials() {
   const vids = [1, 2, 3, 4];
   const [playing, setPlaying] = useState(null);
   const refs = useRef({});
+  // A <video poster> is fetched immediately even far below the fold, competing
+  // with the hero image; only attach the posters when the block gets close.
+  const box = useRef(null);
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const el = box.current;
+    if (!el || !('IntersectionObserver' in window)) { setNear(true); return; }
+    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { setNear(true); io.disconnect(); } }, { rootMargin: '600px 0px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   const play = (n) => {
     const v = refs.current[n];
     if (v) { try { v.play(); } catch (e) {} setPlaying(n); }
   };
   const heading = lang === 'ar' ? 'شهادات بالفيديو' : lang === 'en' ? 'Video testimonials' : 'Témoignages vidéo';
   return (
-    <div className="vtest" data-reveal style={{ marginTop: 'var(--space-9)' }}>
+    <div className="vtest" ref={box} data-reveal style={{ marginTop: 'var(--space-9)' }}>
       <h3 className="serif" style={{ textAlign: 'center', fontSize: 'clamp(1.1rem, 2.4vw, 1.5rem)', marginBottom: 'var(--space-6)', color: 'var(--navy-700, #28324E)' }}>{heading}</h3>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 'var(--space-5, 18px)' }}>
         {vids.map((n) => (
@@ -313,7 +324,7 @@ function VideoTestimonials() {
             <video
               ref={(el) => { refs.current[n] = el; }}
               src={`/assets/videos/avis-client-${n}.mp4`}
-              poster={`/assets/videos/avis-client-${n}-poster.webp`}
+              poster={near ? `/assets/videos/avis-client-${n}-poster.webp` : undefined}
               preload="none"
               playsInline
               controls={playing === n}

@@ -17,7 +17,9 @@ const FilterIcon = (p) => (
   </svg>
 );
 
-function PCard({ p, lang, t }) {
+// `eager`: the first cards are above the fold on mobile (the collection's LCP
+// element), so they must not wait for lazy-loading.
+function PCard({ p, lang, t, eager = false }) {
   const { openOrder } = useOrder();
   const bq = t.bq;
   const name = lang === 'ar' ? p.name_ar : p.name;
@@ -44,7 +46,7 @@ function PCard({ p, lang, t }) {
   return (
     <Link className="pcard" href={'/produit/' + encodeURIComponent(p.id)} aria-label={(bq.view || 'Voir') + ' — ' + name}>
       <div className={mediaCls}>
-        {p.img ? <Img src={p.img} alt={name} sizes="(max-width: 600px) 45vw, (max-width: 1000px) 30vw, 340px" /> : <div className="img-slot"><span>{p.name}</span></div>}
+        {p.img ? <Img src={p.img} alt={name} priority={eager} sizes="(max-width: 600px) 45vw, (max-width: 1000px) 30vw, 340px" /> : <div className="img-slot"><span>{p.name}</span></div>}
         <div className="pmedia__scrim">
           <div className="pmedia__tags">
             <span className="ptag">{comp}</span>
@@ -205,7 +207,7 @@ export default function Boutique({ variant = 'boutique', lockCol = null, intro =
               ? Array.from({ length: variant === 'catalogue' ? 8 : 6 }).map((_, i) => <SkeletonCard key={i} />)
               : list.length === 0
                 ? <div className="bq-empty"><p>{bq.empty}</p><button className="bq-clear" onClick={clearAll} style={{ fontSize: 'var(--text-sm)' }}>{bq.clear}</button></div>
-                : list.map((p) => <PCard key={p.id} p={p} lang={lang} t={t} />)}
+                : list.map((p, i) => <PCard key={p.id} p={p} lang={lang} t={t} eager={i < 2} />)}
           </div>
         </div>
       </div>

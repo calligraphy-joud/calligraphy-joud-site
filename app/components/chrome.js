@@ -48,7 +48,7 @@ export function Header({ page = 'home' }) {
       <header className={'hdr' + (open ? ' hdr--open' : '') + (scrolled ? ' is-scrolled' : '')}>
         <div className="wrap hdr__bar">
           <button className="brand" onClick={() => go('home')} aria-label="JOUDART">
-            <Img priority src="/assets/logo-mark-navy.webp" alt="" sizes="36px" />
+            <Img loading="eager" src="/assets/logo-mark-navy.webp" alt="" sizes="36px" />
             <span className="brand__name">JOUDART</span>
           </button>
 
