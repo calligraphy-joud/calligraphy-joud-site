@@ -92,8 +92,12 @@ En plus `app/template.js` enveloppe chaque page dans `.page-fade` (animation opa
 | 9 | `perf(js)` | Modal de commande COD chargée à la demande (`next/dynamic`, préchargée en idle). Code de la modal déplacé tel quel (tracking Pixel/CAPI/gtag identique). |
 | 10 | `perf(reflow)` | `useReveal` : lectures `getBoundingClientRect` groupées avant les écritures. Slider avant/après : mesure une fois par drag. |
 | 11 | `perf(lcp)` | Pas de `.page-fade` (opacity 0 → 1) au tout premier chargement ; les navigations internes gardent le fondu. |
+| 12 | `perf(isr)` | `dynamicParams = true` explicite sur la route produit (72 SKU pré-rendus, les autres à la demande). `next build` : **`● /[locale]/produit/[sku]` (SSG/ISR 5 min)**, pas ƒ. |
+| 13 | `security(revalidate)` | `/api/revalidate` : comparaison du secret à temps constant ; 401 si `REVALIDATE_SECRET` absent ou faux (testé : sans secret / mauvais query / mauvais header → 401, bon → 200). |
+| 14 | `perf(lcp)` | Image LCP en `fetchpriority=high` (le preload seul la laissait en Low) ; 2 premières cartes de la collection en priorité (le LCP de la collection était une carte en lazy) ; logo header sans preload ; posters des vidéos d'avis attachés seulement près du viewport (~70 KiB qui concurrençaient le hero). |
+| 15 | `perf(lcp)` | `content-visibility: auto` sur les sections sous la ligne de flottaison + footer : le premier layout de toute la page était le render delay du LCP (~1.3 s → ~0.25 s). Ancres testées (bouton, `/#id`, `router.push`) : position identique. |
 
-Testé puis **non retenu** (pas de gain mesurable) : `experimental.inlineCss`, suppression de `text-wrap: pretty` / `optimizeLegibility`, `adjustFontFallback: false`, `browserslist` moderne.
+Testé puis **non retenu** (pas de gain mesurable) : retrait du preload Cormorant, `experimental.inlineCss`, suppression de `text-wrap: pretty` / `optimizeLegibility`, `adjustFontFallback: false`, `browserslist` moderne.
 
 Non fait / volontairement laissé :
 - **Legacy JS (~11–28 KiB)** : ce sont les polyfills internes de Next 15 (inclus sans condition). Testé : un `browserslist` moderne ne change rien (chunks identiques). Il faudrait Next 16 → hors périmètre.
@@ -111,18 +115,37 @@ Non fait / volontairement laissé :
   surestime fortement TBT/render-delay (il l'avertit lui-même). Série **calibrée** = CPU ×2 (recommandation Lighthouse pour ce
   benchmarkIndex, plus proche des serveurs PSI). Les deux séries sont données.
 
-### Série calibrée (CPU ×2) — médiane de 3 runs
+### Checklist route produit (steer owner)
+1. `cookies()/headers()/draftMode()` : aucun dans app/ ni lib/ (le seul, dans le layout racine, a été retiré).
+2. Fetch produit/variations/liste : `next: { revalidate: 300, tags: ['woo'] }` ; `no-store` seulement pour commandes/admin/health.
+3. `force-dynamic` / `revalidate = 0` : seulement routes API + /admin, rien dans l'arbre produit.
+4. `searchParams` : aucun usage dans les pages (`?cat=` réécrit par le middleware vers une route statique).
+5. `generateStaticParams` (72 SKU) + `dynamicParams = true`. Build → `●`. Runtime : `x-nextjs-cache: HIT`, et MISS→HIT juste après un webhook.
+
+### LCP breakdown (accueil, à chaud, calibré)
+| Phase | Avant | Après |
+|---|---|---|
+| TTFB | 354 ms | ~10 ms |
+| Resource load delay | 90 ms | ~25 ms |
+| Resource load duration | 36 ms (147 KiB webp) | ~12 ms (40 KiB AVIF) |
+| Element render delay | 2 108 ms | **~250 ms** |
+| **LCP observé (vrai rendu)** | FCP 968 → LCP 2 185 ms | **FCP 281 → LCP 281 ms** |
+
+Observé : LCP = FCP sur l'accueil, +100–170 ms sur collection/produit (cible « ~0,5 s du FCP » atteinte). Le LCP *simulé* par
+Lighthouse reste ~3 s : modèle réseau 1,6 Mbps / 150 ms RTT appliqué à tous les octets critiques (polices ~110 KiB incluses).
+
+### Série calibrée finale (CPU ×2) — médiane de 3 runs
 
 | Page | Score | FCP | LCP | TBT | SI | CLS |
 |---|---|---|---|---|---|---|
 | Accueil — avant | 74 | 3.0 s | 5.1 s | 160 ms | 3.4 s | 0 |
-| Accueil — **après** | **86** | **1.7 s** | **3.8 s** | 160 ms | 3.2 s | 0 |
+| Accueil — **après** | **91** | **1.7 s** | **3.4 s** | 20 ms | 1.8 s | 0 |
 | Collection — avant | 67 | 3.0 s | 4.7 s | 390 ms | 3.9 s | 0 |
-| Collection — **après** | **86** | **1.7 s** | **3.6 s** | 170 ms | 2.4 s | 0 |
+| Collection — **après** | **94** | **1.7 s** | **3.0 s** | 50 ms | 1.8 s | 0 |
 | Produit ISL-010 — avant | 77 | 3.0 s | 4.5 s | 130 ms | 3.6 s | 0 |
-| Produit ISL-010 — **après** | **90** | **1.7 s** | **3.4 s** | 100 ms | 2.6 s | 0 |
+| Produit ISL-010 — **après** | **92** | **1.6 s** | **3.2 s** | 30 ms | 1.8 s | 0 |
 
-### Série brute (CPU ×4 sur machine lente) — médiane de 3 runs
+### Série brute (CPU ×4 sur machine lente) — médiane de 3 runs (avant les fixes 12–15)
 
 | Page | Score | FCP | LCP | TBT | SI |
 |---|---|---|---|---|---|
@@ -144,9 +167,9 @@ est stable ou en baisse.
 ### Cibles
 | Cible | Résultat (calibré) |
 |---|---|
-| Performance ≥ 85 | ✅ 86 / 86 / 90 |
-| LCP < 2.5 s | ❌ 3.4–3.8 s en labo local (−1.1 à −1.3 s). À reconfirmer sur PSI réel : le reste du LCP est le render delay CPU sur cette machine lente ; TTFB réel attendu bien plus bas grâce à l'ISR + cdg1. |
-| TBT < 200 ms | ✅ 100–170 ms |
+| Performance ≥ 85 | ✅ 91 / 94 / 92 |
+| LCP < 2.5 s | Observé ✅ (0,28–0,5 s) · simulé Lighthouse ❌ 3,0–3,4 s (−1,5 à −1,9 s vs avant). À confirmer sur PSI réel (preview protégée). |
+| TBT < 200 ms | ✅ 20–50 ms |
 | CLS < 0.1 | ✅ 0 |
 
 ## 4. Vérifications fonctionnelles (build de prod local, Chrome headless mobile)
